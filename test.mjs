@@ -61,7 +61,7 @@ async function runSuite(page, label) {
       && slot.classList.contains('locked')
       && /Octopus2\.jpg|octopus/i.test(img?.src || '');
   });
-  results.push([`${label}: silent curator locked until six viewed`, curatorLocked, curatorLocked]);
+  results.push([`${label}: octopus locked until six viewed`, curatorLocked, curatorLocked]);
 
   await page.evaluate(() => {
     localStorage.setItem('mia-ocean-passport-v1', JSON.stringify(['EXT-01', 'EXT-02', 'EXT-03', 'EXT-04', 'EXT-05', 'EXT-06']));
@@ -296,7 +296,7 @@ async function runSuite(page, label) {
     await page.waitForTimeout(400);
 
     const unlocked = await page.locator('.passport-slot.bonus').evaluate((el) => !el.disabled && !el.classList.contains('locked'));
-    results.push([`${label}: silent curator unlocked after six`, unlocked, unlocked]);
+    results.push([`${label}: octopus unlocked after six`, unlocked, unlocked]);
 
     await page.locator('.passport-slot.bonus').click();
     await page.waitForTimeout(500);
@@ -307,8 +307,8 @@ async function runSuite(page, label) {
     const octopusSrc = await page.locator('#heroImg').getAttribute('src');
     await page.waitForFunction(() => document.querySelector('#player iframe'), { timeout: 20000 }).catch(() => {});
     const octopusVideo = await page.evaluate(() => document.querySelector('#player iframe')?.src || '');
-    results.push([`${label}: silent curator disguise episode`, octopusTitle === 'The silent curator' && watchVisible && octopusVideo.includes('9jJmaSgbOz4'), { octopusTitle, watchVisible, octopusVideo }]);
-    results.push([`${label}: silent curator octopus image`, !!octopusSrc && /Octopus2\.jpg|octopus/i.test(octopusSrc), octopusSrc]);
+    results.push([`${label}: octopus disguise episode`, octopusTitle === 'Octopus' && watchVisible && octopusVideo.includes('9jJmaSgbOz4'), { octopusTitle, watchVisible, octopusVideo }]);
+    results.push([`${label}: octopus specimen image`, !!octopusSrc && /Octopus2\.jpg|octopus/i.test(octopusSrc), octopusSrc]);
     await page.locator('#closeBtn').click();
     await page.waitForTimeout(200);
   }
