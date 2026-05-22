@@ -1,0 +1,3458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0054e3" />
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>★ DEPTHS ★ Most Extreme Ocean Zone</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.78em' x='.12em' font-size='72'%3E🐙%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --carousel-transition-duration: 250ms;
+      --carousel-transition-ease: ease-out;
+      --carousel-bg-color-rgb: 0, 24, 48;
+      --carousel-shadow-color-rgb: 0, 120, 180;
+      --carousel-item-width: 11.5rem;
+      --carousel-item-height: 17.5rem;
+      --carousel-item-hover-effect: 1.08;
+      --carousel-item-reflection-blur: 0.3rem;
+      --carousel-item-empty-color-rgb: 0, 40, 80;
+      --carousel-item-glow-color-rgb: 0, 255, 255;
+      --carousel-item-glow-size: 5.5rem;
+      --carousel-diameter: 50rem;
+      --carousel-3d-perspective: 1000px;
+      --carousel-3d-perspective-origin: 50% 50%;
+      --carousel-control-button-width: 1.25rem;
+      --carousel-control-button-height: 4rem;
+      --carousel-control-color-rgb: 0, 180, 255;
+      --carousel-animation-duration: 40s;
+      --panel-ease: cubic-bezier(0.22, 1, 0.28, 1);
+      --carousel-animation-play-state: running;
+      --carousel-direction-animation-play-state: paused;
+      --text: #e8ffff;
+      --muted: #7ec8e8;
+      --line: #004466;
+      --sea: #00ffcc;
+      --ocean: #00aaff;
+      --hot: #ff66cc;
+      --lime: #ccff00;
+      --xp-blue: #0054e3;
+      --xp-light: #3a8ee6;
+      --chrome-hi: #ffffff;
+      --chrome-lo: #006699;
+      --safe-t: env(safe-area-inset-top, 0px);
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --safe-l: env(safe-area-inset-left, 0px);
+      --safe-r: env(safe-area-inset-right, 0px);
+      --touch: 48px;
+      --gloss-btn: linear-gradient(180deg, #6ecfff 0%, #2080d0 45%, #004080 100%);
+      --gloss-panel: linear-gradient(180deg, #1a5a8a 0%, #0a2848 8%, #051830 100%);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; border: 0; box-sizing: border-box; }
+    a, button {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    :focus-visible {
+      outline: 2px solid var(--sea);
+      outline-offset: 3px;
+    }
+
+    @keyframes bg-pan {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes blink-soft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    @keyframes bubble-rise {
+      0% { transform: translateY(0) scale(1); opacity: 0; }
+      8% { opacity: 0.55; }
+      100% { transform: translateY(-110vh) scale(1.15); opacity: 0; }
+    }
+    @keyframes stamp-pop {
+      0% { transform: scale(0) rotate(-25deg); opacity: 0; }
+      55% { transform: scale(1.35) rotate(8deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    @keyframes slot-glow {
+      0%, 100% { box-shadow: 0 0 0 transparent; }
+      50% { box-shadow: 0 0 14px rgba(204, 255, 0, 0.65); }
+    }
+    @keyframes confetti-fall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    @keyframes progress-pulse {
+      0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+      50% { filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.8)); }
+    }
+    @keyframes card-stamp-flash {
+      0% { box-shadow: 0 0 0 rgba(255, 102, 204, 0); }
+      40% { box-shadow: 0 0 22px rgba(255, 102, 204, 0.85); }
+      100% { box-shadow: 0 0 12px rgba(0, 255, 200, 0.45); }
+    }
+
+    html, body { min-height: 100%; }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: Tahoma, Verdana, "Segoe UI", Geneva, sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: #001a33 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='8' cy='8' r='1.5' fill='%2300aaff' opacity='.25'/%3E%3Ccircle cx='38' cy='22' r='1' fill='%2300ffcc' opacity='.2'/%3E%3Ccircle cx='22' cy='44' r='1.2' fill='%23fff' opacity='.15'/%3E%3C/svg%3E");
+      overflow-x: hidden;
+    }
+    body.panel-open { overflow: hidden; position: fixed; inset: 0; width: 100%; }
+
+    .crt {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.04) 2px, rgba(0,0,0,.04) 4px);
+      opacity: 0.5;
+    }
+
+    .bg-video-wrap {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+      background: #001428;
+    }
+    .bg-video {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      filter: saturate(1.35) hue-rotate(-15deg) contrast(1.1) brightness(0.45);
+    }
+    .bg-tint {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(0, 80, 160, 0.35), rgba(0, 20, 50, 0.92)),
+        radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0, 255, 204, 0.12), transparent);
+    }
+    .bubble-field {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    }
+    .bubble {
+      position: absolute; bottom: -2rem;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), rgba(0, 200, 255, .12) 55%, transparent 70%);
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      animation: bubble-rise linear infinite;
+    }
+    .deco-rays {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse 90% 50% at 50% -10%, rgba(0, 170, 255, 0.12), transparent 55%);
+    }
+
+    .ui-layer {
+      position: relative; z-index: 2; width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1; padding-top: calc(0.35rem + var(--safe-t));
+    }
+    body.panel-open .ui-layer { visibility: hidden; pointer-events: none; }
+
+    .chrome-header {
+      width: min(100%, 52rem);
+      margin: 0 max(0.65rem, var(--safe-l)) 0.4rem max(0.65rem, var(--safe-r));
+      border: 2px solid;
+      border-color: var(--chrome-hi) var(--chrome-lo) var(--chrome-lo) var(--chrome-hi);
+      border-radius: 8px 8px 0 0;
+      background: var(--gloss-panel);
+      box-shadow: 0 4px 0 #002040, 0 8px 24px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+    .title-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.35rem 0.5rem;
+      background: linear-gradient(90deg, #0054e3, #3a8ee6 40%, #0054e3);
+      border-bottom: 1px solid #003080;
+    }
+    .title-bar-dots {
+      display: flex; gap: 4px;
+    }
+    .title-bar-dots span {
+      width: 11px; height: 11px; border-radius: 2px;
+      border: 1px solid rgba(0,0,0,.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+    }
+    .title-bar-dots .r { background: linear-gradient(180deg, #ff8a7a, #c03020); }
+    .title-bar-dots .y { background: linear-gradient(180deg, #ffe080, #c0a020); }
+    .title-bar-dots .g { background: linear-gradient(180deg, #80ff90, #30a040); }
+    .title-bar-title {
+      flex: 1;
+      text-align: center;
+      font: bold 11px/1 Tahoma, Verdana, sans-serif;
+      color: #fff;
+      text-shadow: 1px 1px 0 #002060;
+      letter-spacing: 0.04em;
+    }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.55rem 0.65rem;
+      flex-wrap: wrap;
+    }
+    .brand h1 {
+      margin: 0;
+      font: bold 1.35rem/1.1 Impact, "Arial Black", Haettenschweiler, sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #fff 0%, #a8f0ff 35%, #00ccff 60%, #0066aa 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 2px 0 #003366) drop-shadow(0 0 12px rgba(0, 255, 255, 0.5));
+    }
+    .brand p {
+      margin: 0.2rem 0 0;
+      font-size: 10px;
+      color: var(--lime);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .badge-new {
+      display: inline-block;
+      margin-left: 0.35rem;
+      padding: 0.1rem 0.35rem;
+      font: bold 9px/1 Tahoma, sans-serif;
+      color: #000;
+      background: var(--lime);
+      border: 1px solid #fff;
+      animation: blink-soft 1.2s step-end infinite;
+      vertical-align: middle;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .badge-new { animation: none; }
+    }
+    .visitor {
+      font: bold 10px/1.2 Tahoma, sans-serif;
+      color: var(--sea);
+      padding: 0.25rem 0.5rem;
+      border: 1px inset #004466;
+      background: #001830;
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .topbar-actions { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+    .gloss-btn {
+      appearance: none;
+      cursor: pointer;
+      min-height: 30px;
+      padding: 0 0.75rem;
+      border-radius: 6px;
+      border: 1px solid;
+      border-color: #9fd4ff #003366 #003366 #9fd4ff;
+      background: var(--gloss-btn);
+      color: #fff;
+      font: bold 11px/1 Tahoma, Verdana, sans-serif;
+      text-shadow: 0 1px 1px #003366;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    .gloss-btn:active {
+      border-color: #003366 #9fd4ff #9fd4ff #003366;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+      transform: translateY(1px);
+    }
+    .gloss-btn[aria-pressed="true"] {
+      background: linear-gradient(180deg, #00ccaa, #008866);
+      border-color: #80ffee #004433 #004433 #80ffee;
+    }
+    .gloss-btn.note { min-width: 36px; padding: 0; font-size: 14px; }
+
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid #003355;
+      background: linear-gradient(90deg, #001830, #002850, #001830);
+      padding: 0.3rem 0;
+    }
+    .ticker {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+      font: bold 10px/1.3 Tahoma, Verdana, sans-serif;
+      color: var(--sea);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker { animation: none; flex-wrap: wrap; justify-content: center; width: auto; padding: 0 0.5rem; }
+    }
+    .ticker span { padding: 0 1.5rem; white-space: nowrap; }
+    .ticker span::before { content: "★ "; color: var(--hot); }
+
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+      padding: 0.35rem max(0.65rem, var(--safe-l)) 0.25rem max(0.65rem, var(--safe-r));
+      overflow: hidden;
+    }
+
+    .gallery-arena {
+      width: min(100%, 54rem);
+      border: 2px solid;
+      border-color: var(--chrome-hi) var(--chrome-lo) var(--chrome-lo) var(--chrome-hi);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #0c3060 0%, #051830 12%, #020c18 100%);
+      box-shadow: 0 6px 0 #001020, inset 0 0 40px rgba(0, 120, 200, 0.12), 0 0 30px rgba(0, 255, 255, 0.08);
+      overflow: hidden;
+    }
+    .gallery-titlebar {
+      padding: 0.3rem 0.55rem;
+      background: linear-gradient(90deg, #004080, #2080c0 30%, #004080);
+      border-bottom: 1px solid #002850;
+      font: bold 10px/1.2 Tahoma, Verdana, sans-serif;
+      color: #fff;
+      text-shadow: 0 1px 0 #001840;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .gallery-titlebar span:last-child {
+      font-size: 9px;
+      color: var(--lime);
+      animation: blink-soft 1.5s step-end infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-titlebar span:last-child { animation: none; }
+    }
+    .gallery-viewport {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: min(calc(var(--carousel-diameter) + 2rem), 68vh);
+      padding: 1rem 0.75rem 1.25rem;
+      background:
+        radial-gradient(ellipse 55% 50% at 50% 50%, rgba(0, 180, 255, 0.22), transparent 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 80, 120, 0.08) 3px, rgba(0, 80, 120, 0.08) 4px);
+      border-top: 1px solid #004466;
+    }
+    .gallery-viewport .carousel {
+      margin: 0 auto;
+      flex-shrink: 0;
+    }
+    .gloss-btn-sm { min-height: 26px; padding: 0 0.5rem; font-size: 10px; }
+
+    /* ——— Mobile layout ——— */
+    .layout-mobile {
+      width: min(100%, 52rem);
+      padding: 0 max(0.65rem, var(--safe-l)) 0 max(0.65rem, var(--safe-r));
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .layout-desktop {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      width: min(100%, 72rem);
+      min-height: 0;
+    }
+    .mobile-hint {
+      text-align: center;
+      font: bold 10px/1.4 Tahoma, sans-serif;
+      color: var(--muted);
+      margin: 0.35rem 0 0.5rem;
+      letter-spacing: 0.06em;
+    }
+    .mobile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      padding-bottom: 0.75rem;
+      flex: 1;
+      align-content: start;
+    }
+    .mobile-card {
+      appearance: none;
+      text-align: left;
+      cursor: pointer;
+      touch-action: manipulation;
+      width: 100%;
+      border: 2px solid;
+      border-color: #fff #225588 #225588 #fff;
+      border-radius: 6px;
+      background: linear-gradient(145deg, #e8f4fc, #98b8d0);
+      padding: 6px 6px 8px;
+      box-shadow: 2px 3px 8px rgba(0,0,0,.4);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-height: 0;
+    }
+    .mobile-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border: 2px inset #6699bb;
+      display: block;
+      pointer-events: none;
+    }
+    .mobile-card .mobile-card-act,
+    .mobile-card .mobile-card-title { pointer-events: none; }
+    .mobile-card-title {
+      font: bold 10px/1.2 Tahoma, sans-serif;
+      color: #003366;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .mobile-card-act {
+      font: bold 8px/1 Tahoma, sans-serif;
+      color: #0066aa;
+      text-transform: uppercase;
+    }
+    .mobile-card[aria-current="true"] {
+      border-color: var(--lime) #004433 #004433 var(--lime);
+      box-shadow: 0 0 12px rgba(0, 255, 200, 0.45);
+    }
+    .mobile-fill {
+      flex-shrink: 0;
+      margin: 0.25rem 0 0.5rem;
+      padding: 0.55rem 0.65rem;
+      font: 11px/1.45 Georgia, "Times New Roman", serif;
+      color: #a8e8ff;
+      background: #001428;
+      border: 2px inset #004466;
+      border-radius: 6px;
+      min-height: 3.5rem;
+    }
+    .mobile-fill em { color: var(--sea); font-style: italic; }
+    .mobile-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 8;
+      margin: 0 calc(-1 * max(0.65rem, var(--safe-l)));
+      padding: 0.6rem max(0.75rem, var(--safe-l)) calc(0.65rem + var(--safe-b)) max(0.75rem, var(--safe-r));
+      background: linear-gradient(180deg, transparent, #051830 20%, #0a2848 100%);
+      border-top: 2px solid #004466;
+    }
+    .mobile-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 0.5rem;
+    }
+    .mobile-bar-row .dock-title {
+      flex: 1;
+      font-size: 12px;
+      margin: 0;
+    }
+    .mobile-bar .cta-btn { width: 100%; min-height: 44px; }
+
+    /* ——— Desktop layout ——— */
+    .desktop-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 0.75rem;
+      padding: 0.5rem max(0.65rem, var(--safe-l)) 0.35rem max(0.65rem, var(--safe-r));
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+    }
+    .desktop-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      min-height: 0;
+      border: 2px solid;
+      border-color: var(--chrome-hi) var(--chrome-lo) var(--chrome-lo) var(--chrome-hi);
+      border-radius: 8px;
+      background: var(--gloss-panel);
+      padding: 0.5rem;
+      overflow: hidden;
+    }
+    .sidebar-head {
+      font: bold 10px/1.2 Tahoma, sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lime);
+      text-align: center;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px dashed #004466;
+    }
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 2px;
+    }
+    .side-nav-item {
+      appearance: none;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 0.45rem;
+      align-items: center;
+      text-align: left;
+      cursor: pointer;
+      touch-action: manipulation;
+      padding: 4px;
+      border: 2px solid;
+      border-color: #fff #225588 #225588 #fff;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #0a2848, #001a30);
+      color: #cfefff;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.35);
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    }
+    .side-nav-item:hover {
+      border-color: var(--sea) #004466 #004466 var(--sea);
+      transform: translateX(2px);
+    }
+    .side-nav-item img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border: 2px inset #6699bb;
+      display: block;
+      pointer-events: none;
+      filter: saturate(0.9) contrast(1.05);
+    }
+    .side-nav-item .side-nav-text { pointer-events: none; min-width: 0; }
+    .side-nav-item strong {
+      display: block;
+      font: bold 10px/1.2 Tahoma, Verdana, sans-serif;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .side-nav-item span {
+      display: block;
+      font: 8px/1.2 Tahoma, sans-serif;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 0.12rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .side-nav-item[aria-current="true"] {
+      border-color: var(--lime) #004433 #004433 var(--lime);
+      background: linear-gradient(90deg, #0a3050, #001a30);
+      box-shadow: 0 0 12px rgba(0, 255, 200, 0.35), 2px 2px 6px rgba(0, 0, 0, 0.4);
+    }
+    .side-nav-item[aria-current="true"] img {
+      filter: saturate(1.15) contrast(1.08) brightness(1.05);
+      border-color: #00ffcc #004466 #004466 #00ffcc;
+    }
+    .side-nav-item.bonus { border-color: var(--hot) #553366 #553366 var(--hot); }
+    .sidebar-fill {
+      flex-shrink: 0;
+      padding: 0.5rem;
+      font: 11px/1.5 Georgia, serif;
+      color: #a8e8ff;
+      background: #001428;
+      border: 1px inset #004466;
+      border-radius: 4px;
+      min-height: 3.5rem;
+      margin-top: 0.35rem;
+    }
+    .sidebar-fill em { color: var(--sea); font-style: italic; }
+    .sidebar-progress {
+      margin: 0.35rem 0 0.5rem;
+      text-align: center;
+      font: bold 11px/1.35 Tahoma, Verdana, sans-serif;
+      color: var(--lime);
+      text-shadow: 0 0 8px rgba(0, 255, 200, 0.35);
+    }
+    .dock-simple .dock-controls { display: none !important; }
+
+    @media (max-width: 959px) {
+      .layout-mobile { display: flex; }
+      .layout-desktop { display: none !important; }
+      .ticker-wrap { display: none; }
+      .visitor { display: none; }
+      .chrome-header { margin-bottom: 0.25rem; }
+      .stage { display: none !important; }
+      .site-footer { font-size: 8px; padding: 0.35rem; }
+    }
+    @media (min-width: 960px) {
+      .layout-mobile { display: none !important; }
+      .layout-desktop { display: flex; }
+      .ui-layer { flex: 1; min-height: 0; }
+      .gallery-arena { width: 100%; }
+      :root { --carousel-diameter: 42rem; }
+      .dock { width: 100%; margin: 0; border-radius: 0 0 10px 10px; }
+      .desktop-split .stage { padding: 0; flex: none; }
+    }
+
+    /* ——— Bottom dock ——— */
+    .dock {
+      width: min(100%, 52rem);
+      margin: 0 max(0.65rem, var(--safe-l)) 0 max(0.65rem, var(--safe-r));
+      padding: 0.65rem 0.75rem calc(0.65rem + var(--safe-b));
+      background: var(--gloss-panel);
+      border: 2px solid;
+      border-color: var(--chrome-hi) var(--chrome-lo) var(--chrome-lo) var(--chrome-hi);
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 6px 0 #001020, inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    .dock-top {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+    .progress-wrap {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+    }
+    .progress-ring {
+      width: 44px;
+      height: 44px;
+      transform: rotate(-90deg);
+    }
+    .progress-ring circle {
+      fill: none;
+      stroke-width: 3;
+    }
+    .progress-ring .track { stroke: rgba(148, 180, 200, 0.2); }
+    .progress-ring .fill {
+      stroke: url(#progressGrad);
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.4s var(--panel-ease);
+    }
+    .progress-label {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font: bold 10px/1 Tahoma, sans-serif;
+      color: var(--lime);
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 6px var(--sea);
+    }
+    .dock-card {
+      flex: 1;
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      gap: 0.65rem;
+      align-items: center;
+    }
+    .dock-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 4px;
+      object-fit: cover;
+      border: 2px solid;
+      border-color: #fff #004466 #004466 #fff;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5), inset 0 0 8px rgba(0, 255, 255, 0.2);
+    }
+    .dock-meta { min-width: 0; }
+    .dock-act {
+      margin: 0;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ocean);
+      font-weight: 600;
+    }
+    .dock-title {
+      margin: 0.1rem 0 0;
+      font: bold 14px/1.15 Tahoma, Verdana, sans-serif;
+      color: #fff;
+      text-shadow: 0 1px 0 #003366, 0 0 8px rgba(0, 200, 255, 0.6);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dock-epithet {
+      margin: 0.1rem 0 0;
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cta-btn {
+      appearance: none;
+      cursor: pointer;
+      min-height: 40px;
+      padding: 0 1rem;
+      border-radius: 6px;
+      font: bold 12px/1 Tahoma, Verdana, sans-serif;
+      color: #fff;
+      text-shadow: 0 1px 2px #003366;
+      border: 2px solid;
+      border-color: #ffff99 #996600 #996600 #ffff99;
+      background: linear-gradient(180deg, #ffee55 0%, #ffaa00 40%, #cc6600 100%);
+      box-shadow: 0 3px 0 #663300, 0 0 16px rgba(255, 170, 0, 0.45);
+      white-space: nowrap;
+    }
+    .cta-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #663300;
+    }
+
+    .dock-controls {
+      display: flex;
+      gap: 0.45rem;
+      margin-top: 0.55rem;
+      justify-content: center;
+    }
+    .ctrl-btn {
+      appearance: none;
+      cursor: pointer;
+      min-height: 32px;
+      padding: 0 0.75rem;
+      border-radius: 5px;
+      border: 1px solid;
+      border-color: #9fd4ff #003366 #003366 #9fd4ff;
+      background: linear-gradient(180deg, #4a90c8, #2060a0);
+      color: #fff;
+      font: bold 10px/1 Tahoma, sans-serif;
+      text-shadow: 0 1px 1px #002040;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      box-shadow: 0 2px 3px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .ctrl-btn[aria-pressed="true"] {
+      border-color: #003366 #9fd4ff #9fd4ff #003366;
+      background: linear-gradient(180deg, #2060a0, #103050);
+      color: var(--lime);
+      box-shadow: inset 0 2px 5px rgba(0,0,0,.4);
+    }
+    .ctrl-btn svg { width: 14px; height: 14px; opacity: 0.9; }
+
+    /* ——— 3D carousel (your pattern) ——— */
+    .carousel {
+      --_diameter: var(--carousel-diameter);
+      --_radius: calc(var(--_diameter) / 2);
+      --_item-width: var(--carousel-item-width);
+      --_item-height: var(--carousel-item-height);
+      perspective: var(--carousel-3d-perspective);
+      perspective-origin: var(--carousel-3d-perspective-origin);
+      width: var(--_diameter);
+      height: var(--_diameter);
+    }
+    @media only screen and (max-width: 48rem) {
+      .carousel {
+        --_diameter: calc(var(--carousel-diameter) * 0.75);
+        --_item-width: calc(var(--carousel-item-width) * 0.75);
+        --_item-height: calc(var(--carousel-item-height) * 0.75);
+      }
+    }
+    @media only screen and (max-width: 32rem) {
+      .carousel {
+        --_diameter: calc(var(--carousel-diameter) * 0.6);
+        --_item-width: calc(var(--carousel-item-width) * 0.6);
+        --_item-height: calc(var(--carousel-item-height) * 0.6);
+      }
+    }
+
+    .carousel .carousel-rotation-direction {
+      --_direction-animation-play-state: var(--carousel-direction-animation-play-state);
+      --_z: calc(var(--_radius) * -1);
+      transform: translateZ(var(--_z));
+      transform-style: preserve-3d;
+      animation: carousel-rotation-reverse calc(var(--carousel-animation-duration) / 2) reverse linear infinite var(--_direction-animation-play-state);
+      transition: all var(--carousel-transition-duration) var(--carousel-transition-ease);
+    }
+    @keyframes carousel-rotation-reverse {
+      from { transform: translateZ(var(--_z)) rotateY(0deg); }
+      to { transform: translateZ(var(--_z)) rotateY(360deg); }
+    }
+    @keyframes carousel-rotation-normal {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .carousel .carousel-item-wrapper {
+      transform-style: inherit;
+      width: inherit;
+      height: inherit;
+      list-style-type: none;
+      position: relative;
+      animation: carousel-rotation-normal var(--carousel-animation-duration) normal linear infinite var(--carousel-animation-play-state);
+      transition: all var(--carousel-transition-duration) var(--carousel-transition-ease);
+    }
+    .carousel .carousel-rotation-direction:has(.carousel-item:hover),
+    .carousel .carousel-rotation-direction:has(.carousel-item:focus-within) {
+      --carousel-animation-play-state: paused;
+      --_direction-animation-play-state: paused;
+    }
+
+    .carousel .carousel-item {
+      --_width: var(--_item-width);
+      --_height: var(--_item-height);
+      --_rotation: calc(360deg / var(--_num-elements) * var(--_index));
+      left: calc(var(--_radius) - var(--_item-width) / 2);
+      top: calc(var(--_radius) - var(--_item-height) / 2);
+      transform: rotateY(var(--_rotation)) translateZ(var(--_radius));
+      transform-style: inherit;
+      width: var(--_width);
+      height: var(--_height);
+      transition: all var(--carousel-transition-duration) var(--carousel-transition-ease);
+      box-shadow: 0 0 var(--carousel-item-glow-size) transparent;
+      position: absolute;
+      list-style: none;
+      pointer-events: auto;
+    }
+    .carousel .carousel-item:hover,
+    .carousel .carousel-item:focus-within,
+    .carousel .carousel-item.is-selected {
+      box-shadow:
+        0 0 var(--carousel-item-glow-size) rgba(0, 255, 255, 0.55),
+        0 0 24px rgba(255, 102, 204, 0.25);
+      transform: rotateY(var(--_rotation)) translateZ(calc(var(--_radius) * var(--carousel-item-hover-effect)));
+    }
+    button.polaroid-frame {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 0;
+      padding: 9px 9px 6px;
+      margin: 0;
+      appearance: none;
+      font: inherit;
+      text-align: inherit;
+      cursor: pointer;
+      touch-action: manipulation;
+      background: linear-gradient(145deg, #f0f8ff 0%, #c8e0f0 35%, #98b8d0 100%);
+      border: 2px solid;
+      border-color: #fff #225588 #225588 #fff;
+      box-shadow:
+        0 5px 14px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -2px 8px rgba(0, 60, 100, 0.2);
+      position: relative;
+    }
+    button.polaroid-frame:focus-visible {
+      outline: 2px solid var(--sea);
+      outline-offset: 2px;
+    }
+    .carousel .carousel-item.is-selected .polaroid-frame {
+      border-color: var(--lime) #006655 #006655 var(--lime);
+      box-shadow:
+        0 0 20px rgba(0, 255, 200, 0.45),
+        0 5px 14px rgba(0, 0, 0, 0.5),
+        inset 0 0 12px rgba(0, 255, 255, 0.15);
+    }
+    .frame-badge {
+      position: absolute;
+      top: -7px;
+      left: -5px;
+      z-index: 4;
+      pointer-events: none;
+      font: bold 8px/1 Tahoma, Verdana, sans-serif;
+      letter-spacing: 0.04em;
+      color: #fff;
+      background: linear-gradient(180deg, #ff66aa, #cc2288);
+      padding: 3px 6px;
+      border: 1px solid #fff;
+      box-shadow: 1px 2px 4px rgba(0,0,0,.4);
+      transform: rotate(-6deg);
+    }
+    .frame-ribbon {
+      position: absolute;
+      top: 6px;
+      right: -6px;
+      z-index: 4;
+      pointer-events: none;
+      max-width: 72%;
+      font: bold 7px/1.2 Tahoma, sans-serif;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 1px 0 #003366;
+      background: linear-gradient(90deg, #00ccff, #0066cc);
+      padding: 3px 8px 3px 5px;
+      border: 1px solid rgba(255,255,255,.5);
+      clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
+    }
+    .carousel .carousel-item .carousel-photo {
+      display: block;
+      width: 100%;
+      min-height: 0;
+      margin: 0;
+      border: 2px inset #6699bb;
+      background-color: #001a30;
+      background-image: var(--_image-url, none);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      transition: filter var(--carousel-transition-duration) var(--carousel-transition-ease);
+      filter: grayscale(70%) saturate(0.85) brightness(0.95);
+      box-shadow: inset 0 0 16px rgba(0, 40, 80, 0.5);
+      pointer-events: none;
+    }
+    .carousel .carousel-item.is-selected .carousel-photo,
+    .carousel .carousel-item:hover .carousel-photo,
+    .carousel .carousel-item:focus-within .carousel-photo,
+    button.polaroid-frame:hover .carousel-photo,
+    button.polaroid-frame:focus .carousel-photo {
+      filter: grayscale(0%) saturate(1.2) brightness(1.05) contrast(1.08);
+      border-color: #00ffcc #004466 #004466 #00ffcc;
+    }
+    .frame-caption {
+      margin-top: 5px;
+      padding: 3px 4px;
+      pointer-events: none;
+      font: bold 9px/1.25 Tahoma, Verdana, sans-serif;
+      text-align: center;
+      color: #003366;
+      background: linear-gradient(180deg, #ffffaa 0%, #ffdd44 50%, #cc9900 100%);
+      border: 1px solid;
+      border-color: #ffffee #886600 #886600 #ffffee;
+      text-shadow: 0 1px 0 rgba(255,255,255,.6);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .carousel .carousel-item::before {
+      content: '';
+      width: inherit;
+      height: inherit;
+      background-color: rgba(var(--carousel-item-empty-color-rgb), 0.6);
+      background-image:
+        linear-gradient(to top, rgba(0, 40, 80, 0.35) 0%, rgba(0, 10, 30, 0.95) 70%),
+        var(--_image-url);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      pointer-events: none;
+      filter: blur(var(--carousel-item-reflection-blur)) grayscale(70%) saturate(1.1);
+      transition: filter var(--carousel-transition-duration) var(--carousel-transition-ease);
+      transform-style: inherit;
+      transform-origin: center bottom;
+      transform: rotateX(90deg) rotateZ(180deg) rotateY(180deg);
+      position: absolute;
+      opacity: 0.85;
+    }
+    .carousel .carousel-item.is-selected::before,
+    .carousel .carousel-item:hover::before,
+    .carousel .carousel-item:focus-within::before {
+      filter: blur(var(--carousel-item-reflection-blur)) grayscale(0%) saturate(1.15);
+      opacity: 1;
+    }
+
+    .carousel .carousel-ground {
+      --_width: var(--_diameter);
+      --_height: var(--_diameter);
+      --_rotation: 90deg;
+      left: calc(var(--_radius) - var(--_width) / 2);
+      top: calc(var(--_radius) - var(--_height) / 2);
+      transform: rotateX(var(--_rotation)) translateZ(calc(var(--_item-height) / -2));
+      width: var(--_width);
+      height: var(--_height);
+      border-radius: 50%;
+      background:
+        radial-gradient(rgba(0, 200, 255, 0.35) 8%, transparent 35%),
+        radial-gradient(rgba(var(--carousel-shadow-color-rgb), 0.8) 18%, rgba(var(--carousel-bg-color-rgb), 0) 62%);
+      opacity: 0.65;
+      transition: opacity var(--carousel-transition-duration) var(--carousel-transition-ease);
+      position: absolute;
+      pointer-events: none;
+    }
+    .carousel .carousel-item-wrapper:has(.carousel-item:hover) .carousel-ground,
+    .carousel .carousel-item-wrapper:has(.carousel-item:focus-within) .carousel-ground {
+      opacity: 0.8;
+    }
+
+    .carousel.user-paused .carousel-item-wrapper,
+    .carousel.user-paused .carousel-rotation-direction {
+      --carousel-animation-play-state: paused;
+      --_direction-animation-play-state: paused;
+      animation-play-state: paused;
+    }
+    .carousel.user-paused .carousel-item,
+    .carousel.carousel-focusing .carousel-item {
+      pointer-events: auto;
+    }
+    .carousel.carousel-focusing .carousel-rotation-direction {
+      animation: none !important;
+      transform: translateZ(var(--_z)) rotateY(0deg);
+    }
+    .carousel.carousel-focusing .carousel-item-wrapper {
+      animation: none !important;
+      transform: rotateY(var(--_focus-deg, 0deg));
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.28, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .carousel .carousel-item-wrapper,
+      .carousel .carousel-rotation-direction { animation-play-state: paused !important; }
+    }
+
+    /* ——— Detail panel ——— */
+    .panel {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      background: rgba(0, 20, 40, 0.75);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    .panel.open { opacity: 1; pointer-events: auto; }
+    .dialog {
+      width: 100%;
+      max-height: min(94dvh, 900px);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      border-radius: 10px 10px 0 0;
+      border: 2px solid;
+      border-color: var(--chrome-hi) var(--chrome-lo) var(--chrome-lo) var(--chrome-hi);
+      background: var(--gloss-panel);
+      box-shadow: 0 -4px 0 #002040, 0 -12px 40px rgba(0, 200, 255, 0.15);
+      transform: translateY(100%);
+      transition: transform 0.34s cubic-bezier(0.22, 1, 0.28, 1);
+    }
+    .panel.open .dialog { transform: translateY(0); }
+    .dialog-grab { display: none; }
+    .dialog-titlebar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.35rem 0.5rem;
+      background: linear-gradient(90deg, #0054e3, #3a8ee6 50%, #0054e3);
+      border-bottom: 1px solid #002860;
+      font: bold 11px/1 Tahoma, sans-serif;
+      color: #fff;
+      text-shadow: 0 1px 0 #002060;
+    }
+    .dialog-hero {
+      position: relative;
+      height: min(34vh, 200px);
+    }
+    .dialog-hero img { width: 100%; height: 100%; object-fit: cover; }
+    .dialog-hero-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1rem 3.5rem 1rem 1rem;
+      background: linear-gradient(0deg, rgba(8, 16, 28, 0.95), transparent 70%);
+    }
+    .hero-epithet {
+      margin: 0.25rem 0 0;
+      font: italic 12px/1.35 Georgia, "Times New Roman", serif;
+      color: #a8e8ff;
+    }
+    .badge {
+      margin: 0;
+      font: bold 9px/1 Tahoma, sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .dialog-hero h2 {
+      margin: 0.15rem 0 0;
+      font: bold clamp(1.2rem, 5vw, 1.6rem)/1.05 Impact, Tahoma, sans-serif;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 2px 0 #003366, 0 0 10px rgba(0, 255, 255, 0.4);
+    }
+    .close-panel {
+      appearance: none;
+      min-width: 52px;
+      height: 22px;
+      border-radius: 3px;
+      border: 1px solid;
+      border-color: #ffaaaa #880000 #880000 #ffaaaa;
+      background: linear-gradient(180deg, #ff6666, #cc2222);
+      color: #fff;
+      cursor: pointer;
+      font: bold 10px/1 Tahoma, sans-serif;
+      z-index: 2;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35);
+    }
+    .dialog-hero .close-panel {
+      position: absolute;
+      top: max(0.45rem, var(--safe-t));
+      right: max(0.5rem, var(--safe-r));
+    }
+    .dialog-body {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(1rem + var(--safe-b));
+    }
+    .dialog-body-inner {
+      display: grid;
+      gap: 0;
+    }
+    @media (min-width: 900px) {
+      .panel { place-items: center; justify-content: center; padding: 1.5rem; }
+      .dialog {
+        width: min(1000px, 100%);
+        border-radius: 24px;
+        border-bottom: 1px solid var(--line);
+        transform: translateY(12px) scale(0.97);
+        opacity: 0;
+        transition: transform 0.35s ease, opacity 0.28s ease;
+      }
+      .panel.open .dialog { transform: none; opacity: 1; }
+      .dialog-grab { display: none; }
+      .dialog-body-inner { grid-template-columns: 1.1fr 0.9fr; }
+    }
+    .media {
+      padding: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+    @media (min-width: 900px) {
+      .media { border-bottom: none; border-right: 1px solid var(--line); }
+    }
+    .player-wrap {
+      aspect-ratio: 16/9;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+    #player { width: 100%; height: 100%; }
+    .player-loading, .player-fallback {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      background: rgba(8, 12, 20, 0.95);
+      font-size: 0.85rem;
+    }
+    .player-loading[hidden], .player-fallback[hidden] { display: none; }
+    .player-actions {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .btn {
+      appearance: none;
+      cursor: pointer;
+      text-decoration: none;
+      flex: 1;
+      min-width: 7rem;
+      min-height: 36px;
+      padding: 0 0.85rem;
+      border-radius: 5px;
+      border: 1px solid;
+      border-color: #9fd4ff #003366 #003366 #9fd4ff;
+      background: var(--gloss-btn);
+      color: #fff;
+      font: bold 11px/1 Tahoma, sans-serif;
+      text-shadow: 0 1px 1px #003366;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 3px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.3);
+    }
+    .btn-primary {
+      flex: 1 1 100%;
+      border-color: #ffff99 #996600 #996600 #ffff99;
+      background: linear-gradient(180deg, #ffee55, #ffaa00, #cc6600);
+      color: #fff;
+      text-shadow: 0 1px 2px #663300;
+    }
+    .tabs {
+      display: flex;
+      gap: 2px;
+      padding: 0.4rem 0.5rem 0;
+      background: #001a30;
+      border-bottom: 2px solid #004466;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      appearance: none;
+      border: 1px solid #004466;
+      border-bottom: none;
+      background: linear-gradient(180deg, #103050, #082040);
+      color: var(--muted);
+      cursor: pointer;
+      font: bold 10px/1 Tahoma, Verdana, sans-serif;
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px 6px 0 0;
+      margin-bottom: -2px;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+    .tab[aria-selected="true"] {
+      color: #fff;
+      background: linear-gradient(180deg, #2a70b0, #1a5088);
+      border-color: #6ecfff #004466 #004466 #6ecfff;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    }
+    .tab-panels { min-height: 0; }
+    .tab-panel { display: none; padding: 1rem; }
+    .tab-panel.active { display: block; }
+    .tab-panel[data-tab="watch"].active { display: grid; gap: 0.75rem; }
+    .side { padding: 0; display: grid; gap: 0.75rem; }
+
+    .site-footer {
+      width: min(100%, 52rem);
+      margin: 0.35rem max(0.65rem, var(--safe-l)) calc(0.5rem + var(--safe-b)) max(0.65rem, var(--safe-r));
+      padding: 0.45rem 0.6rem;
+      text-align: center;
+      font: 9px/1.5 Tahoma, Verdana, sans-serif;
+      color: #5a9ab8;
+      border: 1px dashed #004466;
+      border-radius: 4px;
+      background: rgba(0, 20, 40, 0.6);
+    }
+    .site-footer a { color: var(--sea); }
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .sparkles i {
+      position: absolute;
+      font-style: normal;
+      font-size: 10px;
+      color: var(--sea);
+      opacity: 0.5;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    .sparkles i:nth-child(1) { top: 12%; left: 8%; animation-delay: 0s; }
+    .sparkles i:nth-child(2) { top: 22%; right: 12%; color: var(--hot); animation-delay: .4s; }
+    .sparkles i:nth-child(3) { bottom: 30%; left: 15%; color: var(--lime); animation-delay: .8s; }
+    .sparkles i:nth-child(4) { top: 45%; right: 6%; animation-delay: 1.2s; }
+    @media (prefers-reduced-motion: reduce) { .sparkles { display: none; } }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(7.5rem + var(--safe-b));
+      translate: -50% 0;
+      z-index: 50;
+      padding: 0.55rem 1rem;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #1a5088, #0a2848);
+      border: 2px solid;
+      border-color: var(--chrome-hi) var(--chrome-lo) var(--chrome-lo) var(--chrome-hi);
+      font: bold 11px/1.3 Tahoma, sans-serif;
+      color: var(--lime);
+      box-shadow: 0 4px 0 #001020, 0 0 20px rgba(0, 255, 255, 0.35);
+      transition: opacity 0.35s var(--panel-ease), visibility 0.35s var(--panel-ease);
+      pointer-events: none;
+      max-width: min(90vw, 320px);
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .passport-bar {
+      width: min(100%, 52rem);
+      margin: 0 max(0.65rem, var(--safe-l)) 0.45rem max(0.65rem, var(--safe-r));
+      padding: 0.45rem 0.55rem;
+      border: 2px inset #004466;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #0a3050, #001428);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .passport-bar-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.5rem; margin-bottom: 0.4rem;
+    }
+    .passport-label {
+      font: bold 9px/1 Tahoma, sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lime);
+      text-shadow: 0 0 8px rgba(204, 255, 0, 0.35);
+    }
+    .passport-hint {
+      font: 9px/1.3 Tahoma, sans-serif;
+      color: var(--muted);
+      text-align: right;
+      flex: 1;
+    }
+    .passport-slots {
+      display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: center;
+    }
+    .passport-slot {
+      appearance: none; cursor: pointer;
+      touch-action: manipulation;
+      position: relative;
+      width: 2.65rem; height: 2.65rem;
+      padding: 2px;
+      border: 2px solid #225588;
+      border-radius: 5px;
+      background: #001a30;
+      overflow: hidden;
+      transition: transform 0.15s ease, border-color 0.2s;
+    }
+    .passport-slot img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: filter 0.35s ease;
+      pointer-events: none;
+    }
+    .passport-slot .slot-code { pointer-events: none; }
+    .passport-slot .slot-code {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      font: bold 6px/1.1 Tahoma, sans-serif;
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 30, 60, 0.75);
+      padding: 1px 0;
+    }
+    .passport-slot .slot-stamp {
+      position: absolute; inset: 0;
+      display: none;
+      place-items: center;
+      font-size: 1.1rem;
+      color: var(--hot);
+      text-shadow: 0 0 8px #ff66cc;
+      pointer-events: none;
+    }
+    .passport-slot:not(.stamped) img {
+      filter: grayscale(85%) brightness(0.75);
+    }
+    .passport-slot.stamped img { filter: grayscale(0%) brightness(1.05) saturate(1.1); }
+    .passport-slot.stamped { border-color: var(--lime); }
+    .passport-slot.stamped:not(.just-stamped) { box-shadow: 0 0 10px rgba(0, 255, 200, 0.25); }
+    .passport-slot.stamped.just-stamped { animation: slot-glow 1.2s ease; }
+    .passport-slot.stamped .slot-stamp {
+      display: grid;
+      opacity: 1;
+      transform: scale(1);
+    }
+    .passport-slot.stamped.just-stamped .slot-stamp {
+      animation: stamp-pop 0.55s ease forwards;
+    }
+    .passport-slot.bonus { border-color: var(--hot); width: 2.85rem; height: 2.85rem; }
+    .passport-slot.bonus.stamped { box-shadow: 0 0 16px rgba(255, 102, 204, 0.45); }
+    .passport-slot.bonus.locked { opacity: 0.55; filter: grayscale(0.6); }
+    .passport-slot.bonus.locked .slot-code::after { content: "🔒"; margin-left: 1px; }
+    .passport-slot:hover { transform: scale(1.06); border-color: var(--sea); }
+    .passport-slot.just-stamped { animation: card-stamp-flash 0.9s ease; }
+
+    .stamp-burst {
+      position: fixed; z-index: 60; pointer-events: none;
+      font: bold 2rem/1 Impact, sans-serif;
+      color: var(--hot);
+      text-shadow: 0 0 12px #ff66cc, 0 2px 0 #003366;
+      animation: stamp-pop 0.7s ease forwards;
+      opacity: 0;
+    }
+    .confetti-layer {
+      position: fixed; inset: 0; z-index: 55; pointer-events: none; overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute; top: -12px;
+      width: 8px; height: 12px;
+      animation: confetti-fall linear forwards;
+    }
+    body.zone-complete .progress-ring .fill {
+      animation: progress-pulse 1.5s ease-in-out infinite;
+    }
+    .gloss-btn.sound-off { opacity: 0.65; }
+    .passport-slot.just-stamped { animation: card-stamp-flash 0.9s ease; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bubble-field, .confetti-layer { display: none !important; }
+      .passport-slot.stamped { animation: none; }
+      body.zone-complete .progress-ring .fill { animation: none; }
+    }
+
+    @media (min-width: 768px) {
+      .dock-card { grid-template-columns: 56px 1fr auto; }
+      .dock-thumb { width: 56px; height: 56px; }
+    }
+    .blurb { margin: 0; color: var(--muted); line-height: 1.65; font-size: 0.9rem; }
+    .anthro-note {
+      margin: 0;
+      padding: 0.75rem;
+      border-radius: 4px;
+      background: #001a30;
+      border: 2px inset #004466;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #a8e8ff;
+    }
+    .anthro-note strong {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sea);
+      margin-bottom: 0.35rem;
+    }
+    .facts-sheet { display: grid; gap: 0.65rem; }
+    .facts-tax {
+      margin: 0;
+      padding: 0.45rem 0.55rem;
+      font: bold 9px/1.35 Tahoma, Verdana, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lime);
+      background: linear-gradient(90deg, #0a3050, #001428);
+      border: 1px solid #004466;
+      border-radius: 4px;
+      text-shadow: 0 0 8px rgba(204, 255, 0, 0.25);
+    }
+    .facts-overview {
+      padding: 0.7rem 0.75rem;
+      background: #001428;
+      border: 2px inset #004466;
+      border-radius: 4px;
+      font: 12px/1.65 Georgia, "Times New Roman", serif;
+      color: #c8e8ff;
+    }
+    .facts-overview p { margin: 0 0 0.65rem; }
+    .facts-overview p:last-child { margin-bottom: 0; }
+    .facts-overview em { color: var(--sea); font-style: italic; }
+    .facts-list-head,
+    .facts-sources-head {
+      margin: 0.15rem 0 0;
+      font: bold 9px/1.2 Tahoma, Verdana, sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sea);
+      text-shadow: 0 0 6px rgba(0, 255, 204, 0.35);
+    }
+    .facts-list {
+      margin: 0;
+      padding: 0.55rem 0.65rem 0.55rem 1.35rem;
+      list-style: none;
+      background: #001a30;
+      border: 2px inset #004466;
+      border-radius: 4px;
+      max-height: min(42vh, 280px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .facts-list li {
+      position: relative;
+      margin-bottom: 0.45rem;
+      padding-left: 0.15rem;
+      font: 11px/1.5 Tahoma, Verdana, sans-serif;
+      color: #d8f4ff;
+    }
+    .facts-list li::before {
+      content: "◆";
+      position: absolute;
+      left: -1rem;
+      color: var(--hot);
+      font-size: 8px;
+      top: 0.2rem;
+    }
+    .facts-list li:last-child { margin-bottom: 0; }
+    .facts-sources {
+      margin: 0;
+      padding: 0.5rem 0.6rem;
+      list-style: none;
+      background: #000c18;
+      border: 1px dashed #004466;
+      border-radius: 4px;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+    .facts-sources li { margin-bottom: 0.35rem; }
+    .facts-sources li:last-child { margin-bottom: 0; }
+    .facts-sources a {
+      color: #7ec8ff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .facts-sources a:hover { color: var(--lime); }
+    .makes-intro {
+      margin: 0 0 0.65rem;
+      font: 11px/1.55 Tahoma, Verdana, sans-serif;
+      color: #b8e8ff;
+    }
+    .makes-group-head {
+      margin: 0.75rem 0 0.35rem;
+      font: bold 9px/1.2 Tahoma, Verdana, sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--hot);
+      text-shadow: 0 0 6px rgba(255, 102, 204, 0.35);
+    }
+    .makes-group-head:first-of-type { margin-top: 0.15rem; }
+    .craft-links {
+      margin: 0;
+      padding: 0.5rem 0.6rem;
+      list-style: none;
+      background: #000c18;
+      border: 1px dashed #335566;
+      border-radius: 4px;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+    .craft-links li { margin-bottom: 0.4rem; }
+    .craft-links li:last-child { margin-bottom: 0; }
+    .craft-links a {
+      color: #9ad4ff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .craft-links a:hover { color: var(--lime); }
+    .craft-kind {
+      display: inline-block;
+      margin-right: 0.3rem;
+      padding: 0 0.25rem;
+      font: bold 7px/1.5 Tahoma, sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #001428;
+      background: var(--hot);
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+    .craft-kind.kind-search { background: #6688aa; color: #fff; }
+    .craft-kind.kind-free { background: var(--lime); }
+    .craft-kind.kind-play { background: var(--sea); color: #001428; }
+    .facts-sources .cite-type {
+      display: inline-block;
+      margin-right: 0.25rem;
+      padding: 0 0.2rem;
+      font: bold 8px/1.4 Tahoma, sans-serif;
+      color: #001428;
+      background: var(--lime);
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+    .fact {
+      padding: 0.65rem;
+      border-radius: 4px;
+      background: #001428;
+      border: 1px inset #004466;
+    }
+    .fact strong {
+      display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ocean);
+      margin-bottom: 0.25rem;
+    }
+    .fact span { font-size: 0.84rem; line-height: 1.5; color: var(--muted); }
+    .letter-body {
+      padding: 1.25rem 1.35rem 1.5rem;
+      line-height: 1.65;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .letter-body em { color: var(--ocean); font-style: italic; }
+    .letter-sign { margin-top: 1rem; color: var(--sea); font-size: 0.82rem; }
+  </style>
+</head>
+<body>
+  <div class="bg-video-wrap" aria-hidden="true">
+    <video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto">
+      <source src="https://videos.pexels.com/video-files/8823192/8823192-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="bg-tint"></div>
+  </div>
+  <div class="deco-rays" aria-hidden="true"></div>
+  <div class="bubble-field" id="bubbleField" aria-hidden="true"></div>
+  <div class="crt" aria-hidden="true"></div>
+  <div class="sparkles" aria-hidden="true"><i>✦</i><i>★</i><i>✧</i><i>◇</i></div>
+
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <defs>
+      <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#00aaff"/>
+        <stop offset="50%" stop-color="#00ffcc"/>
+        <stop offset="100%" stop-color="#ccff00"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <div class="ui-layer">
+    <div class="chrome-header">
+      <div class="title-bar">
+        <div class="title-bar-dots" aria-hidden="true">
+          <span class="r"></span><span class="y"></span><span class="g"></span>
+        </div>
+        <span class="title-bar-title" id="windowTitle">DEPTHS.exe — Ocean Zone</span>
+        <div class="title-bar-dots" aria-hidden="true" style="visibility:hidden">
+          <span class="r"></span><span class="y"></span><span class="g"></span>
+        </div>
+      </div>
+      <header class="topbar">
+        <div class="brand">
+          <h1 id="brandTitle">Depths</h1>
+          <span class="badge-new" id="badgeNew" hidden>NEW!</span>
+          <p id="brandSub">Six ocean stories</p>
+        </div>
+        <span class="visitor" id="visitorCount" title="Visitor counter"></span>
+        <div class="topbar-actions">
+          <button type="button" class="gloss-btn" id="soundBtn" aria-pressed="true" title="Sound effects">🔊</button>
+          <button type="button" class="gloss-btn" id="langBtn" aria-pressed="false">EN</button>
+          <button type="button" class="gloss-btn note" id="noteBtn" aria-label="Note">🐙</button>
+        </div>
+      </header>
+      <div class="ticker-wrap" aria-hidden="true">
+        <div class="ticker" id="ticker">
+          <span id="tickerA"></span><span id="tickerB"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="passport-bar" id="passportBar" role="region" aria-labelledby="passportLabel">
+      <div class="passport-bar-head">
+        <span class="passport-label" id="passportLabel">Ocean passport</span>
+        <span class="passport-hint" id="passportHint"></span>
+      </div>
+      <div class="passport-slots" id="passportSlots"></div>
+    </div>
+
+    <section class="layout-mobile" id="layoutMobile" aria-label="Mobile gallery">
+      <p class="mobile-hint" id="mobileHint"></p>
+      <div class="mobile-grid" id="mobileGrid" role="list"></div>
+      <div class="mobile-fill" id="mobileFill" aria-live="polite"></div>
+      <div class="mobile-bar">
+        <div class="mobile-bar-row">
+          <div class="progress-wrap" aria-hidden="true">
+            <svg class="progress-ring" viewBox="0 0 44 44">
+              <circle class="track" cx="22" cy="22" r="18"/>
+              <circle class="fill" id="progressFillMobile" cx="22" cy="22" r="18" stroke="url(#progressGrad)" stroke-dasharray="113.1" stroke-dashoffset="113.1"/>
+            </svg>
+            <span class="progress-label" id="progressLabelMobile">0</span>
+          </div>
+          <div style="flex:1;min-width:0">
+            <p class="dock-act" id="dockActMobile" style="margin:0"></p>
+            <h2 class="dock-title" id="dockTitleMobile" style="margin:0"></h2>
+            <p class="dock-epithet" id="dockEpithetMobile" style="margin:0.15rem 0 0;font-size:10px"></p>
+          </div>
+        </div>
+        <button type="button" class="cta-btn" id="openStoryBtnMobile"></button>
+      </div>
+    </section>
+
+    <div class="layout-desktop" id="layoutDesktop">
+    <div class="desktop-split">
+    <div class="stage">
+      <div class="gallery-arena">
+        <div class="gallery-titlebar">
+          <span id="galleryTitle">★ 3D Specimen Gallery ★</span>
+          <span style="display:flex;gap:.35rem;align-items:center">
+            <button type="button" class="gloss-btn gloss-btn-sm" id="pauseSpinBtn" aria-pressed="false">
+              <span id="pauseSpinLabel">⏸ Pause</span>
+            </button>
+            <span id="galleryStatus">● LIVE</span>
+          </span>
+        </div>
+        <div class="gallery-viewport">
+          <div class="carousel" id="carousel3d">
+            <div class="carousel-rotation-direction">
+              <ul class="carousel-item-wrapper" id="carouselItems"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="desktop-sidebar" aria-label="Specimen menu">
+      <p class="sidebar-head" id="sidebarTitle">Specimens</p>
+      <p class="sidebar-progress" id="progressText"></p>
+      <nav class="side-nav" id="sideNav" aria-label="Choose a specimen"></nav>
+      <div class="sidebar-fill" id="sidebarTip"></div>
+    </aside>
+    </div>
+
+    <footer class="dock dock-simple" id="dock">
+      <div class="dock-top">
+        <div class="progress-wrap" aria-hidden="true">
+          <svg class="progress-ring" viewBox="0 0 44 44">
+            <circle class="track" cx="22" cy="22" r="18"/>
+            <circle class="fill" id="progressFill" cx="22" cy="22" r="18"
+              stroke-dasharray="113.1" stroke-dashoffset="113.1"/>
+          </svg>
+          <span class="progress-label" id="progressLabel">0</span>
+        </div>
+        <div class="dock-card">
+          <img class="dock-thumb" id="dockThumb" alt="" width="56" height="56" decoding="async" />
+          <div class="dock-meta">
+            <p class="dock-act" id="dockAct"></p>
+            <h2 class="dock-title" id="dockTitle"></h2>
+            <p class="dock-epithet" id="dockEpithet"></p>
+          </div>
+          <button type="button" class="cta-btn" id="openStoryBtn"></button>
+        </div>
+      </div>
+    </footer>
+    </div>
+
+    <p class="site-footer" id="siteFooter"></p>
+  </div>
+
+  <p class="toast" id="toast" role="status" aria-live="polite"></p>
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+  <div class="panel" id="panel" aria-hidden="true">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="title">
+      <div class="dialog-titlebar">
+        <span id="panelWindowTitle">Specimen Viewer</span>
+        <button class="close-panel" id="closeBtn" type="button" aria-label="Close">✕ Close</button>
+      </div>
+      <header class="dialog-hero">
+        <img id="heroImg" alt="" decoding="async" hidden />
+        <div class="dialog-hero-overlay">
+          <p class="badge" id="episode"></p>
+          <p class="hero-epithet" id="epithet"></p>
+          <h2 id="title"></h2>
+        </div>
+      </header>
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab" role="tab" data-tab="watch" aria-selected="true" id="tabWatch">Watch</button>
+        <button type="button" class="tab" role="tab" data-tab="story" aria-selected="false" id="tabStory">Story</button>
+        <button type="button" class="tab" role="tab" data-tab="facts" aria-selected="false" id="tabFacts">Facts</button>
+        <button type="button" class="tab" role="tab" data-tab="makes" aria-selected="false" id="tabMakes">Makes</button>
+      </div>
+      <div class="dialog-body">
+        <div class="tab-panels">
+          <section class="tab-panel active" data-tab="watch" role="tabpanel" id="mediaSection">
+            <div class="player-wrap">
+              <div id="player"></div>
+              <div class="player-loading" id="playerLoading">Loading…</div>
+              <div class="player-fallback" id="playerFallback" hidden></div>
+            </div>
+            <div class="player-actions" id="playerActions">
+              <button class="btn" id="replayBtn" type="button"></button>
+              <button class="btn" id="muteBtn" type="button"></button>
+              <a class="btn btn-primary" id="youtubeLink" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+          </section>
+          <section class="tab-panel" data-tab="story" role="tabpanel">
+            <p class="blurb" id="blurb"></p>
+            <p class="anthro-note"><strong id="anthroLabel">Between us & the sea</strong><span id="anthro"></span></p>
+          </section>
+          <section class="tab-panel" data-tab="facts" role="tabpanel">
+            <div class="facts-sheet">
+              <p class="facts-tax" id="factsTaxStrip"></p>
+              <div class="facts-overview" id="factsOverview"></div>
+              <p class="facts-list-head" id="factsListHead">Recorded observations</p>
+              <ul class="facts-list" id="factsList"></ul>
+              <p class="facts-sources-head" id="factsSourcesHead">Sources &amp; further reading</p>
+              <ul class="facts-sources" id="factsSources"></ul>
+            </div>
+          </section>
+          <section class="tab-panel" data-tab="makes" role="tabpanel">
+            <p class="makes-intro" id="makesIntro"></p>
+            <p class="makes-group-head" id="makesPuzzlesHead">Puzzles</p>
+            <ul class="craft-links" id="makesPuzzles"></ul>
+            <p class="makes-group-head" id="makesCrochetHead">Crochet kits &amp; patterns</p>
+            <ul class="craft-links" id="makesCrochet"></ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="letterPanel" aria-hidden="true">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="letterTitle">
+      <div class="dialog-titlebar">
+        <span id="letterWindowTitle">readme.txt</span>
+        <button class="close-panel" id="letterClose" type="button" aria-label="Close">✕ Close</button>
+      </div>
+      <header class="dialog-hero" style="height:100px">
+        <div class="dialog-hero-overlay">
+          <p class="badge" id="letterBadge">A quiet note</p>
+          <h2 id="letterTitle" style="font-size:1.35rem">After the tide</h2>
+        </div>
+      </header>
+      <div class="letter-body" id="letterBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_PASSPORT = 'mia-ocean-passport-v1';
+    const STORAGE_LANG = 'mia-ocean-lang';
+
+    const I18N = {
+      en: {
+        brandTitle: '★ Depths ★',
+        brandSub: 'Six ocean stories · made for you',
+        windowTitle: 'DEPTHS.exe — Ocean Zone',
+        panelWindow: 'Specimen Viewer 3000',
+        letterWindow: 'readme.txt',
+        ticker: 'WELCOME TO THE DEPTHS ZONE • LO MÁS EXTREMO MARINO • HOVER TO PAUSE THE RING • CLICK >>> OPEN STORY <<< • FLORIDA REEFS • ANTHROLOGY PLAQUES •',
+        openStory: '>>> OPEN STORY <<<',
+        prev: '◄ Prev', next: 'Next ►',
+        pauseSpin: '⏸ Pause', resumeSpin: '▶ Spin',
+        reverse: '↺ Rev', reverseOn: '↺ ON',
+        tabWatch: '📺 Watch', tabStory: '📖 Story', tabFacts: '📋 Facts', tabMakes: '🧩 Makes',
+        makesIntro: 'If this specimen stuck with you — puzzles and crochet to take home (links open in a new tab).',
+        makesPuzzlesHead: 'Jigsaw & 3D puzzles',
+        makesCrochetHead: 'Crochet kits & patterns',
+        makesPuzzlesEmpty: 'No puzzle listing saved yet — try Etsy or Ravensburger ocean sets.',
+        makesCrochetEmpty: 'No crochet listing saved yet — try Etsy amigurumi kits.',
+        makesKindKit: 'kit',
+        makesKindPattern: 'pattern',
+        makesKindFree: 'free',
+        makesKindPlay: 'online',
+        makesKindSearch: 'search',
+        anthroLabel: '☆ Human × Ocean ☆',
+        traitsLabel: 'Traits', taxLabel: 'Kinship', histLabel: 'Habitat', mythLabel: 'Lore',
+        factsListHead: '★ Recorded observations ★',
+        factsSourcesHead: '★ Sources & peer-reviewed reading ★',
+        sourcePeer: 'peer-reviewed',
+        sourceReview: 'review',
+        sourceDatabase: 'database',
+        factsEmpty: 'No field notes on file for this specimen.',
+        sourcesEmpty: 'No citations on file for this specimen.',
+        langSwitch: 'Switch language',
+        badgeNewText: 'NEW!',
+        passportLabel: 'Ocean passport',
+        passportHint: 'Open a story in the gallery — a star appears on that slot',
+        passportHintDone: 'All six viewed — bonus octopus unlocked',
+        passportHintBonus: 'View all 6 stories to unlock 🐙',
+        stampBurst: 'STAMPED!',
+        soundOnLabel: 'Sound on',
+        soundOffLabel: 'Sound off',
+        youtubeOpen: 'YouTube ↗',
+        replay: '↺ Replay', soundOn: '🔊 Sound ON', mute: '🔈 Mute',
+        loading: 'Loading clip… please wait',
+        fallback: 'Clip blocked — try YouTube ↓',
+        letterBadge: 'from_the_shore.txt',
+        letterTitle: 'readme_for_you.log',
+        letterHtml: `<p>You describe the ocean the way other people describe archives — rooms, labels, reasons to come back. When you mentioned <em>Lo más extremo</em>, I kept circling the specifics: octopuses, crochet, puzzles, that library-with-a-crafts-room you keep sketching in conversation.</p>
+<p>So this isn’t a generic marine page. Six animals from the show, Gulf and Florida blue in the frame, a <strong>Story</strong> tab for the anthropology angle — how people and animals meet, not just charts — and a seventh polaroid on the ring: an octopus at the desk, watching the bonus shelf.</p>
+<p>Tap <strong>ES</strong> if Spanish fits better. On your phone, pick a card and open story; on a wider screen, hover the ring to pause it. Open all six and the passport bar fills — a record that you actually walked the zone.</p>
+<p>I built it because your interests kept pulling me back — not as a love letter, just evidence I was listening, and curious enough to follow the thread.</p>
+<p class="letter-sign">— curator log · updated from your notes</p>`,
+        completeToast: '★★★ You have seen every specimen — confetti time ★★★',
+        footer: 'Best viewed 1024×768 · Flash-free since 2012 ·',
+        visitors: 'Visitors:',
+        galleryTitle: '★ 3D Specimen Gallery ★',
+        galleryStatus: '● LIVE',
+        mobileHint: 'Pick a specimen you love · then open story',
+        sidebarTitle: 'Specimens',
+        sideNavHint: 'Pick one — the ring spins it forward. Click the card to open story.',
+        progressText: (n, t) => `${n} of ${t} viewed`,
+        progressBlurb: (n, t) =>
+          `<strong>${n} of ${t}</strong> stories opened. ★ only appears in your passport above — pick the next one in the gallery.`,
+        sidebarTips: [
+          'Six specimens from <em>Lo más extremo</em> — tap a card in the gallery, then open story.',
+          '<strong>Story</strong> is the anthropology plaque: people × ocean, not just biology.',
+          'Finish all six to unlock the octopus bonus in your passport.',
+        ],
+      },
+      es: {
+        brandTitle: '★ Profundidades ★',
+        brandSub: 'Seis historias del mar · hecho para ti',
+        windowTitle: 'PROFUNDIDADES.exe',
+        panelWindow: 'Visor de espécimen',
+        letterWindow: 'nota_secreta.txt',
+        ticker: 'BIENVENIDO A LA ZONA • LO MÁS EXTREMO • TOCA PARA PAUSAR • ABRIR HISTORIA • FLORIDA • ANTROPOLOGÍA •',
+        openStory: '>>> ABRIR <<<',
+        prev: '◄ Ant', next: 'Sig ►',
+        pauseSpin: '⏸ Pausa', resumeSpin: '▶ Girar',
+        reverse: '↺ Inv', reverseOn: '↺ ON',
+        tabWatch: '📺 Ver', tabStory: '📖 Historia', tabFacts: '📋 Datos', tabMakes: '🧩 Manualidades',
+        makesIntro: 'Si este espécimen te quedó en la cabeza — rompecabezas y crochet para llevar (enlaces en pestaña nueva).',
+        makesPuzzlesHead: 'Rompecabezas y 3D',
+        makesCrochetHead: 'Kits y patrones de crochet',
+        makesPuzzlesEmpty: 'Sin rompecabezas guardado — prueba Etsy u océano en Ravensburger.',
+        makesCrochetEmpty: 'Sin crochet guardado — prueba kits amigurumi en Etsy.',
+        makesKindKit: 'kit',
+        makesKindPattern: 'patrón',
+        makesKindFree: 'gratis',
+        makesKindPlay: 'en línea',
+        makesKindSearch: 'buscar',
+        anthroLabel: '☆ Humano × Mar ☆',
+        traitsLabel: 'Rasgos', taxLabel: 'Parentesco', histLabel: 'Hábitat', mythLabel: 'Lore',
+        factsListHead: '★ Observaciones registradas ★',
+        factsSourcesHead: '★ Fuentes y lectura revisada ★',
+        sourcePeer: 'revisado por pares',
+        sourceReview: 'revisión',
+        sourceDatabase: 'base de datos',
+        factsEmpty: 'Sin observaciones en archivo.',
+        sourcesEmpty: 'Sin fuentes en archivo para este espécimen.',
+        langSwitch: 'Cambiar idioma',
+        badgeNewText: '¡NUEVO!',
+        passportLabel: 'Pasaporte oceánico',
+        passportHint: 'Abre una historia en la galería — aparece una estrella en esa casilla',
+        passportHintDone: 'Viste los seis — pulpo extra desbloqueado',
+        passportHintBonus: 'Ve las 6 historias para desbloquear 🐙',
+        stampBurst: '¡SELLO!',
+        soundOnLabel: 'Sonido activo',
+        soundOffLabel: 'Sonido apagado',
+        youtubeOpen: 'YouTube ↗',
+        replay: '↺ Repetir', soundOn: '🔊 Sonido', mute: '🔈 Mute',
+        loading: 'Cargando… espera',
+        fallback: 'Clip bloqueado — YouTube ↓',
+        letterBadge: 'desde_la_orilla.txt',
+        letterTitle: 'lee_esto_para_ti.log',
+        letterHtml: `<p>Describes el mar como quien describe archivos — cuartos, etiquetas, motivos para volver. Cuando salió <em>Lo más extremo</em>, seguí dando vueltas a los detalles: pulpos, crochet, rompecabezas, esa biblioteca con taller de manualidades que vas armando en conversación.</p>
+<p>No es una página marina genérica. Seis animales del programa, azul del Golfo y Florida en el marco, la pestaña <strong>Historia</strong> para el ángulo antropológico — cómo se encuentran personas y animales, no solo tablas — y un séptimo polaroid en el anillo: un pulpo en el mostrador, vigilando el estante extra.</p>
+<p>Toca <strong>EN</strong> si prefieres inglés. En el teléfono, elige una ficha y abre la historia; en pantalla grande, pasa el cursor sobre el anillo para pausarlo. Abre las seis y la barra del pasaporte se llena — registro de que recorriste la zona.</p>
+<p>Lo hice porque tus temas me seguían llamando la atención — no como carta de amor, solo prueba de que escuché y tenía curiosidad de seguir el hilo.</p>
+<p class="letter-sign">— bitácora del curador · actualizada con tus notas</p>`,
+        completeToast: '★★★ Viste todos los espécimenes — confeti ★★★',
+        footer: 'Mejor en 1024×768 · Sin Flash ·',
+        visitors: 'Visitas:',
+        galleryTitle: '★ Galería 3D ★',
+        galleryStatus: '● EN VIVO',
+        mobileHint: 'Elige un espécimen · luego abrir historia',
+        sidebarTitle: 'Espécimenes',
+        sideNavHint: 'Elige uno — el anillo lo trae al frente. Toca la ficha para abrir.',
+        progressText: (n, t) => `${n} de ${t} vistos`,
+        progressBlurb: (n, t) =>
+          `<strong>${n} de ${t}</strong> historias abiertas. ★ solo en tu pasaporte arriba — elige el siguiente en la galería.`,
+        sidebarTips: [
+          'Seis espécimenes de <em>Lo más extremo</em> — toca una ficha en la galería y abre la historia.',
+          '<strong>Historia</strong> es la placa de antropología: humano × mar.',
+          'Completa los seis para desbloquear el pulpo extra en tu pasaporte.',
+        ],
+      },
+    };
+
+    const STORAGE_VISITS = 'depths-visits-v1';
+    const STORAGE_VISITED = 'depths-stories-opened-v2';
+    const STORAGE_SEEN = 'depths-seen-v1';
+    const STORAGE_BONUS = 'depths-bonus-v1';
+    const STORAGE_SFX = 'depths-sfx-v1';
+
+    const OCTOPUS_DESK = {
+      specimen: 'CUR-00',
+      image: 'https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg?auto=compress&cs=tinysrgb&w=1280',
+      imageAlt: 'Octopus underwater',
+      youtube: 'https://www.youtube.com/watch?v=9jJmaSgbOz4',
+      videoId: '9jJmaSgbOz4',
+      en: {
+        title: 'The quiet curator', epithet: 'Eight arms, one library card',
+        act: 'Bonus · Disguise — Lo más extremo',
+        blurb: 'Every good collection needs someone clever at the door — and on <em>The Most Extreme</em>, the mimic octopus won the Disguise episode for shape-shifting that fooled the sea itself. This desk specimen guards the crafts room between polaroids.',
+        anthro: 'You said octopuses feel like the kind of mind that would run a crafts room — so this one guards the desk: eight arms, one library card, and patience for the slow work of sorting beautiful things.',
+        traits: 'Soft body · eight arms · blue blood · three hearts',
+        taxonomy: 'Octopus vulgaris · Order Octopoda · Class Cephalopoda',
+        history: 'Shallow reefs & seagrass · Florida Keys to global warm coasts',
+        overview: [
+          'The common octopus is a master of <em>problem-solving</em> and camouflage: skin chromatophores shift color and texture in milliseconds, while its decentralized nervous system lets each arm explore independently. In lab and field studies, individuals open jars, navigate mazes, and remember solutions for weeks — rare cognitive flexibility for an invertebrate.',
+          'Along Florida limestone ledges and seagrass meadows, young octopuses hunt crabs and mollusks, then retreat to dens lined with shell debris. Females lay thousands of eggs once, guard them without feeding, and die when the hatchlings drift into the plankton — a life history that reads like devotion written in salt.',
+        ],
+        facts: [
+          'Three hearts: two pump blood through the gills; one supplies the body. Blood is copper-based (hemocyanin), so it appears blue.',
+          'About two-thirds of neurons sit in the arms, allowing touch-led hunting even when the brain is busy elsewhere.',
+          'Documented tool use: wild octopuses have been filmed carrying coconut shells as portable shelters.',
+          'Camouflage is controlled neurally — not hormones — enabling near-instant pattern changes.',
+          'Short lifespan: often 12–18 months; breeding is terminal for females after brooding.',
+          'Beak made of chitin; the only hard part, used to drill prey shells.',
+          'Jet propulsion via siphon; can also walk on the seafloor using arm tips.',
+          'Venomous saliva paralyzes crabs; chief prey in Florida includes stone crabs and bivalves.',
+          'Excellent vision for an invertebrate; horizontal slit pupils.',
+          'Play behavior (bottles, objects) reported in aquaria — still debated but widely observed.',
+          'Key predators: groupers, moray eels, seals; cryptic coloration is primary defense.',
+          'Cephalopods are entirely absent from freshwater; all ~300 octopus species are marine.',
+        ],
+        sources: [
+          { type: 'peer', text: 'Mather JA, Kuba MJ (2013). The Cambridge Handbook of Intelligence — cephalopod cognition review', url: 'https://doi.org/10.1017/CBO9780511977244' },
+          { type: 'peer', text: 'Finn JK et al. (2009). Defensive tool use in a coconut-carrying octopus', url: 'https://doi.org/10.1016/j.cub.2009.12.002' },
+          { type: 'peer', text: 'Huffard CL (2006). Locomotion by Abdopus aculeatus', url: 'https://doi.org/10.1242/jeb.02405' },
+          { type: 'database', text: 'NOAA — Octopus vulgaris species profile', url: 'https://www.fisheries.noaa.gov/species/common-octopus' },
+        ],
+      },
+      es: {
+        title: 'La curadora tranquila', epithet: 'Ocho brazos, una tarjeta de biblioteca',
+        act: 'Extra · Disfraz — Lo más extremo',
+        blurb: 'Toda buena colección necesita alguien listo en la entrada — en <em>Lo más extremo</em>, el pulpo mimético ganó el episodio <em>Disfraz</em>. Este espécimen cuida el taller entre polaroids.',
+        anthro: 'Dijiste que los pulpos parecen la mente que llevaría un taller — por eso cuida el mostrador: ocho brazos, una tarjeta de biblioteca, y paciencia para ordenar cosas bellas.',
+        traits: 'Cuerpo blando · ocho brazos · sangre azul · tres corazones',
+        taxonomy: 'Octopus vulgaris · Orden Octopoda',
+        history: 'Arrecifes someros y praderas · Florida y costas cálidas',
+        overview: [
+          'El pulpo común combina <em>camuflaje</em> y resolución de problemas: cromatóforos cambian color y textura en milisegundos, y gran parte de su sistema nervioso está en los brazos. En laboratorio abre frascos, recuerda rutas y reaprende — flexibilidad cognitiva poco común en invertebrados.',
+          'En rocas y praderas de Florida caza cangrejos y moluscos, luego se refugia en cuevas forradas de conchas. La hembra cuida miles de huevos una sola vez, sin comer, hasta que las crías entran al plancton.',
+        ],
+        facts: [
+          'Tres corazones; sangre con hemocianina (azulada).',
+          'Cerca de dos tercios de las neuronas están en los brazos.',
+          'Uso de herramientas documentado: transporte de medias cocos como refugio.',
+          'Camuflaje controlado por el cerebro, no por hormonas.',
+          'Vida corta: a menudo 12–18 meses; la hembra muere tras la cría.',
+          'Único duro: pico de quitina para perforar conchas.',
+          'Propulsión por sifón; también “camina” con los brazos.',
+          'Saliva venenosa paraliza presas; depredadores: meros y morenas.',
+          'Visión aguda; pupilas horizontales.',
+          'Comportamiento lúdico observado en acuarios.',
+          'Todos los pulpos son marinos; no hay especies de agua dulce.',
+        ],
+        sources: [
+          { type: 'peer', text: 'Finn JK et al. (2009). Uso defensivo de cocos — Current Biology', url: 'https://doi.org/10.1016/j.cub.2009.12.002' },
+          { type: 'database', text: 'NOAA — perfil de Octopus vulgaris', url: 'https://www.fisheries.noaa.gov/species/common-octopus' },
+        ],
+      },
+    };
+
+    const ITEMS = [
+      { specimen: 'EXT-01', title: 'Hammerhead Shark', epithet: 'A silhouette the tide remembers', act: 'Act I · Super Sharks',
+        youtube: 'https://www.youtube.com/watch?v=Yz-WKeGEQIA', videoId: 'Yz-WKeGEQIA',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg/1280px-Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg',
+        imageAlt: 'Scalloped hammerhead shark',
+        blurb: 'The hammerhead moves as if the ocean sketched a thought — wide, deliberate, almost architectural in its grace.',
+        anthro: 'In Atlantic and Gulf communities, hammerheads appear in dock stories as powerful visitors — respected, sometimes feared, always remembered. Cuban and Florida fishers have long distinguished them from other sharks by the unmistakable “martillo” silhouette at the surface.',
+        traits: 'Expanded cephalofoil · lateral eyes · schooling pelagic hunter',
+        taxonomy: 'Sphyrna lewini · Family Sphyrnidae · Class Chondrichthyes',
+        history: 'Coastal & offshore Atlantic · Gulf of Mexico · Caribbean · eastern Pacific populations',
+        overview: [
+          'Hammerhead sharks are named for the laterally expanded head called a <em>cephalofoil</em>, which houses widely spaced eyes and an extraordinary concentration of electroreceptors (ampullae of Lorenzini). Peer-reviewed work shows improved binocular vision and maneuverability compared with conventional shark heads — the “hammer” is not ornament but sensory architecture.',
+          'The scalloped hammerhead (<em>Sphyrna lewini</em>) forms large daytime schools at seamounts and migrates along continental shelves, including the U.S. Atlantic and Gulf. Tracking studies demonstrate magnetoreception and long-distance movements; the species is now <strong>Endangered</strong> on the IUCN Red List because of targeted fishing and bycatch pressure.',
+        ],
+        facts: [
+          'Cephalofoil width can reach ~25% of total body length in large adults.',
+          'Eyes mounted at the ends of the hammer widen the visual field and enhance depth perception.',
+          'Ampullae of Lorenzini on the ventral surface detect prey buried in sand.',
+          'Scalloped hammerheads may school in hundreds or thousands at cleaning stations and seamounts.',
+          'Born live (viviparous); litters can include 15–30 pups after 9–10 month gestation.',
+          'Typical length 2.5–3 m; large females exceed 300 kg.',
+          'Diet: teleost fishes, squid, stingrays; rays are located by electroreception then pinned with the head.',
+          'Vertically migrates — deeper by day, shallower at night in some populations.',
+          'Skin denticles (placoid scales) reduce drag; like all sharks, replaces teeth continuously.',
+          'Must swim to ventilate gills; negative buoyancy from large liver rich in squalene oil.',
+          'IUCN status: Endangered (2020 assessment) — steep global decline from fin trade and fisheries.',
+          'Protected in U.S. waters under multiple fishery rules; still caught as bycatch in longline fleets.',
+          'Hammerhead lineage diverged roughly 20 million years ago — one of the youngest shark head shapes.',
+          'Florida Keys and Gulf shelf waters are seasonal nursery and feeding habitat for juveniles.',
+        ],
+        sources: [
+          { type: 'peer', text: 'McComb DM et al. (2009). Hammerhead shark stereo vision — PLOS ONE', url: 'https://doi.org/10.1371/journal.pone.0004616' },
+          { type: 'peer', text: 'Klimley AP (1993). Highly directional swimming and scent trail following by scalloped hammerhead sharks', url: 'https://doi.org/10.1016/0278-6915(93)90111-3' },
+          { type: 'peer', text: 'Guttridge TL et al. (2017). Learning from shark attacks — movement ecology review', url: 'https://doi.org/10.1098/rsif.2016.0816' },
+          { type: 'database', text: 'IUCN Red List — Sphyrna lewini (Endangered)', url: 'https://www.iucnredlist.org/species/39385/2919167' },
+          { type: 'review', text: 'NOAA Fisheries — Scalloped hammerhead species directory', url: 'https://www.fisheries.noaa.gov/species/scalloped-hammerhead-shark' },
+        ],
+        es: {
+          title: 'Tiburón martillo', epithet: 'Una silueta que la marea devuelve', act: 'Acto I · Super tiburones',
+          blurb: 'Se mueve como si el océano dibujara un pensamiento — ancho, deliberado, casi arquitectónico.',
+          anthro: 'En el Atlántico y el Golfo, el “martillo” es visitante poderoso en historias de muelle — respetado y recordado.',
+          traits: 'Cefalofoil amplio · ojos laterales · cardumen pelágico',
+          taxonomy: 'Sphyrna lewini · Familia Sphyrnidae',
+          history: 'Atlántico · Golfo de México · Caribe · Pacífico oriental',
+          overview: [
+            'Los tiburones martillo llevan un <em>cefalofoil</em> lateral: ojos separados y densidad de ampollas de Lorenzini. Estudios revisados por pares muestran mejor visión binocular y maniobrabilidad que en tiburones de cabeza clásica.',
+            'El martillo entrado (<em>S. lewini</em>) forma cardúmenes en montes submarinos y migra por la plataforma continental. La lista roja IUCN lo clasifica como <strong>En peligro</strong> por pesca dirigida y captura incidental.',
+          ],
+          facts: [
+            'El cefalofoil puede alcanzar ~25% de la longitud corporal.',
+            'Cardúmenes de cientos o miles en limpieza y seamounts.',
+            'Vivíparo; camadas de 15–30 crías tras ~9–10 meses.',
+            'Longitud habitual 2,5–3 m; hembras grandes >300 kg.',
+            'Dieta: peces, calamares, rayas localizadas por electrorecepción.',
+            'IUCN: En peligro (2020) — declive por aleta y bycatch.',
+            'Aguas de Florida y el Golfo como criadero estacional de juveniles.',
+          ],
+          sources: [
+            { type: 'peer', text: 'McComb DM et al. (2009) — visión estereoscópica', url: 'https://doi.org/10.1371/journal.pone.0004616' },
+            { type: 'database', text: 'IUCN — Sphyrna lewini', url: 'https://www.iucnredlist.org/species/39385/2919167' },
+          ],
+        },
+      },
+      { specimen: 'EXT-02', title: 'Cookiecutter Shark', epithet: 'Small mouth, lasting signature', act: 'Act II · Biters',
+        youtube: 'https://www.youtube.com/watch?v=y5TNO-jSUzo', videoId: 'y5TNO-jSUzo',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Isistius_brasiliensis.jpg',
+        imageAlt: 'Cookiecutter shark',
+        blurb: 'A perfect circle — a seal of visitation on giants who never saw the visitor.',
+        anthro: 'Before biologists named <em>Isistius</em>, round scars on whales, tuna, and even submarine rubber sounded like sea monsters. The truth is smaller and stranger: a fish that takes a measured plug of flesh and vanishes.',
+        traits: 'Cigar-shaped body · photophores · suctorial lips · replaceable lower teeth',
+        taxonomy: 'Isistius brasiliensis · Family Dalatiidae · Order Squaliformes',
+        history: 'Mesopelagic 200–1,000 m · diel vertical migration · worldwide warm oceans',
+        overview: [
+          'Cookiecutter sharks are small mesopelagic dogfish (usually &lt;50 cm) famous for leaving crisp, circular wounds on whales, dolphins, tuna, billfish, and occasionally research equipment. They approach prey using counter-illumination: ventral photophores match downwelling light so the silhouette disappears from below.',
+          'The bite is a suction anchor followed by a spinning cut from lower jaw teeth acting like a cookie cutter. Peer-reviewed morphology studies document wound geometry and prey overlap; tagging shows strong vertical migration — rising toward surface waters at night to feed, descending by day.',
+        ],
+        facts: [
+          'Average length ~40–56 cm; brown dorsally, pale ventrally with light organs.',
+          'Lower teeth are enlarged, united, and shed as a unit — replaced as a “tooth plate.”',
+          'Upper teeth are small and pointed; grip while the lower jaw scoops flesh.',
+          'Wounds are typically 5–7 cm across and heal on large animals with distinctive scars.',
+          'Recorded prey marks on sperm whales, elephant seals, great white sharks, and tuna.',
+          'Also known as “cigar shark” and <em>tiburón cigarro</em> in Latin American fisheries lore.',
+          'Liver can be ~35% of body weight — buoyancy aid in deep habitat.',
+          'Feeds on squid, crustaceans, and chunks from larger animals (facultative parasitic feeding).',
+          'Eyes large for low light; olfaction important for tracking blood trails.',
+          'Reproduction ovoviviparous; litter size modest compared with coastal sharks.',
+          'Harm to humans rare; one documented bite on a long-distance swimmer at night.',
+          'Global tropical and subtropical distribution including Atlantic and Gulf offshore waters.',
+          'Bioluminescence may also lure prey toward the ventral glow.',
+          'First described scientifically in 1824; many 19th-century “mystery bites” later attributed to it.',
+        ],
+        sources: [
+          { type: 'peer', text: 'Hoyos-Padilla M et al. (2013). Observation of an adult white shark with cookiecutter bite — Pacific Science', url: 'https://doi.org/10.2984/67.4.1' },
+          { type: 'peer', text: 'Papastamatiou YP et al. (2010). Foraging ecology of cookiecutter sharks — J Fish Biol', url: 'https://doi.org/10.1111/j.1095-8649.2010.02709.x' },
+          { type: 'peer', text: 'Jones EC (1971). Isistius brasiliensis, a squaloid shark, probable cause of crater wounds on fishes and cetaceans — Fish Bull', url: 'https://spo.nmfs.noaa.gov/content/isistius-brasiliensis-squaloid-shark-probable-cause-crater-wounds-fishes-and-cetaceans' },
+          { type: 'database', text: 'FishBase — Isistius brasiliensis species summary', url: 'https://www.fishbase.se/summary/Isistius-brasiliensis.html' },
+        ],
+        es: {
+          title: 'Tiburón cigarro', epithet: 'Firma pequeña, cicatriz larga', act: 'Acto II · Mordedores',
+          blurb: 'Un círculo perfecto — sello de visita en gigantes que no vieron al visitante.',
+          anthro: 'Antes de nombrar <em>Isistius</em>, las marcas redondas en ballenas y submarinos parecían monstruos marinos.',
+          traits: 'Cuerpo en cigarro · fotóforos · labios succionadores',
+          taxonomy: 'Isistius brasiliensis · Dalatiidae',
+          history: 'Mesopelágico · migración vertical · océanos cálidos',
+          overview: [
+            'El tiburón cigarro (<em>Isistius brasiliensis</em>) deja heridas circulares en cetáceos, atunes y tiburones grandes. Usa <em>contra-iluminación</em>: fotóforos ventrales que igualan la luz del cielo.',
+            'Muerde con succión y dientes inferiores en placa que giran como cortador. Estudios morfológicos documentan la geometría de las mordidas; sube de noche y baja de día.',
+          ],
+          facts: [
+            'Longitud ~40–56 cm; hígado muy grande para flotabilidad.',
+            'Dientes inferiores en placa reemplazable.',
+            'Heridas típicas 5–7 cm; cicatrices reconocibles en ballenas.',
+            'Distribución tropical global, incluido Atlántico y Golfo.',
+            'Raro en humanos; un caso nocturno documentado.',
+          ],
+          sources: [
+            { type: 'peer', text: 'Papastamatiou YP et al. (2010) — ecología', url: 'https://doi.org/10.1111/j.1095-8649.2010.02709.x' },
+            { type: 'database', text: 'FishBase — Isistius brasiliensis', url: 'https://www.fishbase.se/summary/Isistius-brasiliensis.html' },
+          ],
+        },
+      },
+      { specimen: 'EXT-03', title: 'Box Jellyfish', epithet: 'Glass bell, old warning', act: 'Act III · Venom',
+        youtube: 'https://www.youtube.com/watch?v=5qAetTMgTQA', videoId: '5qAetTMgTQA',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/7/75/Chironex_fleckeri_%28sea_wasp%29.jpg',
+        imageAlt: 'Box jellyfish Chironex fleckeri',
+        blurb: 'Nearly invisible — geometry of light and hazard.',
+        anthro: 'On tropical coasts, box jellies sit in calendars of caution — swim flags, vinegar bottles, stories told before holidays. Anthropologists note how “invisible danger” shapes beach culture more than almost any other marine animal.',
+        traits: 'Cuboidal bell · four sides · complex eyes · potent cnidocytes',
+        taxonomy: 'Chironex fleckeri · Class Cubozoa · Phylum Cnidaria',
+        history: 'Shallow tropical Indo-Pacific · also Caribbean relatives · nearshore after rains',
+        overview: [
+          'Box jellyfish are not “true” jellyfish (scyphozoans) but cubozoans — agile swimmers with a cube-shaped bell and tentacles arising from four corners. <em>Chironex fleckeri</em>, the sea wasp, carries some of the most potent venom in the animal kingdom: toxins rapidly affect skin, heart, and nervous system, and fatal envenomations are documented in minutes without treatment.',
+          'Each of the four rhopalia (sensory clubs) carries six eyes of four types, including lensed camera-type eyes — peer-reviewed vision research shows they can navigate obstacles and likely detect large objects. They are active hunters of fish and crustaceans in mangrove and nearshore waters, not passive drifters.',
+        ],
+        facts: [
+          'Bell can reach ~20–30 cm per side in large Chironex; tentacles may extend several meters.',
+          'Swims at speeds up to ~4 knots using muscular pulsations — unusual among cnidarians.',
+          'Venoms include pore-forming toxins and cardiotoxins; antivenom exists in Australia.',
+          'First aid emphasis: vinegar inactivates undischarged nematocysts; pressure immobilization debated.',
+          'Life cycle includes polyp stage attached to substrate; seasonal blooms after rains.',
+          '24 eyes total; upper lens eyes may form low-resolution images.',
+          'Hunting: tentacles trail behind; contact triggers millions of stinging cells.',
+          'Also called sea wasp; related species occur in Indo-Pacific and some Atlantic waters.',
+          'Irukandji syndrome linked to smaller cubozoans — different clinical profile.',
+          'Peak human risk when bathers overlap habitat after storms and warm currents.',
+          'Conservation status less studied than fish; habitat loss and warming alter distribution.',
+          'Chironex named after toxicologist Hugo Flecker; documented fatalities since 1950s.',
+          'Research on box jelly venom informs ion-channel biology and pain medicine.',
+          'Not a single species globally — cubozoan diversity includes dozens of taxa.',
+        ],
+        sources: [
+          { type: 'peer', text: 'Garm A et al. (2007). Box jellyfish design — vision and obstacle avoidance — J Exp Biol', url: 'https://doi.org/10.1242/jeb.02757' },
+          { type: 'peer', text: 'Brinkman DL et al. (2012). Chironex fleckeri venom proteome — Toxicon', url: 'https://doi.org/10.1016/j.toxicon.2012.02.007' },
+          { type: 'peer', text: 'Currie BJ (2004). Marine antivenoms — Medical Journal of Australia review', url: 'https://doi.org/10.5694/j.1326-5377.2004.tb05940.x' },
+          { type: 'review', text: 'Gershwin L (2005). Taxonomy and distribution of Australian cubozoans — Memoirs of Museum Victoria', url: 'https://doi.org/10.24199/j.mmv.2005.58.1' },
+        ],
+        es: {
+          title: 'Medusa cubo', epithet: 'Campana de vidrio, aviso antiguo', act: 'Acto III · Veneno',
+          blurb: 'Casi invisible — geometría de luz y peligro.',
+          anthro: 'En costas tropicales, la medusa cubo marca calendarios de cautela — banderas, vinagre, cuentos antes de vacaciones.',
+          traits: 'Campana cúbica · cuatro lados · ojos complejos',
+          taxonomy: 'Chironex fleckeri · Cubozoa',
+          history: 'Indo-Pacífico tropical · manglares y playas',
+          overview: [
+            'Las cubomedusas nadan con campana cúbica y tentáculos en las esquinas. <em>Chironex fleckeri</em> tiene veneno que afecta piel, corazón y sistema nervioso; hay muertes en minutos sin tratamiento.',
+            'Cada ropalio lleva seis ojos de cuatro tipos; estudios muestran evitación de obstáculos. Cazan peces activamente, no solo derivan.',
+          ],
+          facts: [
+            'Campana hasta ~20–30 cm por lado en ejemplares grandes.',
+            'Nada hasta ~4 nudos; veneno con cardiotoxinas.',
+            'Vinagre para nematocistos sin disparar; antiveneno en Australia.',
+            '24 ojos; posible imagen de baja resolución.',
+            'Ciclo con fase pólipo; floraciones tras lluvias.',
+          ],
+          sources: [
+            { type: 'peer', text: 'Garm A et al. (2007) — visión cubomedusa', url: 'https://doi.org/10.1242/jeb.02757' },
+            { type: 'peer', text: 'Brinkman DL et al. (2012) — proteoma de veneno', url: 'https://doi.org/10.1016/j.toxicon.2012.02.007' },
+          ],
+        },
+      },
+      { specimen: 'EXT-04', title: 'Seahorse', epithet: 'Devotion in reverse currents', act: 'Act IV · Dads',
+        youtube: 'https://www.youtube.com/watch?v=uzOa4q-ilzk', videoId: 'uzOa4q-ilzk',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Hippocampus_hystrix.jpg/1280px-Hippocampus_hystrix.jpg',
+        imageAlt: 'Thorny seahorse',
+        blurb: 'Upright in the current — patience breathing through bone and grace.',
+        anthro: 'Seahorses appear on wedding rings, Caribbean folk art, and Chinese medicine debates — symbols of gentleness that mask a predator’s strike. Florida’s shallow grass beds tie local identity to animals many visitors never notice.',
+        traits: 'Upright posture · prehensile tail · fused jaw · male brood pouch',
+        taxonomy: 'Hippocampus spp. · Family Syngnathidae · Order Syngnathiformes',
+        history: 'Seagrass · mangroves · coral rubble · global tropics & subtropics',
+        overview: [
+          'Seahorses are fish, but they swim upright, lack pelvic fins, and anchor with a prehensile tail to seagrass and algae. Their fused snout creates suction feeding with explosive timing — one of the fastest strikes in vertebrates relative to body size. Males possess a brood pouch where females deposit eggs; the male fertilizes, oxygenates, and gives birth to miniature seahorses after weeks of gestation.',
+          'Roughly 46 recognized species face pressure from habitat loss, bycatch in trawl fisheries, and traditional medicine demand. Peer-reviewed conservation assessments led to CITES Appendix II listing for all <em>Hippocampus</em> species. Florida’s estuaries host several species, including lined and dwarf forms in grass beds critical to nurseries.',
+        ],
+        facts: [
+          'Male pregnancy documented across genus; gestation 2–4 weeks typical.',
+          'Monogamous pair bonds reported in some species for a breeding season.',
+          'Poor swimmers — beat dorsal fin 30–70 times per second for stability.',
+          'Exoskeleton of bony plates instead of scales; minimal fossil record.',
+          'Independent eye movement — can watch prey while body faces another direction.',
+          'Camouflage via skin filaments and color change; some species match gorgonians.',
+          'World’s smallest seahorse (Satomi’s pygmy) near 1.4 cm; largest ~35 cm.',
+          'Feed on copepods, larval fish, and plankton — high feeding effort per calorie.',
+          'Vulnerable to boat propellers, dredging, and coastal pollution in Florida Bay.',
+          'Captive breeding programs supply aquarium trade to reduce wild harvest.',
+          'IUCN lists many species as Vulnerable or Endangered; global trade regulated.',
+          'Syngnathid relatives include pipefish and sea dragons.',
+          'Lifespan in wild often 1–5 years depending on species and predation.',
+          'Predators: crabs, fish, rays; crypsis is primary defense.',
+        ],
+        sources: [
+          { type: 'peer', text: 'Vincent ACJ et al. (2011). Trade in seahorses — Biocon conservation synthesis', url: 'https://doi.org/10.1016/j.biocon.2011.07.022' },
+          { type: 'peer', text: 'Paczolt KA, Jones AG (2010). Post-copulatory sexual selection in seahorses — Proc R Soc B', url: 'https://doi.org/10.1098/rspb.2010.0793' },
+          { type: 'peer', text: 'Foster SJ, Vincent ACJ (2004). Life history and ecology of seahorses — Advances in Marine Biology', url: 'https://doi.org/10.1016/S0065-2881(04)63003-4' },
+          { type: 'database', text: 'CITES — Hippocampus spp. Appendix II', url: 'https://cites.org/eng/app/appendices.php' },
+          { type: 'database', text: 'IUCN — Hippocampus hystrix assessment', url: 'https://www.iucnredlist.org/species/10066/16664377' },
+        ],
+        es: {
+          title: 'Caballito de mar', epithet: 'Devoción en corrientes inversas', act: 'Acto IV · Papás',
+          blurb: 'Vertical en la corriente — paciencia que respira entre hueso y gracia.',
+          anthro: 'En joyería y arte caribeño simbolizan ternura; en Florida las praderas marinas los esconden.',
+          traits: 'Postura vertical · cola prensil · bolsa paternal',
+          taxonomy: 'Hippocampus · Syngnathidae',
+          history: 'Pastos marinos · manglares · trópico global',
+          overview: [
+            'Los caballitos de mar nadan erguidos y se sujetan con la cola. La hembra deposita huevos en la bolsa del macho, que gesta y “da a luz” a crías miniatura — embarazo masculino documentado en todo el género.',
+            'Unas 46 especies enfrentan pérdida de hábitat y captura incidental. CITES Apéndice II regula el comercio internacional.',
+          ],
+          facts: [
+            'Gestación del macho ~2–4 semanas.',
+            'Mal nadadores; aleta dorsal muy rápida.',
+            'Ojos se mueven de forma independiente.',
+            'CITES Apéndice II para todo Hippocampus.',
+            'Pastos de Florida como criadero crítico.',
+          ],
+          sources: [
+            { type: 'peer', text: 'Vincent ACJ et al. (2011) — comercio y conservación', url: 'https://doi.org/10.1016/j.biocon.2011.07.022' },
+            { type: 'database', text: 'CITES — Hippocampus', url: 'https://cites.org/eng/app/appendices.php' },
+          ],
+        },
+      },
+      { specimen: 'EXT-05', title: 'Pistol Shrimp', epithet: 'Thunder held in a palm', act: 'Act V · Loudmouths',
+        youtube: 'https://www.youtube.com/watch?v=HHFwLE8Wt1E', videoId: 'HHFwLE8Wt1E',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Alpheus_bellulus_57108149.jpg/1280px-Alpheus_bellulus_57108149.jpg',
+        imageAlt: 'Tiger pistol shrimp',
+        blurb: 'A snap like distant lightning — power in perfect timing.',
+        anthro: 'Reefkeepers know pistol shrimp as the roommate who rearranges the apartment — and the goby as the lookout. That partnership became a parable of trust across species lines in Caribbean diving culture.',
+        traits: 'Asymmetric claws · cavitation snap · burrow builder',
+        taxonomy: 'Alpheus bellulus · Family Alpheidae · Order Decapoda',
+        history: 'Indo-Pacific reefs · popular in aquaria · mutualism with gobies worldwide',
+        overview: [
+          'Pistol (snapping) shrimp generate one of the loudest sounds in the ocean by closing an enlarged claw so fast that water cavitates — a collapsing bubble briefly reaches temperatures comparable to the sun’s surface and emits a ~210 dB snap used to stun prey and communicate. High-speed imaging published in <em>Science</em> established the cavitation mechanism, overturning earlier “jet” hypotheses.',
+          'Many species pair with goby fish: the shrimp maintains the burrow while the goby watches for danger and flick signals when predators approach. <em>Alpheus bellulus</em>, the tiger pistol shrimp, is a reef-dwelling icon in home aquaria and wild Indo-Pacific rubble zones — a reminder that extreme power can live in a body smaller than your thumb.',
+        ],
+        facts: [
+          'Snap produced in &lt;300 microseconds; bubble collapse creates light (sonoluminescence).',
+          'Large claw can regenerate after autotomy; smaller claw may enlarge on next molt.',
+          'Alpheids contribute heavily to ocean ambient noise — detectable on hydrophones.',
+          'Burrows under rubble stabilize reef sediment; excavated sand is piled at entrance.',
+          'Goby mutualism: shrimp stays contact with goby tail; fish species-specific pairing.',
+          'Stuns or kills small fish, shrimp, and crabs for scavenging after snap.',
+          'Colonies can interfere with sonar and underwater communication in dense areas.',
+          'More than 1,000 alpheid species worldwide; snapping evolved multiple times.',
+          'Antennae detect chemical cues; poor vision compensated by goby vigilance.',
+          'Live 2–4 years in aquaria; molt regularly to grow.',
+          'Females carry eggs under abdomen until larvae hatch to plankton.',
+          'Reef trade important economically; wild collection regulated in some countries.',
+          'Cavitation study (Versluis et al. 2000) used ultra-high-speed video at 40,000 fps.',
+          'Sound also used in territorial disputes between neighboring shrimp.',
+        ],
+        sources: [
+          { type: 'peer', text: 'Versluis M et al. (2000). How snapping shrimp snap — Science', url: 'https://doi.org/10.1126/science.289.5485.2114' },
+          { type: 'peer', text: 'Luther G et al. (1998). Snapping shrimp dominance and sound production — Mar Ecol Prog Ser', url: 'https://doi.org/10.3354/meps169237' },
+          { type: 'peer', text: 'Karplus I (1987). The association between gobiid fish and burrowing alpheid shrimp — Oceanogr Mar Biol Annu Rev', url: 'https://doi.org/10.1201/9780203753720-6' },
+          { type: 'review', text: 'National Marine Fisheries — crustacean fisheries overview', url: 'https://www.fisheries.noaa.gov/topic/crustacean-fisheries' },
+        ],
+        es: {
+          title: 'Camarón pistola', epithet: 'Trueno en la palma', act: 'Acto V · Ruidosos',
+          blurb: 'Un chasquido como relámpago lejano — poder en el tiempo justo.',
+          anthro: 'En arrecifes, el camarón excava y el gobio vigila — metáfora de confianza entre especies.',
+          traits: 'Pinza asimétrica · cavitación · madriguera',
+          taxonomy: 'Alpheus bellulus · Alpheidae',
+          history: 'Arrecifes Indo-Pacífico · mutualismo con gobios',
+          overview: [
+            'Los camarones pistola cierran la pinza tan rápido que la cavitation produce un estallido de ~210 dB y calor breve. Versluis et al. (2000) en <em>Science</em> demostraron el mecanismo.',
+            'Muchos viven con gobios: el camarón cava; el pez avisa de depredadores. <em>A. bellulus</em> es ícono de acuarios y arrecifes.',
+          ],
+          facts: [
+            'Chasquido en &lt;300 microsegundos; posible sonoluminiscencia.',
+            'Pinza grande puede regenerarse en la muda.',
+            'Ruido ambiental oceánico medible en hidrófonos.',
+            'Mutualismo: contacto con la cola del gobio.',
+            'Más de 1.000 especies alpheid en el mundo.',
+          ],
+          sources: [
+            { type: 'peer', text: 'Versluis M et al. (2000) — Science', url: 'https://doi.org/10.1126/science.289.5485.2114' },
+            { type: 'peer', text: 'Karplus I (1987) — asociación gobio-camarón', url: 'https://doi.org/10.1201/9780203753720-6' },
+          ],
+        },
+      },
+      { specimen: 'EXT-06', title: 'Sperm Whale', epithet: 'Archive of the abyss', act: 'Act VI · Divers',
+        youtube: 'https://www.youtube.com/watch?v=B2f669rSC54', videoId: 'B2f669rSC54',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Physeter_macrocephalus.jpg/1280px-Physeter_macrocephalus.jpg',
+        imageAlt: 'Sperm whale',
+        blurb: 'A cathedral of flesh and sound — memory preferring the cold.',
+        anthro: 'Moby-Dick fixed the sperm whale in literature, but Atlantic and Caribbean histories also know them through whaling logbooks, ambergris lore, and today’s whale-watching economies — a species that carries human stories in its scars.',
+        traits: 'Largest toothed predator · spermaceti organ · echolocation clicks',
+        taxonomy: 'Physeter macrocephalus · Family Physeteridae · Order Cetacea',
+        history: 'Deep offshore · dives &gt;1,000 m · worldwide except polar ice',
+        overview: [
+          'The sperm whale is the largest toothed predator on Earth — males can exceed 16 m and 40 tonnes, with a block-shaped head filled with spermaceti organ oil once hunted for lamps and industry. Social groups (units) of females and young stay in warmer waters while mature males roam higher latitudes, including the North Atlantic.',
+          'Satellite tagging and acoustic studies show routine dives beyond 1,000 m and dives lasting over an hour, hunting chiefly squid in the mesopelagic and bathypelagic zones. Clicks used in echolocation are among the loudest biological sounds known; peer-reviewed work links click patterns to foraging and social “codas.” Cookiecutter shark scars on their lips testify to surface visits from much smaller neighbors.',
+        ],
+        facts: [
+          'Brain among the largest of any animal — ~7 kg in large males.',
+          'Spermaceti organ may aid echolocation focusing and buoyancy control.',
+          'Feeds primarily on squid, including giant and colossal species; also fish.',
+          'Historic whaling reduced global populations; partial recovery in some oceans.',
+          'IUCN: Vulnerable (2008) — still threatened by ship strikes, entanglement, noise.',
+          'Females ~11 m, males considerably larger — strong sexual dimorphism.',
+          'Gestation ~14–16 months; calves nurse for years with long parental investment.',
+          'Produces ambergris (intestinal concretion) prized historically in perfumery.',
+          'Social structure: matrilineal units with culturally transmitted codas.',
+          'Deep foraging: can hold breath ~90 min; heart rate drops during dive.',
+          'Florida and Gulf sightings often adult males on migration or feeding loops.',
+          'Ship strikes and marine debris (ghost gear) documented mortality causes.',
+          'Noise pollution may disrupt foraging clicks and stress responses.',
+          'Protected under U.S. Marine Mammal Protection Act and international agreements.',
+        ],
+        sources: [
+          { type: 'peer', text: 'Watkins WA et al. (2002). Sperm whale diving and foraging — Deep-Sea Research', url: 'https://doi.org/10.1016/S0967-0645(02)00037-8' },
+          { type: 'peer', text: 'Whitehead H (2003). Sperm whales: social evolution in the ocean — University of Chicago Press', url: 'https://doi.org/10.7208/chicago/9780226895182.001.0001' },
+          { type: 'peer', text: 'Tyack PL (1999). Communication and cognition in cetaceans — Proc Natl Acad Sci review context', url: 'https://doi.org/10.1073/pnas.96.18.10571' },
+          { type: 'database', text: 'IUCN Red List — Physeter macrocephalus (Vulnerable)', url: 'https://www.iucnredlist.org/species/41755/181473697' },
+          { type: 'database', text: 'NOAA Fisheries — sperm whale species directory', url: 'https://www.fisheries.noaa.gov/species/sperm-whale' },
+        ],
+        es: {
+          title: 'Cachalote', epithet: 'Archivo del abismo', act: 'Acto VI · Buceadores',
+          blurb: 'Catedral de carne y sonido — memoria que prefiere el frío.',
+          anthro: 'Moby-Dick lo fijó en la literatura; el Atlántico lo conoce por bitácoras, ámbar gris y avistamientos actuales.',
+          traits: 'Mayor depredador con dientes · órgano de espermaceti · clicks',
+          taxonomy: 'Physeter macrocephalus · Physeteridae',
+          history: 'Aguas profundas · buceos &gt;1.000 m · casi mundial',
+          overview: [
+            'El cachalote es el mayor depredador con dientes — machos &gt;16 m. El cráneo alberga espermaceti, históricamente cazado. Unidades de hembras en aguas cálidas; machos maduros migran más al norte.',
+            'Etiquetas satelitales registran buceos &gt;1 h y &gt;1.000 m por calamares. Los clicks de ecolocalización son de los sonidos biológicos más intensos; cicatrices de tiburón cigarro en los labios.',
+          ],
+          facts: [
+            'Cerebro ~7 kg en machos grandes.',
+            'IUCN: Vulnerable — choques con barcos y ruido.',
+            'Gestación ~14–16 meses; cría prolongada.',
+            'Codas sociales transmitidas culturalmente.',
+            'Protegido por leyes de mamíferos marinos en EE. UU.',
+          ],
+          sources: [
+            { type: 'peer', text: 'Watkins WA et al. (2002) — buceo y forrajeo', url: 'https://doi.org/10.1016/S0967-0645(02)00037-8' },
+            { type: 'database', text: 'IUCN — Physeter macrocephalus', url: 'https://www.iucnredlist.org/species/41755/181473697' },
+            { type: 'database', text: 'NOAA — cachalote', url: 'https://www.fisheries.noaa.gov/species/sperm-whale' },
+          ],
+        },
+      },
+    ];
+
+    const CAROUSEL_ENTRIES = [...ITEMS, OCTOPUS_DESK];
+
+    const MAKES_BY_SPECIMEN = {
+      'EXT-01': {
+        puzzles: [
+          { label: 'Discovery Shark Week hammerhead 3D puzzle (150 pcs)', url: 'https://jigsawjungle.com/products/shark-week-hammerhead-shark-3d-puzzle-100pcs', kind: 'kit' },
+          { label: 'Scalloped hammerhead school — photo jigsaw (96–1,000 pcs)', url: 'https://animalsandearth.com/featured/1-scalloped-hammerhead-shark-school-cocos-flip-nicklin.html?product=puzzle', kind: 'kit' },
+        ],
+        crochet: [
+          { label: 'TOFT — Troy the hammerhead shark (kit or PDF)', url: 'https://www.toftuk.com/PD.aspx?product=Animals%2Focean%2F-Troy_the_Hammerhead_Shark', kind: 'kit' },
+          { label: 'Hobbii — hammerhead shark amigurumi pattern (free)', url: 'https://hobbii.com/products/hp-1004029-hammerhead-shark', kind: 'free' },
+        ],
+        es: {
+          puzzles: [
+            { label: 'Discovery Shark Week — rompecabezas 3D martillo (150 piezas)', url: 'https://jigsawjungle.com/products/shark-week-hammerhead-shark-3d-puzzle-100pcs', kind: 'kit' },
+            { label: 'Cardumen de martillo entrado — foto rompecabezas', url: 'https://animalsandearth.com/featured/1-scalloped-hammerhead-shark-school-cocos-flip-nicklin.html?product=puzzle', kind: 'kit' },
+          ],
+          crochet: [
+            { label: 'TOFT — Troy el tiburón martillo (kit o PDF)', url: 'https://www.toftuk.com/PD.aspx?product=Animals%2Focean%2F-Troy_the_Hammerhead_Shark', kind: 'kit' },
+            { label: 'Hobbii — patrón amigurumi martillo (gratis)', url: 'https://hobbii.com/products/hp-1004029-hammerhead-shark', kind: 'free' },
+          ],
+        },
+      },
+      'EXT-02': {
+        puzzles: [
+          { label: 'No cigar-shark puzzle on file — browse shark puzzles on Etsy', url: 'https://www.etsy.com/search?q=shark+jigsaw+puzzle', kind: 'search' },
+        ],
+        crochet: [
+          { label: 'Sharkito mini shark amigurumi (PDF — closest small-shark match)', url: 'https://www.etsy.com/listing/1506765082/sharkito-the-shark-crochet-pattern', kind: 'pattern' },
+          { label: 'Search Etsy — cigar / cookiecutter shark crochet', url: 'https://www.etsy.com/search?q=cookiecutter+shark+crochet', kind: 'search' },
+        ],
+        es: {
+          puzzles: [
+            { label: 'Sin rompecabezas de tiburón cigarro — buscar en Etsy', url: 'https://www.etsy.com/search?q=shark+jigsaw+puzzle', kind: 'search' },
+          ],
+          crochet: [
+            { label: 'Sharkito — amigurumi tiburón pequeño (PDF, parecido)', url: 'https://www.etsy.com/listing/1506765082/sharkito-the-shark-crochet-pattern', kind: 'pattern' },
+            { label: 'Buscar en Etsy — crochet tiburón cigarro', url: 'https://www.etsy.com/search?q=cookiecutter+shark+crochet', kind: 'search' },
+          ],
+        },
+      },
+      'EXT-03': {
+        puzzles: [
+          { label: 'Box jellyfish in the Red Sea — free online jigsaw', url: 'https://www.jigsawpuzzlepark.com/puzzle/box-jellyfish-in-sea/1663/', kind: 'play' },
+          { label: 'Search Etsy — box jellyfish / sea wasp puzzles', url: 'https://www.etsy.com/search?q=box+jellyfish+puzzle', kind: 'search' },
+        ],
+        crochet: [
+          { label: 'Box jellyfish amigurumi — free crochet pattern', url: 'https://diveintotravellingcom.wordpress.com/2020/04/29/amigurumi-jellyfish-pattern-free/', kind: 'free' },
+          { label: 'Search Etsy — jellyfish crochet kits', url: 'https://www.etsy.com/search?q=jellyfish+crochet+kit', kind: 'search' },
+        ],
+        es: {
+          puzzles: [
+            { label: 'Medusa caja en el Mar Rojo — rompecabezas en línea gratis', url: 'https://www.jigsawpuzzlepark.com/puzzle/box-jellyfish-in-sea/1663/', kind: 'play' },
+            { label: 'Buscar en Etsy — rompecabezas medusa caja', url: 'https://www.etsy.com/search?q=box+jellyfish+puzzle', kind: 'search' },
+          ],
+          crochet: [
+            { label: 'Medusa caja amigurumi — patrón gratis', url: 'https://diveintotravellingcom.wordpress.com/2020/04/29/amigurumi-jellyfish-pattern-free/', kind: 'free' },
+            { label: 'Buscar en Etsy — kits crochet medusa', url: 'https://www.etsy.com/search?q=jellyfish+crochet+kit', kind: 'search' },
+          ],
+        },
+      },
+      'EXT-04': {
+        puzzles: [
+          { label: 'eeBoo — Seahorses, Shells & Coral (500 pc round)', url: 'https://birdinhand.com/collections/puzzles/products/eeboo-pzl-500-rnd-seahorse-shells-coral', kind: 'kit' },
+          { label: 'House of Puzzles — Sea Horses BIG 500', url: 'https://thehouseofpuzzles.com/products/sea-horses-jigsaw-puzzle', kind: 'kit' },
+        ],
+        crochet: [
+          { label: 'TOFT — Finlay the pygmy seahorse kit', url: 'https://www.toftuk.com/PD.aspx?product=Animals%2FOcean%2F-Finlay_the_Pygmy_Seahorse', kind: 'kit' },
+          { label: 'The Whimsical Workshop — Molly seahorse crochet kit', url: 'https://www.thewhimsicalworkshop.com/products/molly-seahorse-crochet-kit', kind: 'kit' },
+          { label: 'PlanetJune — seahorse amigurumi pattern (PDF)', url: 'https://www.planetjune.com/shop/document_product_info.html?products_id=349', kind: 'pattern' },
+        ],
+        es: {
+          puzzles: [
+            { label: 'eeBoo — Caballitos de mar, conchas y coral (500 piezas)', url: 'https://birdinhand.com/collections/puzzles/products/eeboo-pzl-500-rnd-seahorse-shells-coral', kind: 'kit' },
+            { label: 'House of Puzzles — Sea Horses BIG 500', url: 'https://thehouseofpuzzles.com/products/sea-horses-jigsaw-puzzle', kind: 'kit' },
+          ],
+          crochet: [
+            { label: 'TOFT — Finlay caballito pigmeo (kit)', url: 'https://www.toftuk.com/PD.aspx?product=Animals%2FOcean%2F-Finlay_the_Pygmy_Seahorse', kind: 'kit' },
+            { label: 'Whimsical Workshop — kit Molly caballito de mar', url: 'https://www.thewhimsicalworkshop.com/products/molly-seahorse-crochet-kit', kind: 'kit' },
+            { label: 'PlanetJune — patrón amigurumi caballito (PDF)', url: 'https://www.planetjune.com/shop/document_product_info.html?products_id=349', kind: 'pattern' },
+          ],
+        },
+      },
+      'EXT-05': {
+        puzzles: [
+          { label: 'Search Etsy — pistol / snapping shrimp puzzles', url: 'https://www.etsy.com/search?q=pistol+shrimp+puzzle', kind: 'search' },
+          { label: 'Search Amazon — coral reef jigsaw puzzles', url: 'https://www.amazon.com/s?k=coral+reef+jigsaw+puzzle', kind: 'search' },
+        ],
+        crochet: [
+          { label: 'Shrimply the Best — shrimp amigurumi pattern (closest match)', url: 'https://www.ravelry.com/patterns/library/shrimply-the-best', kind: 'pattern' },
+          { label: 'Amigurumi Shrimp Baby — free crochet pattern', url: 'https://punqa.com/free-amigurumi-shrimp-baby-crochet-pattern/', kind: 'free' },
+        ],
+        es: {
+          puzzles: [
+            { label: 'Buscar Etsy — rompecabezas camarón pistola', url: 'https://www.etsy.com/search?q=pistol+shrimp+puzzle', kind: 'search' },
+            { label: 'Buscar Amazon — rompecabezas arrecife', url: 'https://www.amazon.com/s?k=coral+reef+jigsaw+puzzle', kind: 'search' },
+          ],
+          crochet: [
+            { label: 'Shrimply the Best — patrón camarón amigurumi', url: 'https://www.ravelry.com/patterns/library/shrimply-the-best', kind: 'pattern' },
+            { label: 'Amigurumi Shrimp Baby — patrón gratis', url: 'https://punqa.com/free-amigurumi-shrimp-baby-crochet-pattern/', kind: 'free' },
+          ],
+        },
+      },
+      'EXT-06': {
+        puzzles: [
+          { label: 'EUGY — sperm whale 3D cardboard puzzle', url: 'https://www.happyhentoys.com/eugy-092-sperm-whale-3d-puzzle.html', kind: 'kit' },
+          { label: 'Sperm whale fluke — photo jigsaw (96–1,000 pcs)', url: 'https://animalsandearth.com/featured/sperm-whale-fluke-flip-nicklin.html?product=puzzle', kind: 'kit' },
+          { label: 'White sperm whale portrait puzzle', url: 'https://animalsandearth.com/featured/white-sperm-whale-hiroya-minakuchi.html?product=puzzle', kind: 'kit' },
+        ],
+        crochet: [
+          { label: 'Search Etsy — sperm whale crochet kits', url: 'https://www.etsy.com/search?q=sperm+whale+crochet+kit', kind: 'search' },
+          { label: 'Search Ravelry — whale amigurumi patterns', url: 'https://www.ravelry.com/patterns/search#query=whale%20amigurumi&view=captioned_thumbs', kind: 'search' },
+        ],
+        es: {
+          puzzles: [
+            { label: 'EUGY — rompecabezas 3D cachalote', url: 'https://www.happyhentoys.com/eugy-092-sperm-whale-3d-puzzle.html', kind: 'kit' },
+            { label: 'Aleta de cachalote — foto rompecabezas', url: 'https://animalsandearth.com/featured/sperm-whale-fluke-flip-nicklin.html?product=puzzle', kind: 'kit' },
+            { label: 'Cachalote blanco — retrato rompecabezas', url: 'https://animalsandearth.com/featured/white-sperm-whale-hiroya-minakuchi.html?product=puzzle', kind: 'kit' },
+          ],
+          crochet: [
+            { label: 'Buscar Etsy — kits crochet cachalote', url: 'https://www.etsy.com/search?q=sperm+whale+crochet+kit', kind: 'search' },
+            { label: 'Buscar Ravelry — patrones ballena amigurumi', url: 'https://www.ravelry.com/patterns/search#query=whale%20amigurumi&view=captioned_thumbs', kind: 'search' },
+          ],
+        },
+      },
+      'CUR-00': {
+        puzzles: [
+          { label: 'Search Etsy — octopus jigsaw puzzles', url: 'https://www.etsy.com/search?q=octopus+jigsaw+puzzle', kind: 'search' },
+        ],
+        crochet: [
+          { label: 'Okey Dokeys — Cleo the octopus crochet kit', url: 'https://okeydokeys.com/products/crochet-octopus-kit', kind: 'kit' },
+          { label: 'Yarnspirations — Molly the octopus amigurumi kit', url: 'https://www.yarnspirations.com/pages/red-heart-amigurumi-crochet-kit-molly-the-octopus', kind: 'kit' },
+          { label: 'Wool Couture — baby octopus crochet kit', url: 'https://www.woolcouturecompany.com/products/baby-octopus-crochet-kit', kind: 'kit' },
+        ],
+        es: {
+          puzzles: [
+            { label: 'Buscar Etsy — rompecabezas pulpo', url: 'https://www.etsy.com/search?q=octopus+jigsaw+puzzle', kind: 'search' },
+          ],
+          crochet: [
+            { label: 'Okey Dokeys — kit Cleo el pulpo', url: 'https://okeydokeys.com/products/crochet-octopus-kit', kind: 'kit' },
+            { label: 'Yarnspirations — kit Molly el pulpo', url: 'https://www.yarnspirations.com/pages/red-heart-amigurumi-crochet-kit-molly-the-octopus', kind: 'kit' },
+            { label: 'Wool Couture — kit pulpo bebé', url: 'https://www.woolcouturecompany.com/products/baby-octopus-crochet-kit', kind: 'kit' },
+          ],
+        },
+      },
+    };
+
+    const SoundFX = (() => {
+      let ctx = null;
+      let enabled = localStorage.getItem(STORAGE_SFX) !== '0';
+      let unlocked = false;
+      function ensureCtx() {
+        if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (ctx.state === 'suspended') ctx.resume();
+        unlocked = true;
+      }
+      function tone(freq, dur, type = 'sine', vol = 0.08, delay = 0) {
+        if (!enabled || !unlocked) return;
+        ensureCtx();
+        const t0 = ctx.currentTime + delay;
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = type;
+        o.frequency.setValueAtTime(freq, t0);
+        g.gain.setValueAtTime(vol, t0);
+        g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start(t0);
+        o.stop(t0 + dur + 0.02);
+      }
+      function noiseBurst(dur = 0.06, vol = 0.035) {
+        if (!enabled || !unlocked) return;
+        ensureCtx();
+        const n = Math.floor(ctx.sampleRate * dur);
+        const buf = ctx.createBuffer(1, n, ctx.sampleRate);
+        const d = buf.getChannelData(0);
+        for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+        const src = ctx.createBufferSource();
+        const g = ctx.createGain();
+        src.buffer = buf;
+        g.gain.value = vol;
+        src.connect(g);
+        g.connect(ctx.destination);
+        src.start();
+      }
+      return {
+        unlock() { try { ensureCtx(); } catch (_) {} },
+        setEnabled(on) {
+          enabled = on;
+          localStorage.setItem(STORAGE_SFX, on ? '1' : '0');
+        },
+        isEnabled() { return enabled; },
+        click() { tone(620, 0.05); },
+        tab() { tone(480, 0.04, 'triangle'); },
+        open() { tone(280, 0.11, 'sine', 0.07); tone(520, 0.08, 'sine', 0.05, 0.07); },
+        stamp() {
+          tone(392, 0.09, 'square', 0.055);
+          tone(523, 0.11, 'sine', 0.065, 0.09);
+          tone(784, 0.13, 'sine', 0.05, 0.17);
+          noiseBurst();
+        },
+        complete() {
+          [392, 494, 587, 659, 784, 988].forEach((f, i) => tone(f, 0.16, 'sine', 0.065, i * 0.09));
+        },
+        close() { tone(340, 0.07, 'triangle', 0.045); },
+      };
+    })();
+
+    function syncSoundBtn() {
+      const btn = document.getElementById('soundBtn');
+      if (!btn) return;
+      const on = SoundFX.isEnabled();
+      btn.textContent = on ? '🔊' : '🔇';
+      btn.classList.toggle('sound-off', !on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.title = on ? t('soundOnLabel') : t('soundOffLabel');
+    }
+
+    function initBubbles() {
+      const field = document.getElementById('bubbleField');
+      if (!field || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      field.innerHTML = '';
+      for (let i = 0; i < 20; i++) {
+        const b = document.createElement('span');
+        b.className = 'bubble';
+        const size = 6 + Math.random() * 22;
+        b.style.width = `${size}px`;
+        b.style.height = `${size}px`;
+        b.style.left = `${Math.random() * 100}%`;
+        b.style.animationDuration = `${8 + Math.random() * 14}s`;
+        b.style.animationDelay = `${Math.random() * 12}s`;
+        field.appendChild(b);
+      }
+    }
+
+    function launchConfetti() {
+      const layer = document.getElementById('confettiLayer');
+      if (!layer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const colors = ['#00ffcc', '#00aaff', '#ccff00', '#ff66cc', '#ffffff'];
+      for (let i = 0; i < 52; i++) {
+        const p = document.createElement('i');
+        p.className = 'confetti-piece';
+        p.style.left = `${Math.random() * 100}%`;
+        p.style.background = colors[i % colors.length];
+        p.style.animationDuration = `${2 + Math.random() * 2.5}s`;
+        p.style.animationDelay = `${Math.random() * 0.5}s`;
+        layer.appendChild(p);
+        setTimeout(() => p.remove(), 5000);
+      }
+    }
+
+    function showStampBurst() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const el = document.createElement('div');
+      el.className = 'stamp-burst';
+      el.textContent = t('stampBurst');
+      el.style.left = '50%';
+      el.style.top = '42%';
+      el.style.transform = 'translate(-50%, -50%)';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 750);
+    }
+
+    function flashStampedUI(specimenId) {
+      document.querySelectorAll(`#passportSlots [data-specimen="${specimenId}"]`).forEach((node) => {
+        node.classList.add('just-stamped');
+        setTimeout(() => node.classList.remove('just-stamped'), 950);
+      });
+    }
+
+    function passportStampHtml(specimenId) {
+      return hasViewed(specimenId)
+        ? '<span class="slot-stamp" aria-hidden="true">★</span>'
+        : '';
+    }
+
+    function refreshPassportSlot(specimenId) {
+      const el = document.querySelector(`#passportSlots [data-specimen="${specimenId}"]`);
+      if (!el) return;
+      const viewed = hasViewed(specimenId);
+      el.classList.toggle('stamped', viewed);
+      const stamp = el.querySelector('.slot-stamp');
+      if (viewed && !stamp) {
+        const span = document.createElement('span');
+        span.className = 'slot-stamp';
+        span.setAttribute('aria-hidden', 'true');
+        span.textContent = '★';
+        el.appendChild(span);
+      } else if (!viewed && stamp) {
+        stamp.remove();
+      }
+    }
+
+    function buildPassportSlots() {
+      const slots = document.getElementById('passportSlots');
+      const hint = document.getElementById('passportHint');
+      if (!slots) return;
+      const bonusViewed = hasViewed('CUR-00');
+      const n = viewedCount();
+      if (hint) {
+        hint.textContent = n >= ITEMS.length
+          ? (bonusViewed ? t('passportHintDone') : t('passportHintBonus'))
+          : t('passportHint');
+      }
+      slots.innerHTML = '';
+      ITEMS.forEach((item) => {
+        const idx = CAROUSEL_ENTRIES.indexOf(item);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        const viewed = hasViewed(item.specimen);
+        btn.className = 'passport-slot' + (viewed ? ' stamped' : '');
+        btn.dataset.specimen = item.specimen;
+        btn.title = L(item, 'title');
+        btn.setAttribute('aria-label', viewed ? `${L(item, 'title')} — viewed` : `${L(item, 'title')} — not viewed yet`);
+        btn.innerHTML = `<img src="${item.image}" alt="" loading="lazy" /><span class="slot-code">${item.specimen.replace('EXT-', '')}</span>${passportStampHtml(item.specimen)}`;
+        bindCardClick(btn, () => {
+          if (isDesktopLayout()) focusSpecimenAt(idx);
+          else openSpecimenAt(idx, { scrollPick: false });
+        });
+        slots.appendChild(btn);
+      });
+      const oct = OCTOPUS_DESK;
+      const oidx = CAROUSEL_ENTRIES.indexOf(oct);
+      const obtn = document.createElement('button');
+      obtn.type = 'button';
+      obtn.className = 'passport-slot bonus'
+        + (bonusViewed ? ' stamped' : '')
+        + (viewedAllMain() ? '' : ' locked');
+      obtn.dataset.specimen = 'CUR-00';
+      obtn.title = L(oct, 'title');
+      obtn.innerHTML = `<img src="${oct.image}" alt="" loading="lazy" /><span class="slot-code">🐙</span>${passportStampHtml('CUR-00')}`;
+      bindCardClick(obtn, () => {
+        if (isDesktopLayout()) focusSpecimenAt(oidx);
+        else openSpecimenAt(oidx, { scrollPick: false });
+      });
+      slots.appendChild(obtn);
+    }
+
+    let lang = localStorage.getItem(STORAGE_LANG) || (navigator.language.startsWith('es') ? 'es' : 'en');
+    const t = (k) => I18N[lang][k];
+    const L = (item, f) => {
+      if (lang === 'es' && item.es?.[f]) return item.es[f];
+      if (item.en?.[f]) return item.en[f];
+      return item[f];
+    };
+    const LA = (item, f) => {
+      const v = L(item, f);
+      return Array.isArray(v) ? v : (v ? [v] : []);
+    };
+    const LSources = (item) => {
+      if (lang === 'es' && item.es?.sources) return item.es.sources;
+      if (item.sources) return item.sources;
+      if (item.en?.sources) return item.en.sources;
+      return [];
+    };
+    function LCraftLinks(item) {
+      const pack = MAKES_BY_SPECIMEN[item.specimen];
+      if (!pack) return { puzzles: [], crochet: [] };
+      if (lang === 'es' && pack.es) return pack.es;
+      return { puzzles: pack.puzzles || [], crochet: pack.crochet || [] };
+    }
+
+    const craftKindLabel = (kind) => {
+      const map = {
+        kit: 'makesKindKit',
+        pattern: 'makesKindPattern',
+        free: 'makesKindFree',
+        play: 'makesKindPlay',
+        search: 'makesKindSearch',
+      };
+      return kind && map[kind] ? t(map[kind]) : '';
+    };
+
+    function renderCraftList(links, emptyMsg) {
+      if (!links.length) return `<li>${emptyMsg}</li>`;
+      return links.map((link) => {
+        const kind = craftKindLabel(link.kind);
+        const kindCls = link.kind ? ` kind-${link.kind}` : '';
+        const badge = kind ? `<span class="craft-kind${kindCls}">${kind}</span>` : '';
+        return `<li>${badge}<a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.label}</a></li>`;
+      }).join('');
+    }
+
+    const sourceTypeLabel = (type) => {
+      if (type === 'peer') return t('sourcePeer');
+      if (type === 'database') return t('sourceDatabase');
+      return t('sourceReview');
+    };
+
+    const carouselRoot = document.getElementById('carousel3d');
+    const carouselItems = document.getElementById('carouselItems');
+    const sideNav = document.getElementById('sideNav');
+
+    function pauseCarouselMotion() {
+      if (carouselRoot) carouselRoot.classList.add('user-paused');
+    }
+    function resumeCarouselMotion() {
+      if (!carouselRoot) return;
+      if (spinPaused) return;
+      if (!panel.classList.contains('open') && !letterPanel.classList.contains('open')) {
+        carouselRoot.classList.remove('user-paused');
+        carouselRoot.classList.remove('carousel-focusing');
+        if (carouselItems) carouselItems.style.removeProperty('--_focus-deg');
+      }
+    }
+
+    function spinCarouselToIndex(i) {
+      if (!carouselItems || !carouselRoot) return;
+      const n = CAROUSEL_ENTRIES.length;
+      if (!n) return;
+      const idx = ((i % n) + n) % n;
+      const deg = -(360 / n) * (idx + 1);
+      carouselItems.style.setProperty('--_focus-deg', `${deg}deg`);
+      carouselRoot.classList.add('carousel-focusing');
+      pauseCarouselMotion();
+    }
+
+    const panel = document.getElementById('panel');
+    const letterPanel = document.getElementById('letterPanel');
+    const letterBody = document.getElementById('letterBody');
+    const mobileGrid = document.getElementById('mobileGrid');
+    const progressFillMobile = document.getElementById('progressFillMobile');
+    const progressLabelMobile = document.getElementById('progressLabelMobile');
+    const progressText = document.getElementById('progressText');
+    const sidebarTip = document.getElementById('sidebarTip');
+    const mobileFill = document.getElementById('mobileFill');
+    const openStoryBtnMobile = document.getElementById('openStoryBtnMobile');
+    const dockThumb = document.getElementById('dockThumb');
+    const dockAct = document.getElementById('dockAct');
+    const dockTitle = document.getElementById('dockTitle');
+    const dockEpithet = document.getElementById('dockEpithet');
+    const openStoryBtn = document.getElementById('openStoryBtn');
+    const progressFill = document.getElementById('progressFill');
+    const progressLabel = document.getElementById('progressLabel');
+    const pauseSpinBtn = document.getElementById('pauseSpinBtn');
+    const toast = document.getElementById('toast');
+    const langBtn = document.getElementById('langBtn');
+    const noteBtn = document.getElementById('noteBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const letterClose = document.getElementById('letterClose');
+    const replayBtn = document.getElementById('replayBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const youtubeLink = document.getElementById('youtubeLink');
+    const mediaSection = document.getElementById('mediaSection');
+    const heroImg = document.getElementById('heroImg');
+    const episodeEl = document.getElementById('episode');
+    const titleEl = document.getElementById('title');
+    const blurbEl = document.getElementById('blurb');
+    const factsOverview = document.getElementById('factsOverview');
+    const factsList = document.getElementById('factsList');
+    const factsSources = document.getElementById('factsSources');
+    const makesIntro = document.getElementById('makesIntro');
+    const makesPuzzles = document.getElementById('makesPuzzles');
+    const makesCrochet = document.getElementById('makesCrochet');
+    const factsTaxStrip = document.getElementById('factsTaxStrip');
+    const epithetEl = document.getElementById('epithet');
+    const anthroEl = document.getElementById('anthro');
+    const playerLoading = document.getElementById('playerLoading');
+    const playerFallback = document.getElementById('playerFallback');
+    const playerEl = document.getElementById('player');
+    const playerActions = document.getElementById('playerActions');
+    const bgVideo = document.getElementById('bgVideo');
+    const badgeNew = document.getElementById('badgeNew');
+
+    let currentItem;
+    let selectedIdx = 0;
+    let isMuted = true;
+    let scrollLockY = 0;
+    let spinPaused = false;
+    let carouselItemEls = [];
+    let sidebarTipIdx = 0;
+    const PROGRESS_CIRC = 113.1;
+
+    function getPassport() {
+      try { return new Set(JSON.parse(localStorage.getItem(STORAGE_PASSPORT) || '[]')); }
+      catch { return new Set(); }
+    }
+    function savePassport(set) {
+      localStorage.setItem(STORAGE_PASSPORT, JSON.stringify([...set]));
+    }
+    function passportCount() {
+      return viewedCount();
+    }
+
+    function hasViewed(specimenId) {
+      if (!specimenId) return false;
+      return getVisited().order.includes(specimenId);
+    }
+
+    function viewedCount() {
+      return ITEMS.filter((i) => hasViewed(i.specimen)).length;
+    }
+
+    function viewedAllMain() {
+      return viewedCount() >= ITEMS.length;
+    }
+
+    function getVisited() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORAGE_VISITED) || '{}');
+        const order = Array.isArray(raw.order) ? raw.order.filter((id) => typeof id === 'string') : [];
+        const at = raw.at && typeof raw.at === 'object' ? raw.at : {};
+        return { order, at };
+      } catch {
+        return { order: [], at: {} };
+      }
+    }
+
+    function saveVisited(v) {
+      localStorage.setItem(STORAGE_VISITED, JSON.stringify(v));
+    }
+
+    function markViewed(specimenId) {
+      if (!specimenId) return false;
+      if (specimenId === 'CUR-00' && !viewedAllMain()) return false;
+      const v = getVisited();
+      const isNew = !v.order.includes(specimenId);
+      v.at[specimenId] = Date.now();
+      if (isNew) v.order.push(specimenId);
+      saveVisited(v);
+      if (ITEMS.some((i) => i.specimen === specimenId)) {
+        const p = getPassport();
+        if (!p.has(specimenId)) {
+          p.add(specimenId);
+          savePassport(p);
+        }
+      }
+      if (specimenId === 'CUR-00') localStorage.setItem(STORAGE_BONUS, '1');
+      if (isNew) {
+        SoundFX.stamp();
+        showStampBurst();
+      }
+      refreshPassportSlot(specimenId);
+      const hint = document.getElementById('passportHint');
+      if (hint) {
+        const bonusViewed = hasViewed('CUR-00');
+        const n = viewedCount();
+        hint.textContent = n >= ITEMS.length
+          ? (bonusViewed ? t('passportHintDone') : t('passportHintBonus'))
+          : t('passportHint');
+      }
+      document.body.classList.toggle('zone-complete', viewedAllMain());
+      if (isNew) flashStampedUI(specimenId);
+      updateProgressUI();
+      updateVisitorFill();
+      if (isNew && viewedAllMain()) maybeCelebrate();
+      return isNew;
+    }
+
+    function updateVisitorFill() {
+      const n = viewedCount();
+      const total = ITEMS.length;
+      let html;
+      if (n > 0) {
+        html = t('progressBlurb')(n, total);
+      } else {
+        const tips = t('sidebarTips');
+        html = tips[sidebarTipIdx % tips.length];
+      }
+      if (sidebarTip) sidebarTip.innerHTML = html;
+      if (mobileFill) mobileFill.innerHTML = html;
+    }
+
+    function updateProgressUI() {
+      const n = viewedCount();
+      const total = ITEMS.length;
+      const pct = total ? n / total : 0;
+      const offset = String(PROGRESS_CIRC * (1 - pct));
+      if (progressFill) progressFill.style.strokeDashoffset = offset;
+      if (progressFillMobile) progressFillMobile.style.strokeDashoffset = offset;
+      if (progressLabel) progressLabel.textContent = String(n);
+      if (progressLabelMobile) progressLabelMobile.textContent = String(n);
+      if (progressText) progressText.textContent = t('progressText')(n, total);
+      document.body.classList.toggle('zone-complete', viewedAllMain());
+    }
+
+    function updateDockMeta(item) {
+      const act = L(item, 'act') || '';
+      const title = L(item, 'title');
+      const epithet = L(item, 'epithet') || '';
+      if (dockThumb) { dockThumb.src = item.image; dockThumb.alt = title; }
+      const acts = [dockAct, document.getElementById('dockActMobile')];
+      const titles = [dockTitle, document.getElementById('dockTitleMobile')];
+      const epithets = [dockEpithet, document.getElementById('dockEpithetMobile')];
+      acts.forEach((el) => { if (el) el.textContent = act; });
+      titles.forEach((el) => { if (el) el.textContent = title; });
+      epithets.forEach((el) => { if (el) el.textContent = epithet; });
+    }
+
+    function isDesktopLayout() {
+      return window.matchMedia('(min-width: 960px)').matches;
+    }
+
+    function markSeen() {
+      localStorage.setItem(STORAGE_SEEN, '1');
+      if (badgeNew) badgeNew.hidden = true;
+    }
+
+    function syncBadgeNew() {
+      if (!badgeNew) return;
+      const show = !localStorage.getItem(STORAGE_SEEN);
+      badgeNew.hidden = !show;
+      if (show) badgeNew.textContent = t('badgeNewText');
+    }
+
+    function rotateSidebarTip() {
+      if (!viewedCount()) sidebarTipIdx++;
+      updateVisitorFill();
+    }
+
+    let didCelebrate = sessionStorage.getItem('depths-celebrated') === '1';
+    function maybeCelebrate() {
+      if (viewedAllMain() && !didCelebrate) {
+        didCelebrate = true;
+        sessionStorage.setItem('depths-celebrated', '1');
+        SoundFX.complete();
+        launchConfetti();
+        showToast(t('completeToast'));
+      }
+    }
+
+    function showToast(msg) {
+      if (!toast || !msg) return;
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => {
+        toast.classList.remove('show');
+        toast.textContent = '';
+      }, 4200);
+    }
+
+    function setPickCurrent(nodes, idx) {
+      nodes?.forEach((btn, i) => btn.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+    }
+
+    function focusSpecimenAt(i) {
+      const item = CAROUSEL_ENTRIES[i];
+      if (!item) return;
+      setSelection(i, { scrollPick: true });
+    }
+
+    function openSpecimenAt(i, { scrollPick = true } = {}) {
+      const item = CAROUSEL_ENTRIES[i];
+      if (!item) return;
+      setSelection(i, { scrollPick });
+      openPanel(item);
+    }
+
+    function openCarouselSpecimen(i) {
+      const item = CAROUSEL_ENTRIES[i];
+      if (!item) return;
+      setSelection(i, { scrollPick: false });
+      openPanel(item);
+    }
+
+    function bindCardClick(el, handler) {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        SoundFX.click();
+        handler();
+      });
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handler();
+        }
+      });
+    }
+
+    function setSelection(idx, { scrollPick = true } = {}) {
+      selectedIdx = ((idx % CAROUSEL_ENTRIES.length) + CAROUSEL_ENTRIES.length) % CAROUSEL_ENTRIES.length;
+      const item = CAROUSEL_ENTRIES[selectedIdx];
+      carouselItemEls.forEach((li, i) => li.classList.toggle('is-selected', i === selectedIdx));
+      setPickCurrent(mobileGrid?.querySelectorAll('.mobile-card'), selectedIdx);
+      setPickCurrent(sideNav?.querySelectorAll('.side-nav-item'), selectedIdx);
+      updateDockMeta(item);
+      if (isDesktopLayout()) {
+        spinCarouselToIndex(selectedIdx);
+        if (scrollPick) {
+          const active = sideNav?.querySelector('[aria-current="true"]');
+          if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    }
+
+    function buildSideNav() {
+      if (!sideNav) return;
+      sideNav.innerHTML = '';
+      CAROUSEL_ENTRIES.forEach((item, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'side-nav-item' + (item.specimen === 'CUR-00' ? ' bonus' : '');
+        btn.dataset.specimen = item.specimen || '';
+        btn.setAttribute('aria-label', L(item, 'title'));
+        const actShort = (L(item, 'act') || '').split('·')[0].trim();
+        btn.innerHTML = `
+          <img src="${item.image}" alt="" loading="lazy" width="48" height="48" />
+          <div class="side-nav-text"><strong>${L(item, 'title')}</strong><span>${actShort}</span></div>`;
+        bindCardClick(btn, () => focusSpecimenAt(i));
+        sideNav.appendChild(btn);
+      });
+    }
+
+    function buildMobileGrid() {
+      if (!mobileGrid) return;
+      mobileGrid.innerHTML = '';
+      CAROUSEL_ENTRIES.forEach((item, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mobile-card';
+        btn.dataset.specimen = item.specimen || '';
+        btn.setAttribute('role', 'listitem');
+        btn.setAttribute('aria-label', L(item, 'title'));
+        btn.innerHTML = `
+          <img src="${item.image}" alt="" loading="lazy" />
+          <span class="mobile-card-act">${(L(item, 'act') || '').split('·')[0].trim()}</span>
+          <span class="mobile-card-title">${L(item, 'title')}</span>`;
+        bindCardClick(btn, () => openSpecimenAt(i, { scrollPick: false }));
+        mobileGrid.appendChild(btn);
+      });
+    }
+
+    function buildCarousel() {
+      const n = CAROUSEL_ENTRIES.length;
+      carouselItems.style.setProperty('--_num-elements', n);
+      carouselItems.innerHTML = '';
+      carouselItemEls = [];
+      CAROUSEL_ENTRIES.forEach((item, i) => {
+        const li = document.createElement('li');
+        let cls = 'carousel-item';
+        if (i === selectedIdx) cls += ' is-selected';
+        li.className = cls;
+        li.dataset.specimen = item.specimen || '';
+        li.style.setProperty('--_index', i + 1);
+        li.style.setProperty('--_image-url', `url('${item.image}')`);
+        const frame = document.createElement('button');
+        frame.type = 'button';
+        frame.className = 'polaroid-frame';
+        frame.setAttribute('aria-label', L(item, 'title'));
+        const badge = document.createElement('span');
+        badge.className = 'frame-badge';
+        badge.textContent = item.specimen || '★';
+        const ribbon = document.createElement('span');
+        ribbon.className = 'frame-ribbon';
+        ribbon.textContent = (L(item, 'act') || '').replace(/^Acto?\s*[IV\d]+ · /i, '').slice(0, 14);
+        const photo = document.createElement('span');
+        photo.className = 'carousel-photo';
+        photo.setAttribute('aria-hidden', 'true');
+        const caption = document.createElement('span');
+        caption.className = 'frame-caption';
+        caption.textContent = L(item, 'title');
+        frame.appendChild(badge);
+        frame.appendChild(ribbon);
+        frame.appendChild(photo);
+        frame.appendChild(caption);
+        li.appendChild(frame);
+        bindCardClick(frame, () => openCarouselSpecimen(i));
+        carouselItems.appendChild(li);
+        carouselItemEls.push(li);
+      });
+      const ground = document.createElement('li');
+      ground.className = 'carousel-ground';
+      ground.setAttribute('aria-hidden', 'true');
+      carouselItems.appendChild(ground);
+    }
+
+    function setTab(name) {
+      document.querySelectorAll('.tab').forEach((tab) => {
+        tab.setAttribute('aria-selected', tab.dataset.tab === name ? 'true' : 'false');
+      });
+      document.querySelectorAll('.tab-panel').forEach((p) => {
+        p.classList.toggle('active', p.dataset.tab === name);
+      });
+    }
+
+    function syncSpinControls() {
+      if (!pauseSpinBtn) return;
+      pauseSpinBtn.setAttribute('aria-pressed', spinPaused ? 'true' : 'false');
+      const lbl = document.getElementById('pauseSpinLabel');
+      if (lbl) lbl.textContent = spinPaused ? t('resumeSpin') : t('pauseSpin');
+      if (spinPaused) pauseCarouselMotion();
+      else resumeCarouselMotion();
+    }
+
+    function bumpVisitorCount() {
+      const raw = localStorage.getItem(STORAGE_VISITS);
+      const prev = raw !== null && raw !== '' ? Math.max(0, parseInt(raw, 10) || 0) : 0;
+      const n = prev + 1;
+      localStorage.setItem(STORAGE_VISITS, String(n));
+      const el = document.getElementById('visitorCount');
+      if (el) el.textContent = `${t('visitors')} ${String(n).padStart(6, '0')}`;
+    }
+
+    function applyUI() {
+      document.documentElement.lang = lang === 'es' ? 'es' : 'en';
+      langBtn.textContent = lang === 'es' ? 'EN' : 'ES';
+      langBtn.setAttribute('aria-label', t('langSwitch'));
+      langBtn.setAttribute('aria-pressed', lang === 'es' ? 'true' : 'false');
+      syncBadgeNew();
+      document.getElementById('brandTitle').textContent = t('brandTitle');
+      document.getElementById('brandSub').textContent = t('brandSub');
+      document.getElementById('windowTitle').textContent = t('windowTitle');
+      document.getElementById('panelWindowTitle').textContent = t('panelWindow');
+      document.getElementById('letterWindowTitle').textContent = t('letterWindow');
+      const tick = t('ticker');
+      document.getElementById('tickerA').textContent = tick;
+      document.getElementById('tickerB').textContent = tick;
+      document.getElementById('galleryTitle').textContent = t('galleryTitle');
+      document.getElementById('galleryStatus').textContent = t('galleryStatus');
+      document.getElementById('mobileHint').textContent = t('mobileHint');
+      document.getElementById('sidebarTitle').textContent = t('sidebarTitle');
+      document.getElementById('passportLabel').textContent = t('passportLabel');
+      syncSoundBtn();
+      document.getElementById('siteFooter').innerHTML =
+        `${t('footer')} <span id="footerYear">${new Date().getFullYear()}</span>`;
+      document.getElementById('anthroLabel').textContent = t('anthroLabel');
+      document.getElementById('factsListHead').textContent = t('factsListHead');
+      document.getElementById('factsSourcesHead').textContent = t('factsSourcesHead');
+      document.getElementById('tabWatch').textContent = t('tabWatch');
+      document.getElementById('tabStory').textContent = t('tabStory');
+      document.getElementById('tabFacts').textContent = t('tabFacts');
+      document.getElementById('tabMakes').textContent = t('tabMakes');
+      document.getElementById('makesIntro').textContent = t('makesIntro');
+      document.getElementById('makesPuzzlesHead').textContent = t('makesPuzzlesHead');
+      document.getElementById('makesCrochetHead').textContent = t('makesCrochetHead');
+      if (openStoryBtn) openStoryBtn.textContent = t('openStory');
+      if (openStoryBtnMobile) openStoryBtnMobile.textContent = t('openStory');
+      if (youtubeLink && currentItem?.youtube) youtubeLink.href = currentItem.youtube;
+      document.getElementById('pauseSpinLabel').textContent = spinPaused ? t('resumeSpin') : t('pauseSpin');
+      replayBtn.textContent = t('replay');
+      muteBtn.textContent = isMuted ? t('soundOn') : t('mute');
+      playerLoading.textContent = t('loading');
+      playerFallback.textContent = t('fallback');
+      buildPassportSlots();
+      buildMobileGrid();
+      buildSideNav();
+      buildCarousel();
+      setSelection(selectedIdx, { scrollPick: false });
+      if (sidebarTip && isDesktopLayout() && !viewedCount()) {
+        sidebarTip.innerHTML = t('sideNavHint');
+      }
+      updateProgressUI();
+      updateVisitorFill();
+      if (currentItem) fillPanel(currentItem);
+    }
+
+    function panelEmbedSrc(videoId, muted) {
+      const origin = location.protocol === 'file:' ? undefined : location.origin;
+      let src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1&modestbranding=1&mute=${muted ? 1 : 0}`;
+      if (origin) src += `&origin=${encodeURIComponent(origin)}`;
+      return src;
+    }
+
+    function resetPlayer() { playerEl.innerHTML = ''; }
+
+    function embedPanelPlayer(videoId) {
+      isMuted = true;
+      muteBtn.textContent = t('soundOn');
+      playerFallback.hidden = true;
+      playerLoading.hidden = false;
+      playerEl.innerHTML = '';
+      const iframe = document.createElement('iframe');
+      iframe.id = 'panelFrame';
+      iframe.title = L(currentItem, 'title');
+      iframe.src = panelEmbedSrc(videoId, true);
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.style.cssText = 'width:100%;height:100%;border:0';
+      iframe.addEventListener('load', () => {
+        playerLoading.hidden = true;
+        playerFallback.hidden = true;
+      });
+      iframe.addEventListener('error', () => showPlayerFallback());
+      playerEl.appendChild(iframe);
+      clearTimeout(embedPanelPlayer._slowTimer);
+      embedPanelPlayer._slowTimer = setTimeout(() => {
+        if (panel.classList.contains('open') && playerLoading.hidden === false) showPlayerFallback();
+      }, 18000);
+    }
+
+    function showPlayerFallback() {
+      playerLoading.hidden = true;
+      playerFallback.hidden = false;
+      if (currentItem?.youtube) {
+        playerFallback.innerHTML = `${t('fallback')} <a href="${currentItem.youtube}" target="_blank" rel="noopener noreferrer">YouTube ↗</a>`;
+      }
+    }
+
+    function renderFactsPanel(item) {
+      const tax = [L(item, 'taxonomy'), L(item, 'traits'), L(item, 'history')].filter(Boolean).join(' · ');
+      factsTaxStrip.textContent = tax;
+      const paras = LA(item, 'overview');
+      factsOverview.innerHTML = (paras.length ? paras : [L(item, 'blurb')]).map((p) => `<p>${p}</p>`).join('');
+      const factItems = LA(item, 'facts');
+      factsList.innerHTML = factItems.length
+        ? factItems.map((f) => `<li>${f}</li>`).join('')
+        : `<li>${t('factsEmpty')}</li>`;
+      const srcs = LSources(item);
+      factsSources.innerHTML = srcs.length
+        ? srcs.map((s) => {
+            const badge = s.type ? `<span class="cite-type">${sourceTypeLabel(s.type)}</span>` : '';
+            return `<li>${badge}<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.text}</a></li>`;
+          }).join('')
+        : `<li>${t('sourcesEmpty')}</li>`;
+    }
+
+    function renderMakesPanel(item) {
+      const { puzzles, crochet } = LCraftLinks(item);
+      if (makesIntro) makesIntro.textContent = t('makesIntro');
+      if (makesPuzzles) {
+        makesPuzzles.innerHTML = renderCraftList(puzzles, t('makesPuzzlesEmpty'));
+      }
+      if (makesCrochet) {
+        makesCrochet.innerHTML = renderCraftList(crochet, t('makesCrochetEmpty'));
+      }
+    }
+
+    function fillPanel(item) {
+      const isDesk = !item.videoId;
+      heroImg.src = item.image;
+      heroImg.alt = item.imageAlt || L(item, 'title');
+      heroImg.hidden = false;
+      episodeEl.textContent = L(item, 'act') || '';
+      epithetEl.textContent = L(item, 'epithet') || '';
+      titleEl.textContent = L(item, 'title');
+      blurbEl.textContent = L(item, 'blurb');
+      anthroEl.textContent = L(item, 'anthro');
+      renderFactsPanel(item);
+      renderMakesPanel(item);
+      mediaSection.style.display = isDesk ? 'none' : '';
+      const tabWatch = document.getElementById('tabWatch');
+      tabWatch.style.display = isDesk ? 'none' : '';
+      if (playerActions) playerActions.style.display = isDesk ? 'none' : '';
+      replayBtn.style.display = isDesk ? 'none' : '';
+      muteBtn.style.display = isDesk ? 'none' : '';
+      youtubeLink.style.display = isDesk ? 'none' : '';
+      if (isDesk) {
+        setTab('story');
+        playerFallback.hidden = true;
+        playerLoading.hidden = true;
+      } else {
+        setTab('watch');
+        youtubeLink.href = item.youtube;
+        youtubeLink.textContent = t('youtubeOpen');
+      }
+    }
+
+    function openPanel(item) {
+      const idx = CAROUSEL_ENTRIES.indexOf(item);
+      if (idx >= 0) setSelection(idx);
+      markSeen();
+      scrollLockY = window.scrollY;
+      currentItem = item;
+      SoundFX.open();
+      fillPanel(item);
+      document.body.classList.add('panel-open');
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      if (isDesktopLayout()) pauseCarouselMotion();
+      resetPlayer();
+      if (item.videoId) {
+        playerLoading.hidden = false;
+        embedPanelPlayer(item.videoId);
+      }
+      document.querySelector('.dialog-body').scrollTop = 0;
+      if (item.specimen) markViewed(item.specimen);
+    }
+
+    function closePanel() {
+      SoundFX.close();
+      document.body.classList.remove('panel-open');
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      heroImg.hidden = true;
+      resetPlayer();
+      playerLoading.hidden = true;
+      playerFallback.hidden = true;
+      if (isDesktopLayout()) resumeCarouselMotion();
+      window.scrollTo(0, scrollLockY);
+    }
+
+    function fillLetter() {
+      letterBody.innerHTML = t('letterHtml');
+      document.getElementById('letterBadge').textContent = t('letterBadge');
+      document.getElementById('letterTitle').textContent = t('letterTitle');
+    }
+
+    function openLetter() {
+      fillLetter();
+      letterPanel.classList.add('open');
+      letterPanel.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('panel-open');
+    }
+
+    function closeLetter() {
+      letterPanel.classList.remove('open');
+      letterPanel.setAttribute('aria-hidden', 'true');
+      if (!panel.classList.contains('open')) {
+        document.body.classList.remove('panel-open');
+        window.scrollTo(0, scrollLockY);
+      }
+    }
+
+    document.querySelectorAll('.tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        SoundFX.tab();
+        setTab(tab.dataset.tab);
+      });
+    });
+
+    document.getElementById('soundBtn')?.addEventListener('click', () => {
+      SoundFX.unlock();
+      SoundFX.setEnabled(!SoundFX.isEnabled());
+      syncSoundBtn();
+      SoundFX.click();
+    });
+
+    openStoryBtn?.addEventListener('click', () => { SoundFX.click(); openPanel(CAROUSEL_ENTRIES[selectedIdx]); });
+    openStoryBtnMobile?.addEventListener('click', () => { SoundFX.click(); openPanel(CAROUSEL_ENTRIES[selectedIdx]); });
+    pauseSpinBtn?.addEventListener('click', () => {
+      SoundFX.click();
+      spinPaused = !spinPaused;
+      syncSpinControls();
+      document.getElementById('pauseSpinLabel').textContent = spinPaused ? t('resumeSpin') : t('pauseSpin');
+    });
+
+    langBtn.addEventListener('click', () => {
+      lang = lang === 'en' ? 'es' : 'en';
+      localStorage.setItem(STORAGE_LANG, lang);
+      applyUI();
+      if (letterPanel.classList.contains('open')) fillLetter();
+    });
+    noteBtn.addEventListener('click', () => { SoundFX.click(); openLetter(); });
+    letterClose.addEventListener('click', closeLetter);
+    letterPanel.addEventListener('click', (e) => { if (e.target === letterPanel) closeLetter(); });
+    closeBtn.addEventListener('click', closePanel);
+    panel.addEventListener('click', (e) => { if (e.target === panel) closePanel(); });
+    document.addEventListener('keydown', (e) => {
+      if (panel.classList.contains('open') || letterPanel.classList.contains('open')) {
+        if (e.key === 'Escape') {
+          if (letterPanel.classList.contains('open')) closeLetter();
+          else closePanel();
+        }
+        return;
+      }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); setSelection(selectedIdx - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); setSelection(selectedIdx + 1); }
+      if (e.key === 'Enter') {
+        if (document.activeElement?.closest('.mobile-card, .carousel, .passport-slot, .side-nav')) {
+          e.preventDefault();
+          openPanel(CAROUSEL_ENTRIES[selectedIdx]);
+        }
+      }
+    });
+    replayBtn.addEventListener('click', () => {
+      const frame = document.getElementById('panelFrame');
+      if (frame && currentItem?.videoId) {
+        const src = frame.src;
+        frame.src = '';
+        frame.src = src;
+      }
+    });
+    muteBtn.addEventListener('click', () => {
+      if (!currentItem?.videoId) return;
+      isMuted = !isMuted;
+      const frame = document.getElementById('panelFrame');
+      if (frame) frame.src = panelEmbedSrc(currentItem.videoId, isMuted);
+      muteBtn.textContent = isMuted ? t('soundOn') : t('mute');
+    });
+
+    setInterval(rotateSidebarTip, 12000);
+
+    if (bgVideo) {
+      const tryPlay = () => bgVideo.play().catch(() => {});
+      tryPlay();
+      document.addEventListener('click', tryPlay, { once: true });
+    }
+
+    document.addEventListener('click', () => SoundFX.unlock(), { once: true });
+    document.addEventListener('keydown', () => SoundFX.unlock(), { once: true });
+
+    if (carouselRoot) {
+      carouselRoot.addEventListener('pointerenter', pauseCarouselMotion);
+      carouselRoot.addEventListener('pointerleave', resumeCarouselMotion);
+      carouselRoot.addEventListener('focusin', pauseCarouselMotion);
+      carouselRoot.addEventListener('focusout', (e) => {
+        if (!carouselRoot.contains(e.relatedTarget)) resumeCarouselMotion();
+      });
+    }
+
+    bumpVisitorCount();
+    initBubbles();
+    applyUI();
+  </script>
+</body>
+</html>
