@@ -58,10 +58,14 @@ async function runSuite(page, label) {
   const curatorLocked = await page.evaluate(() => {
     const slot = document.querySelector('.passport-slot.bonus');
     const img = slot?.querySelector('img');
+    const mystery = slot?.querySelector('.bonus-mystery');
+    const code = slot?.querySelector('.slot-code')?.textContent;
     return !!slot
       && slot.disabled
       && slot.classList.contains('locked')
-      && /Octopus2\.jpg|octopus/i.test(img?.src || '');
+      && !!mystery
+      && !img
+      && code === '?';
   });
   results.push([`${label}: octopus locked until six viewed`, curatorLocked, curatorLocked]);
 
