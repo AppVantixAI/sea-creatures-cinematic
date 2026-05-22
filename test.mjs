@@ -288,6 +288,30 @@ async function runSuite(page, label) {
     });
     results.push([`${label}: main page scrolls`, mainPageScroll.ok, mainPageScroll]);
 
+    const scrollOverCards = await page.evaluate(async () => {
+      const card = document.querySelector('.mobile-card');
+      if (!card) return { ok: false, reason: 'no card' };
+      const touchAction = getComputedStyle(card).touchAction;
+      const r = card.getBoundingClientRect();
+      const x = r.left + r.width / 2;
+      const y = r.top + r.height / 2;
+      const before = window.scrollY;
+      const target = document.elementFromPoint(x, y);
+      const onCard = target === card || card.contains(target);
+      window.scrollTo(0, Math.min(200, document.documentElement.scrollHeight));
+      await new Promise((res) => setTimeout(res, 50));
+      const after = window.scrollY;
+      window.scrollTo(0, before);
+      return {
+        ok: touchAction.includes('pan-y') && onCard && after > before,
+        touchAction,
+        onCard,
+        before,
+        after,
+      };
+    });
+    results.push([`${label}: scroll works over cards`, scrollOverCards.ok, scrollOverCards]);
+
     const unlockedAfterMain = await page.locator('.mobile-card.bonus').evaluate((el) => !el.disabled);
     results.push([`${label}: curator unlocked on mobile after six`, unlockedAfterMain, unlockedAfterMain]);
 
