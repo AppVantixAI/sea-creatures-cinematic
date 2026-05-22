@@ -248,30 +248,54 @@ async function runSuite(page, label) {
         ['EXT-05', 'Pistol Shrimp'],
         ['EXT-06', 'Sperm Whale'],
       ];
-      const openBtn = document.getElementById('openStoryBtnMobile');
       for (const [id, title] of specs) {
         const card = document.querySelector(`.mobile-card[data-specimen="${id}"]`);
-        if (!card || card.disabled || !openBtn) return false;
+        if (!card || card.disabled) return false;
         card.click();
-        await new Promise((r) => setTimeout(r, 200));
-        if (document.getElementById('dockTitleMobile')?.textContent !== title) return false;
-        openBtn.click();
-        await new Promise((r) => setTimeout(r, 400));
+        await new Promise((r) => setTimeout(r, 500));
         if (document.querySelector('#title')?.textContent !== title) return false;
         document.querySelector('#closeBtn')?.click();
         await new Promise((r) => setTimeout(r, 250));
+        if (document.body.classList.contains('panel-open')) return false;
       }
       return true;
     });
     results.push([`${label}: all six main mobile stories open`, mainCardsClick, mainCardsClick]);
 
+    const passportOpensPanel = await page.evaluate(async () => {
+      const slot = document.querySelector('.passport-slot[data-specimen="EXT-04"]');
+      if (!slot) return false;
+      slot.click();
+      await new Promise((r) => setTimeout(r, 500));
+      const ok = document.body.classList.contains('panel-open')
+        && document.querySelector('#title')?.textContent === 'Seahorse';
+      document.querySelector('#closeBtn')?.click();
+      await new Promise((r) => setTimeout(r, 250));
+      return ok;
+    });
+    results.push([`${label}: passport opens story on tap`, passportOpensPanel, passportOpensPanel]);
+
+    const cardOpensPanel = await page.evaluate(async () => {
+      const card = document.querySelector('.mobile-card[data-specimen="EXT-01"]');
+      if (!card) return false;
+      card.click();
+      await new Promise((r) => setTimeout(r, 500));
+      const ok = document.body.classList.contains('panel-open')
+        && document.querySelector('#title')?.textContent === 'Hammerhead Shark';
+      document.querySelector('#closeBtn')?.click();
+      await new Promise((r) => setTimeout(r, 250));
+      return ok;
+    });
+    results.push([`${label}: mobile card opens story on tap`, cardOpensPanel, cardOpensPanel]);
+
     const mobileLayout = await page.evaluate(() => {
       const dockHidden = getComputedStyle(document.getElementById('dock')).display === 'none';
       const scroll = !!document.querySelector('.mobile-scroll');
       const progress = !!document.getElementById('progressTextMobile')?.textContent;
-      const thumb = !!document.getElementById('dockThumbMobile')?.src;
+      const hint = !!document.getElementById('mobileTapHint')?.textContent;
+      const noStickyOpen = !document.getElementById('openStoryBtnMobile');
       const bodyScroll = getComputedStyle(document.body).overflowY !== 'hidden';
-      return dockHidden && scroll && progress && thumb && bodyScroll;
+      return dockHidden && scroll && progress && hint && noStickyOpen && bodyScroll;
     });
     results.push([`${label}: mobile layout chrome`, mobileLayout, mobileLayout]);
 
@@ -316,7 +340,6 @@ async function runSuite(page, label) {
     results.push([`${label}: curator unlocked on mobile after six`, unlockedAfterMain, unlockedAfterMain]);
 
     await page.locator('.mobile-card').first().click();
-    await page.locator('#openStoryBtnMobile').click();
   }
 
   await page.waitForSelector('body.panel-open', { timeout: 5000 });
@@ -351,18 +374,25 @@ async function runSuite(page, label) {
   const overviewParas = await page.locator('#factsOverview p').count();
   results.push([`${label}: facts tab depth`, factCount >= 8 && sourceCount >= 2 && overviewParas >= 1, { factCount, sourceCount, overviewParas }]);
 
+  await page.locator('#tabStory').click();
   const noRawHtmlInCopy = await page.evaluate(() => {
     const bad = /<(em|strong|p|span|br)\b|&lt;|&gt;/i;
-    const checks = ['#blurb', '#anthro', '#factsOverview', '#factsList'];
+    const checks = ['#storyText', '#factsOverview', '#factsList'];
     for (const sel of checks) {
       const el = document.querySelector(sel);
       if (!el || bad.test(el.textContent)) return { ok: false, sel, sample: el?.textContent?.slice(0, 120) };
     }
-    return { ok: true, hasEm: !!document.querySelector('#factsOverview em') };
+    const story = document.querySelector('#storyText');
+    const storyLen = story?.textContent?.trim().length || 0;
+    return {
+      ok: true,
+      hasEmFacts: !!document.querySelector('#factsOverview em'),
+      storyLen,
+    };
   });
   results.push([
     `${label}: copy renders HTML (no raw tags in text)`,
-    noRawHtmlInCopy.ok && noRawHtmlInCopy.hasEm,
+    noRawHtmlInCopy.ok && noRawHtmlInCopy.hasEmFacts && noRawHtmlInCopy.storyLen > 80,
     noRawHtmlInCopy,
   ]);
 
@@ -416,14 +446,6 @@ async function runSuite(page, label) {
   results.push([`${label}: viewed saved on panel open`, stamped, stamped]);
   const stampedUi = await page.locator('.passport-slot[data-specimen="EXT-01"]').evaluate((el) => el.classList.contains('stamped'));
   results.push([`${label}: passport star after view`, stampedUi, stampedUi]);
-
-  if (!isDesktop) {
-    await page.locator('#openStoryBtnMobile').click();
-    await page.waitForSelector('body.panel-open', { timeout: 5000 });
-    results.push([`${label}: mobile open story btn`, await page.locator('#panel').evaluate((el) => el.classList.contains('open')), true]);
-    await page.locator('#closeBtn').click();
-    await page.waitForTimeout(200);
-  }
 
   const noteHidden = await page.locator('#noteBtn').evaluate((el) => el.hidden);
   results.push([`${label}: readme note hidden`, noteHidden, noteHidden]);

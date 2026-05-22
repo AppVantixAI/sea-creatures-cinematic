@@ -64,10 +64,6 @@
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
     @keyframes blink-soft {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.35; }
@@ -301,27 +297,6 @@
     }
     .gloss-btn.note { min-width: 36px; padding: 0; font-size: 14px; }
 
-    .ticker-wrap {
-      overflow: hidden;
-      border-top: 1px solid #003355;
-      background: linear-gradient(90deg, #001830, #002850, #001830);
-      padding: 0.3rem 0;
-    }
-    .ticker {
-      display: flex;
-      width: max-content;
-      animation: ticker 28s linear infinite;
-      font: bold 10px/1.3 Tahoma, Verdana, sans-serif;
-      color: var(--sea);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .ticker { animation: none; flex-wrap: wrap; justify-content: center; width: auto; padding: 0 0.5rem; }
-    }
-    .ticker span { padding: 0 1.5rem; white-space: nowrap; }
-    .ticker span::before { content: "★ "; color: var(--hot); }
-
     .stage {
       flex: 1;
       display: flex;
@@ -396,13 +371,6 @@
       width: min(100%, 72rem);
       min-height: 0;
     }
-    .mobile-hint {
-      text-align: center;
-      font: bold 10px/1.4 Tahoma, sans-serif;
-      color: var(--muted);
-      margin: 0.35rem 0 0.5rem;
-      letter-spacing: 0.06em;
-    }
     .mobile-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -453,39 +421,13 @@
       border-color: var(--lime) #004433 #004433 var(--lime);
       box-shadow: 0 0 12px rgba(0, 255, 200, 0.45);
     }
-    .mobile-fill {
-      flex-shrink: 0;
-      margin: 0.25rem 0 0.5rem;
-      padding: 0.55rem 0.65rem;
-      font: 11px/1.45 Georgia, "Times New Roman", serif;
-      color: #a8e8ff;
-      background: #001428;
-      border: 2px inset #004466;
-      border-radius: 6px;
-      min-height: 3.5rem;
+    .mobile-tap-hint {
+      text-align: center;
+      font: 600 9px/1.35 Tahoma, Verdana, sans-serif;
+      color: var(--muted);
+      margin: 0 0 0.45rem;
+      letter-spacing: 0.04em;
     }
-    .mobile-fill em { color: var(--sea); font-style: italic; }
-    .mobile-bar {
-      position: sticky;
-      bottom: 0;
-      z-index: 8;
-      margin: 0 calc(-1 * max(0.65rem, var(--safe-l)));
-      padding: 0.6rem max(0.75rem, var(--safe-l)) calc(0.65rem + var(--safe-b)) max(0.75rem, var(--safe-r));
-      background: linear-gradient(180deg, transparent, #051830 20%, #0a2848 100%);
-      border-top: 2px solid #004466;
-    }
-    .mobile-bar-row {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      margin-bottom: 0.5rem;
-    }
-    .mobile-bar-row .dock-title {
-      flex: 1;
-      font-size: 12px;
-      margin: 0;
-    }
-    .mobile-bar .cta-btn { width: 100%; min-height: 44px; }
 
     /* ——— Desktop layout ——— */
     .desktop-split {
@@ -590,18 +532,6 @@
       border-color: #00ffcc #004466 #004466 #00ffcc;
     }
     .side-nav-item.bonus { border-color: var(--hot) #553366 #553366 var(--hot); }
-    .sidebar-fill {
-      flex-shrink: 0;
-      padding: 0.5rem;
-      font: 11px/1.5 Georgia, serif;
-      color: #a8e8ff;
-      background: #001428;
-      border: 1px inset #004466;
-      border-radius: 4px;
-      min-height: 3.5rem;
-      margin-top: 0.35rem;
-    }
-    .sidebar-fill em { color: var(--sea); font-style: italic; }
     .sidebar-progress {
       margin: 0.35rem 0 0.5rem;
       text-align: center;
@@ -615,7 +545,6 @@
       .layout-mobile { display: block; }
       .layout-desktop { display: none !important; }
       #dock { display: none !important; }
-      .ticker-wrap { display: none; }
       .visitor { display: none; }
       html {
         overflow-x: hidden;
@@ -682,8 +611,7 @@
         min-height: auto;
       }
       .mobile-scroll,
-      .mobile-grid,
-      .mobile-fill {
+      .mobile-grid {
         touch-action: pan-y;
       }
       .mobile-scroll {
@@ -699,31 +627,11 @@
         margin: 0 0 0.4rem;
         text-shadow: 0 0 8px rgba(0, 255, 200, 0.35);
       }
-      .mobile-hint { margin-top: 0.15rem; }
       .mobile-grid { padding-bottom: 0.5rem; }
       .mobile-card {
         min-height: var(--touch);
         touch-action: pan-y;
         -webkit-tap-highlight-color: transparent;
-      }
-      .mobile-bar {
-        position: sticky;
-        bottom: 0;
-        margin-left: calc(-1 * max(0.5rem, var(--safe-l)));
-        margin-right: calc(-1 * max(0.5rem, var(--safe-r)));
-        padding-left: max(0.65rem, var(--safe-l));
-        padding-right: max(0.65rem, var(--safe-r));
-        box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.45);
-      }
-      .mobile-bar-thumb {
-        width: 52px;
-        height: 52px;
-        flex-shrink: 0;
-        border-radius: 4px;
-        object-fit: cover;
-        border: 2px solid;
-        border-color: #fff #004466 #004466 #fff;
-        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
       }
       .topbar { padding: 0.4rem 0.45rem; gap: 0.35rem; }
       .brand h1 { font-size: 1.05rem; }
@@ -1659,25 +1567,16 @@
       .dock-card { grid-template-columns: 56px 1fr auto; }
       .dock-thumb { width: 56px; height: 56px; }
     }
-    .blurb { margin: 0; color: var(--muted); line-height: 1.65; font-size: 0.9rem; }
-    .anthro-note {
+    .story-cultural {
       margin: 0;
       padding: 0.75rem;
       border-radius: 4px;
       background: #001a30;
       border: 2px inset #004466;
-      font-size: 12px;
-      line-height: 1.55;
+      font: 12px/1.7 Georgia, "Times New Roman", serif;
       color: #a8e8ff;
     }
-    .anthro-note strong {
-      display: block;
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--sea);
-      margin-bottom: 0.35rem;
-    }
+    .story-cultural em { color: var(--sea); font-style: italic; }
     .facts-sheet { display: grid; gap: 0.65rem; }
     .facts-tax {
       margin: 0;
@@ -2033,11 +1932,6 @@
           <button type="button" class="gloss-btn note" id="noteBtn" aria-label="Note" hidden>🐙</button>
         </div>
       </header>
-      <div class="ticker-wrap" aria-hidden="true">
-        <div class="ticker" id="ticker">
-          <span id="tickerA"></span><span id="tickerB"></span>
-        </div>
-      </div>
     </div>
 
     <div class="passport-bar" id="passportBar" role="region" aria-labelledby="passportLabel">
@@ -2049,29 +1943,10 @@
     </div>
 
     <section class="layout-mobile" id="layoutMobile" aria-label="Mobile gallery">
-      <p class="mobile-hint" id="mobileHint"></p>
       <p class="mobile-progress" id="progressTextMobile" aria-live="polite"></p>
+      <p class="mobile-tap-hint" id="mobileTapHint"></p>
       <div class="mobile-scroll">
         <div class="mobile-grid" id="mobileGrid" role="list"></div>
-        <div class="mobile-fill" id="mobileFill" aria-live="polite"></div>
-      </div>
-      <div class="mobile-bar">
-        <div class="mobile-bar-row">
-          <img class="mobile-bar-thumb" id="dockThumbMobile" alt="" width="52" height="52" decoding="async" />
-          <div class="progress-wrap" aria-hidden="true">
-            <svg class="progress-ring" viewBox="0 0 44 44">
-              <circle class="track" cx="22" cy="22" r="18"/>
-              <circle class="fill" id="progressFillMobile" cx="22" cy="22" r="18" stroke="url(#progressGrad)" stroke-dasharray="113.1" stroke-dashoffset="113.1"/>
-            </svg>
-            <span class="progress-label" id="progressLabelMobile">0</span>
-          </div>
-          <div style="flex:1;min-width:0">
-            <p class="dock-act" id="dockActMobile" style="margin:0"></p>
-            <h2 class="dock-title" id="dockTitleMobile" style="margin:0"></h2>
-            <p class="dock-epithet" id="dockEpithetMobile" style="margin:0.15rem 0 0;font-size:10px"></p>
-          </div>
-        </div>
-        <button type="button" class="cta-btn" id="openStoryBtnMobile"></button>
       </div>
     </section>
 
@@ -2102,7 +1977,6 @@
       <p class="sidebar-head" id="sidebarTitle">Specimens</p>
       <p class="sidebar-progress" id="progressText"></p>
       <nav class="side-nav" id="sideNav" aria-label="Choose a specimen"></nav>
-      <div class="sidebar-fill" id="sidebarTip"></div>
     </aside>
     </div>
 
@@ -2170,8 +2044,7 @@
             </div>
           </section>
           <section class="tab-panel" data-tab="story" role="tabpanel">
-            <p class="blurb" id="blurb"></p>
-            <p class="anthro-note"><strong id="anthroLabel">Between us & the sea</strong><span id="anthro"></span></p>
+            <div class="story-cultural" id="storyText"></div>
           </section>
           <section class="tab-panel" data-tab="facts" role="tabpanel">
             <div class="facts-sheet">
@@ -2222,7 +2095,6 @@
         windowTitle: 'DEPTHS.exe — Ocean Zone',
         panelWindow: 'Specimen Viewer 3000',
         letterWindow: 'readme.txt',
-        ticker: 'WELCOME TO THE DEPTHS ZONE • THE EXTREME • HOVER TO PAUSE THE RING • CLICK >>> OPEN STORY <<< • FLORIDA REEFS • ANTHROLOGY PLAQUES •',
         openStory: '>>> OPEN STORY <<<',
         prev: '◄ Prev', next: 'Next ►',
         pauseSpin: '⏸ Pause', resumeSpin: '▶ Spin',
@@ -2238,7 +2110,7 @@
         makesKindFree: 'free',
         makesKindPlay: 'online',
         makesKindSearch: 'search',
-        anthroLabel: '☆ Human × Ocean ☆',
+        storyLabel: 'Cultural significance',
         traitsLabel: 'Traits', taxLabel: 'Kinship', histLabel: 'Habitat', mythLabel: 'Lore',
         factsListHead: '★ Recorded observations ★',
         factsSourcesHead: '★ Sources & peer-reviewed reading ★',
@@ -2282,27 +2154,18 @@
         letterBadge: 'from_the_shore.txt',
         letterTitle: 'readme_for_you.log',
         letterHtml: `<p>You describe the ocean the way other people describe archives — rooms, labels, reasons to come back. When you mentioned <em>The Extreme</em>, I kept circling the specifics: octopuses, crochet, puzzles, that library-with-a-crafts-room you keep sketching in conversation.</p>
-<p>So this isn’t a generic marine page. Six animals from the show, Gulf and Florida blue in the frame, a <strong>Story</strong> tab for the anthropology angle — how people and animals meet, not just charts — and a seventh polaroid on the ring: an octopus at the desk, watching the bonus shelf.</p>
+<p>Six animals from the show, Gulf and Florida blue in the frame, and a <strong>Story</strong> tab for how each creature matters to the people who live beside it — not just charts. A seventh polaroid on the ring: an octopus at the desk, watching the bonus shelf.</p>
 <p>Tap <strong>ES</strong> if Spanish fits better. On your phone, pick a card and open story; on a wider screen, hover the ring to pause it. Open all six and the passport bar fills — a record that you actually walked the zone.</p>
-<p>I built it because your interests kept pulling me back — not as a love letter, just evidence I was listening, and curious enough to follow the thread.</p>
 <p class="letter-sign">— curator log · updated from your notes</p>`,
         completeToast: '★★★ Every specimen viewed — confetti time ★★★',
         footer: 'Best viewed 1024×768 · Flash-free since 2012 ·',
         visitors: 'Visitors:',
         galleryTitle: '★ 3D Specimen Gallery ★',
         galleryStatus: '● LIVE',
-        mobileHint: 'Tap a card to preview · then Open Story below',
         mobileOpenLocked: 'View all 6 stories to unlock the octopus',
+        mobileTapHint: 'Tap a card or passport slot to open its story',
         sidebarTitle: 'Specimens',
-        sideNavHint: 'Pick one — the ring spins it forward. Click the card to open story.',
         progressText: (n, t) => `${n} of ${t} viewed`,
-        progressBlurb: (n, t) =>
-          `<strong>${n} of ${t}</strong> stories opened. ★ only appears in the passport bar above — pick the next one in the gallery.`,
-        sidebarTips: [
-          'Six specimens from <em>The Extreme</em> — tap a card in the gallery, then open story.',
-          '<strong>Story</strong> is the anthropology plaque: people × ocean, not just biology.',
-          'Finish all six to unlock the octopus bonus in the passport bar.',
-        ],
       },
       es: {
         brandTitle: '★ Profundidades ★',
@@ -2310,7 +2173,6 @@
         windowTitle: 'PROFUNDIDADES.exe',
         panelWindow: 'Visor de espécimen',
         letterWindow: 'nota_secreta.txt',
-        ticker: 'BIENVENIDO A LA ZONA • THE EXTREME • TOCA PARA PAUSAR • ABRIR HISTORIA • FLORIDA • ANTROPOLOGÍA •',
         openStory: '>>> ABRIR <<<',
         prev: '◄ Ant', next: 'Sig ►',
         pauseSpin: '⏸ Pausa', resumeSpin: '▶ Girar',
@@ -2326,7 +2188,7 @@
         makesKindFree: 'gratis',
         makesKindPlay: 'en línea',
         makesKindSearch: 'buscar',
-        anthroLabel: '☆ Humano × Mar ☆',
+        storyLabel: 'Significado cultural',
         traitsLabel: 'Rasgos', taxLabel: 'Parentesco', histLabel: 'Hábitat', mythLabel: 'Lore',
         factsListHead: '★ Observaciones registradas ★',
         factsSourcesHead: '★ Fuentes y lectura revisada ★',
@@ -2370,27 +2232,18 @@
         letterBadge: 'desde_la_orilla.txt',
         letterTitle: 'lee_esto_para_ti.log',
         letterHtml: `<p>Describes el mar como quien describe archivos — cuartos, etiquetas, motivos para volver. Cuando salió <em>The Extreme</em>, seguí dando vueltas a los detalles: pulpos, crochet, rompecabezas, esa biblioteca con taller de manualidades que vas armando en conversación.</p>
-<p>No es una página marina genérica. Seis animales del programa, azul del Golfo y Florida en el marco, la pestaña <strong>Historia</strong> para el ángulo antropológico — cómo se encuentran personas y animales, no solo tablas — y un séptimo polaroid en el anillo: un pulpo en el mostrador, vigilando el estante extra.</p>
-<p>Toca <strong>EN</strong> si prefieres inglés. En el teléfono, elige una ficha y abre la historia; en pantalla grande, pasa el cursor sobre el anillo para pausarlo. Abre las seis y la barra del pasaporte se llena — registro de que recorriste la zona.</p>
-<p>Lo hice porque tus temas me seguían llamando la atención — no como carta de amor, solo prueba de que escuché y tenía curiosidad de seguir el hilo.</p>
+<p>Seis animales del programa, azul del Golfo y Florida en el marco, y la pestaña <strong>Historia</strong> para lo que cada criatura significa a quien vive junto al mar — no solo tablas. Un séptimo polaroid en el anillo: un pulpo en el mostrador, vigilando el estante extra.</p>
+<p>Toca <strong>EN</strong> si prefieres inglés. En el teléfono, elige una ficha y abre la historia; en pantalla grande, pasa el cursor sobre el anillo para pausarlo. Abre las seis y la barra del pasaporte se llena.</p>
 <p class="letter-sign">— bitácora del curador · actualizada con tus notas</p>`,
         completeToast: '★★★ Viste todos los espécimenes — confeti ★★★',
         footer: 'Mejor en 1024×768 · Sin Flash ·',
         visitors: 'Visitas:',
         galleryTitle: '★ Galería 3D ★',
         galleryStatus: '● EN VIVO',
-        mobileHint: 'Toca una ficha para previsualizar · luego Abrir historia abajo',
         mobileOpenLocked: 'Ve las 6 historias para desbloquear el pulpo',
+        mobileTapHint: 'Toca una ficha o un sello del pasaporte para abrir la historia',
         sidebarTitle: 'Espécimenes',
-        sideNavHint: 'Elige uno — el anillo lo trae al frente. Toca la ficha para abrir.',
         progressText: (n, t) => `${n} de ${t} vistos`,
-        progressBlurb: (n, t) =>
-          `<strong>${n} de ${t}</strong> historias abiertas. ★ solo en la barra del pasaporte arriba — elige el siguiente en la galería.`,
-        sidebarTips: [
-          'Seis espécimenes de <em>The Extreme</em> — toca una ficha en la galería y abre la historia.',
-          '<strong>Historia</strong> es la placa de antropología: humano × mar.',
-          'Completa los seis para desbloquear el pulpo extra en la barra del pasaporte.',
-        ],
       },
     };
 
@@ -2420,7 +2273,7 @@
         title: 'Octopus', epithet: 'Eight arms, shifting skin',
         act: 'Bonus · Disguise — The Extreme',
         blurb: 'No spine, no shell — only muscle, siphon, and skin that rewrites color and texture in a heartbeat.',
-        anthro: 'Warm-water octopuses sit at the crossroads of science and dockside story: lab puzzles, small-boat sightings, and <em>The Extreme</em>’s Disguise episode, where the mimic octopus copies lionfish, flatfish, and sea snakes. Along Florida and Gulf limestone ledges, the common octopus hunts crabs by night and vanishes by day.',
+        anthro: '<p>On Gulf and Florida docks, octopuses slip from crab traps and dive stories alike—armored escape artists that feel briefly otherworldly. <em>The Extreme</em>’s Disguise episode fixed the mimic octopus in public memory as a performer that borrows lionfish, flatfish, and sea-snake shapes to cross open sand.</p><p>Coastal families rarely need a lab to respect these animals: they vanish by day, hunt by night, and leave the impression that the reef still keeps secrets.</p>',
         traits: 'Soft body · eight arms · chromatophore camouflage · three hearts',
         taxonomy: 'Octopus vulgaris · Order Octopoda · Class Cephalopoda',
         history: 'Shallow reefs & seagrass · Indo-Pacific mimic species · Florida Keys & Gulf coasts',
@@ -2453,7 +2306,7 @@
         title: 'Pulpo', epithet: 'Ocho brazos, piel que cambia',
         act: 'Extra · Disfraz — The Extreme',
         blurb: 'Sin columna ni caparazón — solo músculo, sifón y piel que reescribe color y textura al instante.',
-        anthro: 'Los pulpos de aguas cálidas unen ciencia y relato de costa: acertijos en laboratorio, avistamientos desde botes pequeños y el episodio <em>Disfraz</em> de <em>The Extreme</em>, donde el pulpo mimético copia peces león, planos y serpientes marinas. En rocas y praderas de Florida y el Golfo, el pulpo común caza cangrejos de noche y desaparece de día.',
+          anthro: '<p>En muelles del Golfo y Florida, los pulpos salen de nasas y relatos de buceo—maestros del escape que parecen de otro planeta. El episodio <em>Disfraz</em> de <em>The Extreme</em> dejó en la memoria al pulpo mimético copiando peces león, planos y serpientes marinas.</p><p>Quien vive junto al mar aprende pronto: desaparecen de día, cazan de noche y el arrecife aún guarda sorpresas.</p>',
         traits: 'Cuerpo blando · ocho brazos · camuflaje · tres corazones',
         taxonomy: 'Octopus vulgaris · Orden Octopoda · Clase Cephalopoda',
         history: 'Arrecifes someros · pulpo mimético Indo-Pacífico · Florida y Golfo',
@@ -2489,7 +2342,7 @@
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg/1280px-Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg',
         imageAlt: 'Scalloped hammerhead shark',
         blurb: 'The hammerhead moves as if the ocean sketched a thought — wide, deliberate, almost architectural in its grace.',
-        anthro: 'In Atlantic and Gulf communities, hammerheads appear in dock stories as powerful visitors — respected, sometimes feared, always remembered. Cuban and Florida fishers have long distinguished them from other sharks by the unmistakable “martillo” silhouette at the surface.',
+        anthro: '<p>Along Atlantic and Gulf coasts, the “martillo” is named before the fin breaks the surface. Fishers, kids on the pier, and charter crews all know that wide shadow—respected, sometimes feared, always remembered.</p><p>Schools of hammerheads at cleaning stations draw tourists and stand in for wild seas that still brush Florida’s cities. Cuban and Florida traditions long treated this silhouette as its own kind of shark, not a generic gray fin.</p>',
         traits: 'Expanded cephalofoil · lateral eyes · schooling pelagic hunter',
         taxonomy: 'Sphyrna lewini · Family Sphyrnidae · Class Chondrichthyes',
         history: 'Coastal & offshore Atlantic · Gulf of Mexico · Caribbean · eastern Pacific populations',
@@ -2523,7 +2376,7 @@
         es: {
           title: 'Tiburón martillo', epithet: 'Una silueta que la marea devuelve', act: 'Acto I · Super tiburones',
           blurb: 'Se mueve como si el océano dibujara un pensamiento — ancho, deliberado, casi arquitectónico.',
-          anthro: 'En el Atlántico y el Golfo, el “martillo” es visitante poderoso en historias de muelle — respetado y recordado.',
+          anthro: '<p>En el Atlántico y el Golfo, el “martillo” se nombra antes de que rompa la superficie. Pescadores y turistas lo reconocen al instante—respetado, a veces temido, siempre recordado.</p><p>Los cardúmenes en montes submarinos simbolizan mares salvajes que aún rozan las ciudades de Florida.</p>',
           traits: 'Cefalofoil amplio · ojos laterales · cardumen pelágico',
           taxonomy: 'Sphyrna lewini · Familia Sphyrnidae',
           history: 'Atlántico · Golfo de México · Caribe · Pacífico oriental',
@@ -2551,7 +2404,7 @@
         image: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Isistius_brasiliensis.jpg',
         imageAlt: 'Cookiecutter shark',
         blurb: 'A perfect circle — a seal of visitation on giants who never saw the visitor.',
-        anthro: 'Before biologists named <em>Isistius</em>, round scars on whales, tuna, and even submarine rubber sounded like sea monsters. The truth is smaller and stranger: a fish that takes a measured plug of flesh and vanishes.',
+        anthro: '<p>Long before science named <em>Isistius</em>, round scars on tuna, whales, and even submarine gear fueled dockside tales of invisible biters. Night divers and submariners shared the same punchline: something small left a perfect hole and vanished.</p><p>Today those marks still read as a signature—proof that the deep sends visitors no one expects, and that the smallest shark can write itself onto the largest animals.</p>',
         traits: 'Cigar-shaped body · photophores · suctorial lips · replaceable lower teeth',
         taxonomy: 'Isistius brasiliensis · Family Dalatiidae · Order Squaliformes',
         history: 'Mesopelagic 200–1,000 m · diel vertical migration · worldwide warm oceans',
@@ -2584,7 +2437,7 @@
         es: {
           title: 'Tiburón cigarro', epithet: 'Firma pequeña, cicatriz larga', act: 'Acto II · Mordedores',
           blurb: 'Un círculo perfecto — sello de visita en gigantes que no vieron al visitante.',
-          anthro: 'Antes de nombrar <em>Isistius</em>, las marcas redondas en ballenas y submarinos parecían monstruos marinos.',
+          anthro: '<p>Antes de nombrar <em>Isistius</em>, las marcas redondas en atunes, ballenas y submarinos alimentaron cuentos de mordedores invisibles. El chiste repetido: algo pequeño dejó un agujero perfecto y desapareció.</p><p>Esas cicatrices siguen siendo una firma—el tiburón más pequeño escribiéndose en los más grandes.</p>',
           traits: 'Cuerpo en cigarro · fotóforos · labios succionadores',
           taxonomy: 'Isistius brasiliensis · Dalatiidae',
           history: 'Mesopelágico · migración vertical · océanos cálidos',
@@ -2610,7 +2463,7 @@
         image: 'https://upload.wikimedia.org/wikipedia/commons/7/75/Chironex_fleckeri_%28sea_wasp%29.jpg',
         imageAlt: 'Box jellyfish Chironex fleckeri',
         blurb: 'Nearly invisible — geometry of light and hazard.',
-        anthro: 'On tropical coasts, box jellies sit in calendars of caution — swim flags, vinegar bottles, stories told before holidays. Anthropologists note how “invisible danger” shapes beach culture more than almost any other marine animal.',
+        anthro: '<p>Tropical beach towns keep box jellyfish in the holiday rulebook: swim flags, vinegar in the kit, warnings from aunties before the first swim. A nearly invisible animal steers where families feel safe.</p><p>Invisible danger often weighs more than sharks in shore lore—shaping which coves feel welcoming and which stories get retold every summer.</p>',
         traits: 'Cuboidal bell · four sides · complex eyes · potent cnidocytes',
         taxonomy: 'Chironex fleckeri · Class Cubozoa · Phylum Cnidaria',
         history: 'Shallow tropical Indo-Pacific · also Caribbean relatives · nearshore after rains',
@@ -2643,7 +2496,7 @@
         es: {
           title: 'Medusa cubo', epithet: 'Campana de vidrio, aviso antiguo', act: 'Acto III · Veneno',
           blurb: 'Casi invisible — geometría de luz y peligro.',
-          anthro: 'En costas tropicales, la medusa cubo marca calendarios de cautela — banderas, vinagre, cuentos antes de vacaciones.',
+          anthro: '<p>En pueblos de playa tropicales, la medusa cubo entra en el calendario de vacaciones: banderas, vinagre, avisos antes del primer baño. Un animal casi invisible decide dónde la familia se siente segura.</p><p>En el relato costero, el peligro que no se ve pesa más que muchos tiburones.</p>',
           traits: 'Campana cúbica · cuatro lados · ojos complejos',
           taxonomy: 'Chironex fleckeri · Cubozoa',
           history: 'Indo-Pacífico tropical · manglares y playas',
@@ -2669,7 +2522,7 @@
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Hippocampus_hystrix.jpg/1280px-Hippocampus_hystrix.jpg',
         imageAlt: 'Thorny seahorse',
         blurb: 'Upright in the current — patience breathing through bone and grace.',
-        anthro: 'Seahorses appear on wedding rings, Caribbean folk art, and Chinese medicine debates — symbols of gentleness that mask a predator’s strike. Florida’s shallow grass beds tie local identity to animals many visitors never notice.',
+        anthro: '<p>Wedding bands, Caribbean folk carvings, and medicine-market debates all borrow the seahorse’s delicate outline—gentleness cast in metal while the living fish waits in grass beds.</p><p>In Florida’s shallow estuaries, people who know the flats treat seahorses as quiet neighbors outsiders walk past. The symbol and the predator share the same body.</p>',
         traits: 'Upright posture · prehensile tail · fused jaw · male brood pouch',
         taxonomy: 'Hippocampus spp. · Family Syngnathidae · Order Syngnathiformes',
         history: 'Seagrass · mangroves · coral rubble · global tropics & subtropics',
@@ -2703,7 +2556,7 @@
         es: {
           title: 'Caballito de mar', epithet: 'Devoción en corrientes inversas', act: 'Acto IV · Papás',
           blurb: 'Vertical en la corriente — paciencia que respira entre hueso y gracia.',
-          anthro: 'En joyería y arte caribeño simbolizan ternura; en Florida las praderas marinas los esconden.',
+          anthro: '<p>En joyería y arte caribeño simbolizan ternura; en mercados de medicina tradicional siguen en debate. En las praderas poco profundas de Florida, quien conoce los bancos los trata como vecinos discretos.</p>',
           traits: 'Postura vertical · cola prensil · bolsa paternal',
           taxonomy: 'Hippocampus · Syngnathidae',
           history: 'Pastos marinos · manglares · trópico global',
@@ -2729,7 +2582,7 @@
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Alpheus_bellulus_57108149.jpg/1280px-Alpheus_bellulus_57108149.jpg',
         imageAlt: 'Tiger pistol shrimp',
         blurb: 'A snap like distant lightning — power in perfect timing.',
-        anthro: 'Reefkeepers know pistol shrimp as the roommate who rearranges the apartment — and the goby as the lookout. That partnership became a parable of trust across species lines in Caribbean diving culture.',
+        anthro: '<p>Aquarium hobbyists nickname pistol shrimp the roommate who redecorates overnight—sand piles, snapped claws, constant renovation. Pair that with a goby on guard and Caribbean dive culture gets a ready parable: one digs, one watches, both survive by staying close.</p><p>On the reef, that snap is also neighborhood noise: territory, warning, and dinner announced in milliseconds.</p>',
         traits: 'Asymmetric claws · cavitation snap · burrow builder',
         taxonomy: 'Alpheus bellulus · Family Alpheidae · Order Decapoda',
         history: 'Indo-Pacific reefs · popular in aquaria · mutualism with gobies worldwide',
@@ -2762,7 +2615,7 @@
         es: {
           title: 'Camarón pistola', epithet: 'Trueno en la palma', act: 'Acto V · Ruidosos',
           blurb: 'Un chasquido como relámpago lejano — poder en el tiempo justo.',
-          anthro: 'En arrecifes, el camarón excava y el gobio vigila — metáfora de confianza entre especies.',
+          anthro: '<p>En acuarios, el camarón pistola es el compañero que redecora la arena; el gobio vigila la entrada. En el Caribe, esa pareja se volvió parábola: uno cava, otro alerta, y los dos sobreviven juntos.</p>',
           traits: 'Pinza asimétrica · cavitación · madriguera',
           taxonomy: 'Alpheus bellulus · Alpheidae',
           history: 'Arrecifes Indo-Pacífico · mutualismo con gobios',
@@ -2788,7 +2641,7 @@
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Physeter_macrocephalus.jpg/1280px-Physeter_macrocephalus.jpg',
         imageAlt: 'Sperm whale',
         blurb: 'A cathedral of flesh and sound — memory preferring the cold.',
-        anthro: 'Moby-Dick fixed the sperm whale in literature, but Atlantic and Caribbean histories also know them through whaling logbooks, ambergris lore, and today’s whale-watching economies — a species that carries human stories in its scars.',
+        anthro: '<p><em>Moby-Dick</em> gave English a vocabulary for obsession, but Atlantic and Caribbean histories already knew sperm whales through whaling logs, ambergris rumors, and the economies that followed grieving oceans.</p><p>Today whale-watching and conservation carry those memories forward. Cookiecutter scars on their lips still turn up in photos—old industries written on living bodies.</p>',
         traits: 'Largest toothed predator · spermaceti organ · echolocation clicks',
         taxonomy: 'Physeter macrocephalus · Family Physeteridae · Order Cetacea',
         history: 'Deep offshore · dives >1,000 m · worldwide except polar ice',
@@ -2822,7 +2675,7 @@
         es: {
           title: 'Cachalote', epithet: 'Archivo del abismo', act: 'Acto VI · Buceadores',
           blurb: 'Catedral de carne y sonido — memoria que prefiere el frío.',
-          anthro: 'Moby-Dick lo fijó en la literatura; el Atlántico lo conoce por bitácoras, ámbar gris y avistamientos actuales.',
+          anthro: '<p><em>Moby-Dick</em> lo fijó en la literatura, pero el Atlántico y el Caribe ya lo conocían por bitácoras balleneras, rumores de ámbar gris y avistamientos de hoy.</p><p>Las cicatrices de tiburón cigarro en los labios siguen contando historias de industrias pasadas.</p>',
           traits: 'Mayor depredador con dientes · órgano de espermaceti · clicks',
           taxonomy: 'Physeter macrocephalus · Physeteridae',
           history: 'Aguas profundas · buceos >1.000 m · casi mundial',
@@ -3503,14 +3356,8 @@
     const letterPanel = document.getElementById('letterPanel');
     const letterBody = document.getElementById('letterBody');
     const mobileGrid = document.getElementById('mobileGrid');
-    const progressFillMobile = document.getElementById('progressFillMobile');
-    const progressLabelMobile = document.getElementById('progressLabelMobile');
     const progressText = document.getElementById('progressText');
-    const sidebarTip = document.getElementById('sidebarTip');
-    const mobileFill = document.getElementById('mobileFill');
-    const openStoryBtnMobile = document.getElementById('openStoryBtnMobile');
     const dockThumb = document.getElementById('dockThumb');
-    const dockThumbMobile = document.getElementById('dockThumbMobile');
     const progressTextMobile = document.getElementById('progressTextMobile');
     const dockAct = document.getElementById('dockAct');
     const dockTitle = document.getElementById('dockTitle');
@@ -3531,7 +3378,7 @@
     const heroImg = document.getElementById('heroImg');
     const episodeEl = document.getElementById('episode');
     const titleEl = document.getElementById('title');
-    const blurbEl = document.getElementById('blurb');
+    const storyTextEl = document.getElementById('storyText');
     const factsOverview = document.getElementById('factsOverview');
     const factsList = document.getElementById('factsList');
     const factsSources = document.getElementById('factsSources');
@@ -3540,7 +3387,6 @@
     const makesCrochet = document.getElementById('makesCrochet');
     const factsTaxStrip = document.getElementById('factsTaxStrip');
     const epithetEl = document.getElementById('epithet');
-    const anthroEl = document.getElementById('anthro');
     const playerLoading = document.getElementById('playerLoading');
     const playerFallback = document.getElementById('playerFallback');
     const playerEl = document.getElementById('player');
@@ -3554,7 +3400,6 @@
     let scrollLockY = 0;
     let spinPaused = false;
     let carouselItemEls = [];
-    let sidebarTipIdx = 0;
     const PROGRESS_CIRC = 113.1;
 
     function getPassport() {
@@ -3666,24 +3511,9 @@
       document.body.classList.toggle('zone-complete', viewedAllMain());
       if (isNew) flashStampedUI(specimenId);
       updateProgressUI();
-      updateVisitorFill();
       if (isNew && viewedAllMain()) maybeCelebrate();
       if (isNew && specimenId !== 'CUR-00' && isBonusOctopusUnlocked()) refreshGalleryAfterBonusUnlock();
       return isNew;
-    }
-
-    function updateVisitorFill() {
-      const n = viewedCount();
-      const total = ITEMS.length;
-      let html;
-      if (n > 0) {
-        html = t('progressBlurb')(n, total);
-      } else {
-        const tips = t('sidebarTips');
-        html = tips[sidebarTipIdx % tips.length];
-      }
-      if (sidebarTip) sidebarTip.innerHTML = html;
-      if (mobileFill) mobileFill.innerHTML = html;
     }
 
     function updateProgressUI() {
@@ -3692,20 +3522,10 @@
       const pct = total ? n / total : 0;
       const offset = String(PROGRESS_CIRC * (1 - pct));
       if (progressFill) progressFill.style.strokeDashoffset = offset;
-      if (progressFillMobile) progressFillMobile.style.strokeDashoffset = offset;
       if (progressLabel) progressLabel.textContent = String(n);
-      if (progressLabelMobile) progressLabelMobile.textContent = String(n);
       if (progressText) progressText.textContent = t('progressText')(n, total);
       if (progressTextMobile) progressTextMobile.textContent = t('progressText')(n, total);
       document.body.classList.toggle('zone-complete', viewedAllMain());
-    }
-
-    function syncMobileStoryBtn() {
-      if (!openStoryBtnMobile) return;
-      const ok = canAccessSpecimen(selectedIdx);
-      openStoryBtnMobile.disabled = !ok;
-      openStoryBtnMobile.setAttribute('aria-disabled', ok ? 'false' : 'true');
-      openStoryBtnMobile.title = ok ? t('openStory') : t('mobileOpenLocked');
     }
 
     function updateDockMeta(item) {
@@ -3713,10 +3533,9 @@
       const title = L(item, 'title');
       const epithet = L(item, 'epithet') || '';
       if (dockThumb) { dockThumb.src = item.image; dockThumb.alt = title; }
-      if (dockThumbMobile) { dockThumbMobile.src = item.image; dockThumbMobile.alt = title; }
-      const acts = [dockAct, document.getElementById('dockActMobile')];
-      const titles = [dockTitle, document.getElementById('dockTitleMobile')];
-      const epithets = [dockEpithet, document.getElementById('dockEpithetMobile')];
+      const acts = [dockAct];
+      const titles = [dockTitle];
+      const epithets = [dockEpithet];
       acts.forEach((el) => { if (el) el.textContent = act; });
       titles.forEach((el) => { if (el) el.textContent = title; });
       epithets.forEach((el) => { if (el) el.textContent = epithet; });
@@ -3750,11 +3569,6 @@
       const show = !localStorage.getItem(STORAGE_SEEN);
       badgeNew.hidden = !show;
       if (show) badgeNew.textContent = t('badgeNewText');
-    }
-
-    function rotateSidebarTip() {
-      if (!viewedCount()) sidebarTipIdx++;
-      updateVisitorFill();
     }
 
     let didCelebrate = sessionStorage.getItem('depths-celebrated') === '1';
@@ -3865,7 +3679,6 @@
       setPickCurrent(mobileGrid?.querySelectorAll('.mobile-card'), selectedIdx);
       setPickCurrent(sideNav?.querySelectorAll('.side-nav-item'), selectedIdx);
       updateDockMeta(item);
-      syncMobileStoryBtn();
       if (isDesktopLayout()) {
         spinCarouselToIndex(selectedIdx);
         if (scrollPick) {
@@ -3928,7 +3741,10 @@
           btn.disabled = true;
           btn.setAttribute('aria-disabled', 'true');
         } else {
-          bindCardClick(btn, () => focusSpecimenAt(i));
+          bindCardClick(btn, () => {
+            if (isDesktopLayout()) focusSpecimenAt(i);
+            else openSpecimenAt(i, { scrollPick: false });
+          });
         }
         mobileGrid.appendChild(btn);
       });
@@ -4028,12 +3844,8 @@
       document.getElementById('windowTitle').textContent = t('windowTitle');
       document.getElementById('panelWindowTitle').textContent = t('panelWindow');
       document.getElementById('letterWindowTitle').textContent = t('letterWindow');
-      const tick = t('ticker');
-      document.getElementById('tickerA').textContent = tick;
-      document.getElementById('tickerB').textContent = tick;
       document.getElementById('galleryTitle').textContent = t('galleryTitle');
       document.getElementById('galleryStatus').textContent = t('galleryStatus');
-      document.getElementById('mobileHint').textContent = t('mobileHint');
       document.getElementById('sidebarTitle').textContent = t('sidebarTitle');
       document.getElementById('passportLabel').textContent = t('passportLabel');
       syncSoundBtn();
@@ -4047,7 +3859,6 @@
       }
       document.getElementById('siteFooter').innerHTML =
         `${t('footer')} <span id="footerYear">${new Date().getFullYear()}</span>`;
-      document.getElementById('anthroLabel').textContent = t('anthroLabel');
       document.getElementById('factsListHead').textContent = t('factsListHead');
       document.getElementById('factsSourcesHead').textContent = t('factsSourcesHead');
       document.getElementById('tabWatch').textContent = t('tabWatch');
@@ -4058,8 +3869,8 @@
       document.getElementById('makesPuzzlesHead').textContent = t('makesPuzzlesHead');
       document.getElementById('makesCrochetHead').textContent = t('makesCrochetHead');
       if (openStoryBtn) openStoryBtn.textContent = t('openStory');
-      if (openStoryBtnMobile) openStoryBtnMobile.textContent = t('openStory');
-      syncMobileStoryBtn();
+      const mobileTapHint = document.getElementById('mobileTapHint');
+      if (mobileTapHint) mobileTapHint.textContent = t('mobileTapHint');
       if (youtubeLink && currentItem?.youtube) youtubeLink.href = currentItem.youtube;
       document.getElementById('pauseSpinLabel').textContent = spinPaused ? t('resumeSpin') : t('pauseSpin');
       replayBtn.textContent = t('replay');
@@ -4071,11 +3882,7 @@
       buildSideNav();
       buildCarousel();
       setSelection(selectedIdx, { scrollPick: false });
-      if (sidebarTip && isDesktopLayout() && !viewedCount()) {
-        sidebarTip.innerHTML = t('sideNavHint');
-      }
       updateProgressUI();
-      updateVisitorFill();
       if (currentItem) fillPanel(currentItem);
     }
 
@@ -4159,8 +3966,7 @@
       episodeEl.textContent = L(item, 'act') || '';
       epithetEl.textContent = L(item, 'epithet') || '';
       titleEl.textContent = L(item, 'title');
-      if (blurbEl) blurbEl.innerHTML = L(item, 'blurb') || '';
-      if (anthroEl) anthroEl.innerHTML = L(item, 'anthro') || '';
+      if (storyTextEl) storyTextEl.innerHTML = L(item, 'anthro') || '';
       renderFactsPanel(item);
       renderMakesPanel(item);
       mediaSection.style.display = isDesk ? 'none' : '';
@@ -4280,7 +4086,6 @@
     });
 
     openStoryBtn?.addEventListener('click', () => { SoundFX.click(); openPanel(CAROUSEL_ENTRIES[selectedIdx]); });
-    openStoryBtnMobile?.addEventListener('click', () => { SoundFX.click(); openPanel(CAROUSEL_ENTRIES[selectedIdx]); });
     pauseSpinBtn?.addEventListener('click', () => {
       SoundFX.click();
       spinPaused = !spinPaused;
@@ -4335,8 +4140,6 @@
       muteBtn.textContent = isMuted ? t('soundOn') : t('mute');
       Bgm.duck(!isMuted);
     });
-
-    setInterval(rotateSidebarTip, 12000);
 
     if (bgVideo) {
       const tryPlay = () => bgVideo.play().catch(() => {});
