@@ -1597,7 +1597,7 @@
         <div class="topbar-actions">
           <button type="button" class="gloss-btn" id="soundBtn" aria-pressed="true" title="Sound effects">🔊</button>
           <button type="button" class="gloss-btn" id="langBtn" aria-pressed="false">EN</button>
-          <button type="button" class="gloss-btn note" id="noteBtn" aria-label="Note">🐙</button>
+          <button type="button" class="gloss-btn note" id="noteBtn" aria-label="Note" hidden>🐙</button>
         </div>
       </header>
       <div class="ticker-wrap" aria-hidden="true">
@@ -1781,7 +1781,7 @@
     const I18N = {
       en: {
         brandTitle: '★ Depths ★',
-        brandSub: 'Six ocean stories · made for you',
+        brandSub: 'Six ocean stories · Lo más extremo',
         windowTitle: 'DEPTHS.exe — Ocean Zone',
         panelWindow: 'Specimen Viewer 3000',
         letterWindow: 'readme.txt',
@@ -1791,7 +1791,7 @@
         pauseSpin: '⏸ Pause', resumeSpin: '▶ Spin',
         reverse: '↺ Rev', reverseOn: '↺ ON',
         tabWatch: '📺 Watch', tabStory: '📖 Story', tabFacts: '📋 Facts', tabMakes: '🧩 Makes',
-        makesIntro: 'If this specimen stuck with you — puzzles and crochet to take home (links open in a new tab).',
+        makesIntro: 'Puzzles and crochet related to this specimen (links open in a new tab).',
         makesPuzzlesHead: 'Jigsaw & 3D puzzles',
         makesCrochetHead: 'Crochet kits & patterns',
         makesPuzzlesEmpty: 'No puzzle listing saved yet — try Etsy or Ravensburger ocean sets.',
@@ -1830,26 +1830,26 @@
 <p>Tap <strong>ES</strong> if Spanish fits better. On your phone, pick a card and open story; on a wider screen, hover the ring to pause it. Open all six and the passport bar fills — a record that you actually walked the zone.</p>
 <p>I built it because your interests kept pulling me back — not as a love letter, just evidence I was listening, and curious enough to follow the thread.</p>
 <p class="letter-sign">— curator log · updated from your notes</p>`,
-        completeToast: '★★★ You have seen every specimen — confetti time ★★★',
+        completeToast: '★★★ Every specimen viewed — confetti time ★★★',
         footer: 'Best viewed 1024×768 · Flash-free since 2012 ·',
         visitors: 'Visitors:',
         galleryTitle: '★ 3D Specimen Gallery ★',
         galleryStatus: '● LIVE',
-        mobileHint: 'Pick a specimen you love · then open story',
+        mobileHint: 'Pick a specimen · then open story',
         sidebarTitle: 'Specimens',
         sideNavHint: 'Pick one — the ring spins it forward. Click the card to open story.',
         progressText: (n, t) => `${n} of ${t} viewed`,
         progressBlurb: (n, t) =>
-          `<strong>${n} of ${t}</strong> stories opened. ★ only appears in your passport above — pick the next one in the gallery.`,
+          `<strong>${n} of ${t}</strong> stories opened. ★ only appears in the passport bar above — pick the next one in the gallery.`,
         sidebarTips: [
           'Six specimens from <em>Lo más extremo</em> — tap a card in the gallery, then open story.',
           '<strong>Story</strong> is the anthropology plaque: people × ocean, not just biology.',
-          'Finish all six to unlock the octopus bonus in your passport.',
+          'Finish all six to unlock the octopus bonus in the passport bar.',
         ],
       },
       es: {
         brandTitle: '★ Profundidades ★',
-        brandSub: 'Seis historias del mar · hecho para ti',
+        brandSub: 'Seis historias del mar · Lo más extremo',
         windowTitle: 'PROFUNDIDADES.exe',
         panelWindow: 'Visor de espécimen',
         letterWindow: 'nota_secreta.txt',
@@ -1859,7 +1859,7 @@
         pauseSpin: '⏸ Pausa', resumeSpin: '▶ Girar',
         reverse: '↺ Inv', reverseOn: '↺ ON',
         tabWatch: '📺 Ver', tabStory: '📖 Historia', tabFacts: '📋 Datos', tabMakes: '🧩 Manualidades',
-        makesIntro: 'Si este espécimen te quedó en la cabeza — rompecabezas y crochet para llevar (enlaces en pestaña nueva).',
+        makesIntro: 'Rompecabezas y crochet de este espécimen (enlaces en pestaña nueva).',
         makesPuzzlesHead: 'Rompecabezas y 3D',
         makesCrochetHead: 'Kits y patrones de crochet',
         makesPuzzlesEmpty: 'Sin rompecabezas guardado — prueba Etsy u océano en Ravensburger.',
@@ -1908,11 +1908,11 @@
         sideNavHint: 'Elige uno — el anillo lo trae al frente. Toca la ficha para abrir.',
         progressText: (n, t) => `${n} de ${t} vistos`,
         progressBlurb: (n, t) =>
-          `<strong>${n} de ${t}</strong> historias abiertas. ★ solo en tu pasaporte arriba — elige el siguiente en la galería.`,
+          `<strong>${n} de ${t}</strong> historias abiertas. ★ solo en la barra del pasaporte arriba — elige el siguiente en la galería.`,
         sidebarTips: [
           'Seis espécimenes de <em>Lo más extremo</em> — toca una ficha en la galería y abre la historia.',
           '<strong>Historia</strong> es la placa de antropología: humano × mar.',
-          'Completa los seis para desbloquear el pulpo extra en tu pasaporte.',
+          'Completa los seis para desbloquear el pulpo extra en la barra del pasaporte.',
         ],
       },
     };
@@ -1933,7 +1933,7 @@
         title: 'The quiet curator', epithet: 'Eight arms, one library card',
         act: 'Bonus · Disguise — Lo más extremo',
         blurb: 'Every good collection needs someone clever at the door — and on <em>The Most Extreme</em>, the mimic octopus won the Disguise episode for shape-shifting that fooled the sea itself. This desk specimen guards the crafts room between polaroids.',
-        anthro: 'You said octopuses feel like the kind of mind that would run a crafts room — so this one guards the desk: eight arms, one library card, and patience for the slow work of sorting beautiful things.',
+        anthro: 'Octopuses read like the kind of mind that would run a crafts room — so this desk specimen guards the shelf: eight arms, one library card, and patience for the slow work of sorting beautiful things.',
         traits: 'Soft body · eight arms · blue blood · three hearts',
         taxonomy: 'Octopus vulgaris · Order Octopoda · Class Cephalopoda',
         history: 'Shallow reefs & seagrass · Florida Keys to global warm coasts',
@@ -1966,7 +1966,7 @@
         title: 'La curadora tranquila', epithet: 'Ocho brazos, una tarjeta de biblioteca',
         act: 'Extra · Disfraz — Lo más extremo',
         blurb: 'Toda buena colección necesita alguien listo en la entrada — en <em>Lo más extremo</em>, el pulpo mimético ganó el episodio <em>Disfraz</em>. Este espécimen cuida el taller entre polaroids.',
-        anthro: 'Dijiste que los pulpos parecen la mente que llevaría un taller — por eso cuida el mostrador: ocho brazos, una tarjeta de biblioteca, y paciencia para ordenar cosas bellas.',
+        anthro: 'Los pulpos parecen la mente que llevaría un taller — este espécimen cuida el mostrador: ocho brazos, una tarjeta de biblioteca, y paciencia para ordenar cosas bellas.',
         traits: 'Cuerpo blando · ocho brazos · sangre azul · tres corazones',
         taxonomy: 'Octopus vulgaris · Orden Octopoda',
         history: 'Arrecifes someros y praderas · Florida y costas cálidas',
@@ -3392,7 +3392,7 @@
       applyUI();
       if (letterPanel.classList.contains('open')) fillLetter();
     });
-    noteBtn.addEventListener('click', () => { SoundFX.click(); openLetter(); });
+    noteBtn?.addEventListener('click', () => { SoundFX.click(); openLetter(); });
     letterClose.addEventListener('click', closeLetter);
     letterPanel.addEventListener('click', (e) => { if (e.target === letterPanel) closeLetter(); });
     closeBtn.addEventListener('click', closePanel);

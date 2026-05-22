@@ -258,11 +258,10 @@ async function runSuite(page, label) {
     await page.waitForTimeout(200);
   }
 
-  await page.locator('#noteBtn').click();
-  results.push([`${label}: note opens letter`, await page.locator('#letterPanel').evaluate((el) => el.classList.contains('open')), true]);
-  const letterText = await page.locator('#letterBody').textContent();
-  results.push([`${label}: letter feels personal`, /listening|escuché|curious|curiosidad|follow the thread|seguir el hilo/i.test(letterText || ''), true]);
-  await page.locator('#letterClose').click();
+  const noteHidden = await page.locator('#noteBtn').evaluate((el) => el.hidden);
+  results.push([`${label}: readme note hidden`, noteHidden, noteHidden]);
+  const sub = await page.locator('#brandSub').textContent();
+  results.push([`${label}: no made-for-you tagline`, !/made for you|hecho para ti/i.test(sub || ''), sub]);
 
   if (isDesktop) {
     await page.locator('.passport-slot.bonus').click();

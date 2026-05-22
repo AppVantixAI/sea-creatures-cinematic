@@ -39,5 +39,4 @@ BASE_URL=http://127.0.0.1:4173/ node test.mjs
 - **Gallery** — pick a specimen; open story from the card or dock button
 - **Ocean passport** — stars appear after you open each story
 - **Makes tab** — puzzle and crochet links per creature
-- **Octopus note (🐙)** — readme popup
 - **ES** — Spanish UI
