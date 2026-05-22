@@ -53,6 +53,8 @@ async function runSuite(page, label) {
   const passportSlots = await page.locator('.passport-slot').count();
   results.push([`${label}: passport game slots`, passportSlots === 7, passportSlots]);
 
+  page.once('dialog', (dialog) => dialog.accept());
+
   const curatorLocked = await page.evaluate(() => {
     const slot = document.querySelector('.passport-slot.bonus');
     const img = slot?.querySelector('img');
@@ -62,6 +64,22 @@ async function runSuite(page, label) {
       && /Octopus2\.jpg|octopus/i.test(img?.src || '');
   });
   results.push([`${label}: octopus locked until six viewed`, curatorLocked, curatorLocked]);
+
+  await page.evaluate(() => {
+    const ids = ['EXT-01', 'EXT-02', 'EXT-03', 'EXT-04', 'EXT-05', 'EXT-06'];
+    const at = {};
+    ids.forEach((id) => { at[id] = Date.now(); });
+    localStorage.setItem('depths-stories-opened-v2', JSON.stringify({ order: ids, at }));
+  });
+  await page.locator('#resetBtn').click();
+  await page.waitForTimeout(400);
+  const progressCleared = await page.evaluate(() => {
+    const visited = JSON.parse(localStorage.getItem('depths-stories-opened-v2') || '{}').order || [];
+    const stamped = document.querySelectorAll('.passport-slot.stamped').length;
+    const octLocked = document.querySelector('.passport-slot.bonus')?.disabled;
+    return visited.length === 0 && stamped === 0 && octLocked === true;
+  });
+  results.push([`${label}: reset clears progress`, progressCleared, progressCleared]);
 
   await page.evaluate(() => {
     localStorage.setItem('mia-ocean-passport-v1', JSON.stringify(['EXT-01', 'EXT-02', 'EXT-03', 'EXT-04', 'EXT-05', 'EXT-06']));

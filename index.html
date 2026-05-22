@@ -1614,6 +1614,7 @@
         <span class="visitor" id="visitorCount" title="Visitor counter"></span>
         <div class="topbar-actions">
           <button type="button" class="gloss-btn" id="soundBtn" aria-pressed="true" title="Sound effects">🔊</button>
+          <button type="button" class="gloss-btn" id="resetBtn" aria-label="Reset progress">↺ Reset</button>
           <button type="button" class="gloss-btn" id="langBtn" aria-pressed="false">EN</button>
           <button type="button" class="gloss-btn note" id="noteBtn" aria-label="Note" hidden>🐙</button>
         </div>
@@ -1836,6 +1837,10 @@
         passportHintBonus: 'View all 6 stories to unlock Octopus 🐙',
         bonusLockedAria: 'Octopus — locked until all six main specimens are viewed',
         stampBurst: 'STAMPED!',
+        resetBtn: '↺ Reset',
+        resetAria: 'Reset passport and viewed specimens',
+        resetConfirm: 'Clear your ocean passport and all viewed specimens? You can explore again from the start. This cannot be undone.',
+        resetDone: 'Progress reset — start exploring again.',
         soundOnLabel: 'Sound on',
         soundOffLabel: 'Sound off',
         youtubeOpen: 'YouTube ↗',
@@ -1905,6 +1910,10 @@
         passportHintBonus: 'Ve las 6 historias para desbloquear Pulpo 🐙',
         bonusLockedAria: 'Pulpo — bloqueado hasta ver los seis espécimenes principales',
         stampBurst: '¡SELLO!',
+        resetBtn: '↺ Reiniciar',
+        resetAria: 'Reiniciar progreso del pasaporte',
+        resetConfirm: '¿Borrar tu pasaporte oceánico y todos los espécimenes vistos? Podrás explorar de nuevo desde el inicio. No se puede deshacer.',
+        resetDone: 'Progreso reiniciado — explora otra vez.',
         soundOnLabel: 'Sonido activo',
         soundOffLabel: 'Sonido apagado',
         youtubeOpen: 'YouTube ↗',
@@ -1942,6 +1951,13 @@
     const STORAGE_SEEN = 'depths-seen-v1';
     const STORAGE_BONUS = 'depths-bonus-v1';
     const STORAGE_SFX = 'depths-sfx-v1';
+    const PROGRESS_STORAGE_KEYS = [
+      STORAGE_VISITED,
+      STORAGE_PASSPORT,
+      STORAGE_BONUS,
+      'depths-visited-v1',
+      'mia-ocean-passport-v1',
+    ];
 
     const OCTOPUS_BONUS = {
       specimen: 'CUR-00',
@@ -3020,6 +3036,20 @@
       if (badgeNew) badgeNew.hidden = true;
     }
 
+    function resetProgress() {
+      if (!window.confirm(t('resetConfirm'))) return;
+      SoundFX.click();
+      PROGRESS_STORAGE_KEYS.forEach((key) => localStorage.removeItem(key));
+      sessionStorage.removeItem('depths-celebrated');
+      didCelebrate = false;
+      currentItem = null;
+      if (panel.classList.contains('open')) closePanel();
+      if (letterPanel.classList.contains('open')) closeLetter();
+      selectedIdx = 0;
+      applyUI();
+      showToast(t('resetDone'));
+    }
+
     function syncBadgeNew() {
       if (!badgeNew) return;
       const show = !localStorage.getItem(STORAGE_SEEN);
@@ -3261,6 +3291,12 @@
       document.getElementById('sidebarTitle').textContent = t('sidebarTitle');
       document.getElementById('passportLabel').textContent = t('passportLabel');
       syncSoundBtn();
+      const resetBtn = document.getElementById('resetBtn');
+      if (resetBtn) {
+        resetBtn.textContent = t('resetBtn');
+        resetBtn.setAttribute('aria-label', t('resetAria'));
+        resetBtn.title = t('resetAria');
+      }
       document.getElementById('siteFooter').innerHTML =
         `${t('footer')} <span id="footerYear">${new Date().getFullYear()}</span>`;
       document.getElementById('anthroLabel').textContent = t('anthroLabel');
@@ -3475,6 +3511,8 @@
       syncSpinControls();
       document.getElementById('pauseSpinLabel').textContent = spinPaused ? t('resumeSpin') : t('pauseSpin');
     });
+
+    document.getElementById('resetBtn')?.addEventListener('click', resetProgress);
 
     langBtn.addEventListener('click', () => {
       lang = lang === 'en' ? 'es' : 'en';
