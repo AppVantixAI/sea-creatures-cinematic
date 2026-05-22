@@ -139,7 +139,16 @@
       background: #001a33 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='8' cy='8' r='1.5' fill='%2300aaff' opacity='.25'/%3E%3Ccircle cx='38' cy='22' r='1' fill='%2300ffcc' opacity='.2'/%3E%3Ccircle cx='22' cy='44' r='1.2' fill='%23fff' opacity='.15'/%3E%3C/svg%3E");
       overflow-x: hidden;
     }
-    body.panel-open { overflow: hidden; position: fixed; inset: 0; width: 100%; }
+    html.scroll-locked,
+    body.panel-open {
+      overflow: hidden;
+      height: 100%;
+    }
+    body.panel-open {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+    }
 
     .crt {
       position: fixed; inset: 0; z-index: 1; pointer-events: none;
@@ -399,7 +408,6 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 0.6rem;
       padding-bottom: 0.75rem;
-      flex: 1;
       align-content: start;
     }
     .mobile-card {
@@ -605,15 +613,28 @@
     .dock-simple .dock-controls { display: none !important; }
 
     @media (max-width: 959px) {
-      .layout-mobile { display: flex; }
+      .layout-mobile { display: block; }
       .layout-desktop { display: none !important; }
       #dock { display: none !important; }
       .ticker-wrap { display: none; }
       .visitor { display: none; }
+      html {
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        display: block;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
       .ui-layer {
-        min-height: 100dvh;
+        display: block;
+        flex: none;
+        min-height: 0;
         width: 100%;
         padding-top: calc(0.25rem + var(--safe-t));
+        padding-bottom: var(--safe-b);
       }
       .chrome-header {
         width: 100%;
@@ -635,13 +656,17 @@
         flex-wrap: nowrap;
         justify-content: flex-start;
         overflow-x: auto;
+        overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x proximity;
+        overscroll-behavior-x: contain;
+        touch-action: pan-x;
         padding-bottom: 0.2rem;
         margin: 0 -0.15rem;
         padding-left: 0.15rem;
         padding-right: 0.15rem;
       }
+      .passport-slot { touch-action: manipulation; }
       .passport-slot {
         flex: 0 0 auto;
         width: 3rem;
@@ -650,19 +675,20 @@
       }
       .passport-slot.bonus { width: 3.15rem; height: 3.15rem; }
       .layout-mobile {
+        display: block;
         width: 100%;
         padding-left: max(0.5rem, var(--safe-l));
         padding-right: max(0.5rem, var(--safe-r));
         padding-bottom: 0;
-        flex: 1;
-        min-height: 0;
+        flex: none;
+        min-height: auto;
       }
       .mobile-scroll {
-        flex: 1;
-        min-height: 0;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
+        display: block;
+        overflow: visible;
+        flex: none;
+        min-height: auto;
+        touch-action: pan-y;
       }
       .mobile-progress {
         text-align: center;
@@ -675,6 +701,8 @@
       .mobile-grid { padding-bottom: 0.5rem; }
       .mobile-card { min-height: var(--touch); }
       .mobile-bar {
+        position: sticky;
+        bottom: 0;
         margin-left: calc(-1 * max(0.5rem, var(--safe-l)));
         margin-right: calc(-1 * max(0.5rem, var(--safe-r)));
         padding-left: max(0.65rem, var(--safe-l));
@@ -714,11 +742,45 @@
         text-align: center;
       }
       .site-loader .loader-window { width: min(20rem, 94vw); }
-      .panel .dialog { max-height: 96dvh; }
+      .panel .dialog,
+      #letterPanel .dialog {
+        display: flex !important;
+        flex-direction: column;
+        grid-template-rows: none;
+        max-height: min(92dvh, 100%);
+        overflow: hidden;
+      }
+      .panel .dialog-titlebar,
+      .panel .dialog-hero,
+      .panel .tabs { flex-shrink: 0; }
+      .panel .dialog-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+      }
+      .panel .tab-panels,
+      .panel .tab-panel,
+      .panel .facts-sheet { min-height: 0; }
+      #letterPanel .letter-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+      }
       .dialog-hero { height: min(30vh, 190px); }
+      .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+      }
       .tab { min-height: 40px; font-size: 11px; padding: 0.5rem 0.8rem; }
       .close-panel { min-width: 56px; min-height: 34px; }
       .btn, .cta-btn { min-height: var(--touch); }
+      .mobile-card { touch-action: manipulation; }
     }
     @media (max-width: 380px) {
       .mobile-grid { grid-template-columns: 1fr; }
@@ -4077,16 +4139,29 @@
       }
     }
 
+    function lockPageScroll() {
+      scrollLockY = window.scrollY || window.pageYOffset || 0;
+      document.documentElement.classList.add('scroll-locked');
+      document.body.classList.add('panel-open');
+      document.body.style.top = `-${scrollLockY}px`;
+    }
+
+    function unlockPageScroll() {
+      document.documentElement.classList.remove('scroll-locked');
+      document.body.classList.remove('panel-open');
+      document.body.style.top = '';
+      restorePageScroll();
+    }
+
     function openPanel(item) {
       if (!canAccessSpecimen(item)) return;
       const idx = CAROUSEL_ENTRIES.indexOf(item);
       if (idx >= 0) setSelection(idx);
       markSeen();
-      scrollLockY = window.scrollY;
       currentItem = item;
       SoundFX.open();
       fillPanel(item);
-      document.body.classList.add('panel-open');
+      lockPageScroll();
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
       if (isDesktopLayout()) pauseCarouselMotion();
@@ -4102,7 +4177,6 @@
     function closePanel() {
       SoundFX.close();
       Bgm.duck(false);
-      document.body.classList.remove('panel-open');
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
       heroImg.hidden = true;
@@ -4110,7 +4184,7 @@
       playerLoading.hidden = true;
       playerFallback.hidden = true;
       if (isDesktopLayout()) resumeCarouselMotion();
-      window.scrollTo(0, scrollLockY);
+      if (!letterPanel.classList.contains('open')) unlockPageScroll();
     }
 
     function fillLetter() {
@@ -4120,19 +4194,24 @@
     }
 
     function openLetter() {
+      if (!panel.classList.contains('open')) lockPageScroll();
       fillLetter();
       letterPanel.classList.add('open');
       letterPanel.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('panel-open');
+      const body = letterPanel.querySelector('.letter-body');
+      if (body) body.scrollTop = 0;
     }
 
     function closeLetter() {
       letterPanel.classList.remove('open');
       letterPanel.setAttribute('aria-hidden', 'true');
-      if (!panel.classList.contains('open')) {
-        document.body.classList.remove('panel-open');
-        window.scrollTo(0, scrollLockY);
-      }
+      if (!panel.classList.contains('open')) unlockPageScroll();
+    }
+
+    function restorePageScroll() {
+      const y = scrollLockY || 0;
+      window.scrollTo(0, y);
+      requestAnimationFrame(() => window.scrollTo(0, y));
     }
 
     document.querySelectorAll('.tab').forEach((tab) => {

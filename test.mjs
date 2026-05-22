@@ -270,9 +270,23 @@ async function runSuite(page, label) {
       const scroll = !!document.querySelector('.mobile-scroll');
       const progress = !!document.getElementById('progressTextMobile')?.textContent;
       const thumb = !!document.getElementById('dockThumbMobile')?.src;
-      return dockHidden && scroll && progress && thumb;
+      const bodyScroll = getComputedStyle(document.body).overflowY !== 'hidden';
+      return dockHidden && scroll && progress && thumb && bodyScroll;
     });
     results.push([`${label}: mobile layout chrome`, mobileLayout, mobileLayout]);
+
+    const mainPageScroll = await page.evaluate(async () => {
+      const docH = document.documentElement.scrollHeight;
+      const winH = window.innerHeight;
+      if (docH <= winH + 8) return { ok: true, short: true };
+      const before = window.scrollY;
+      window.scrollTo(0, Math.min(180, docH - winH));
+      await new Promise((r) => setTimeout(r, 80));
+      const moved = window.scrollY > before;
+      window.scrollTo(0, before);
+      return { ok: moved, docH, winH, y: window.scrollY };
+    });
+    results.push([`${label}: main page scrolls`, mainPageScroll.ok, mainPageScroll]);
 
     const unlockedAfterMain = await page.locator('.mobile-card.bonus').evaluate((el) => !el.disabled);
     results.push([`${label}: curator unlocked on mobile after six`, unlockedAfterMain, unlockedAfterMain]);
@@ -337,9 +351,36 @@ async function runSuite(page, label) {
   });
   results.push([`${label}: makes tab craft links`, makesLinks, makesLinks]);
 
+  if (!isDesktop) {
+    const panelBodyScroll = await page.evaluate(() => {
+      const el = document.querySelector('.dialog-body');
+      if (!el) return false;
+      const overflow = getComputedStyle(el).overflowY;
+      if (overflow !== 'auto' && overflow !== 'scroll') return false;
+      if (el.scrollHeight <= el.clientHeight + 8) return true;
+      const before = el.scrollTop;
+      el.scrollTop = before + 80;
+      return el.scrollTop > before;
+    });
+    results.push([`${label}: panel body scrollable`, panelBodyScroll, panelBodyScroll]);
+  }
+
   await page.locator('#closeBtn').click();
   await page.waitForTimeout(300);
   results.push([`${label}: close panel`, !(await page.locator('#panel').evaluate((el) => el.classList.contains('open'))), true]);
+
+  if (!isDesktop) {
+    const scrollRestored = await page.evaluate(async () => {
+      if (document.body.classList.contains('panel-open')) return false;
+      const docH = document.documentElement.scrollHeight;
+      const winH = window.innerHeight;
+      if (docH <= winH + 8) return true;
+      window.scrollTo(0, 80);
+      await new Promise((r) => setTimeout(r, 80));
+      return window.scrollY > 0;
+    });
+    results.push([`${label}: scroll restored after panel`, scrollRestored, scrollRestored]);
+  }
 
   const stamped = await page.evaluate(() => {
     try {
