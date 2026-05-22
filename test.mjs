@@ -53,6 +53,16 @@ async function runSuite(page, label) {
   const passportSlots = await page.locator('.passport-slot').count();
   results.push([`${label}: passport game slots`, passportSlots === 7, passportSlots]);
 
+  const curatorLocked = await page.evaluate(() => {
+    const slot = document.querySelector('.passport-slot.bonus');
+    const img = slot?.querySelector('img');
+    return !!slot
+      && slot.disabled
+      && slot.classList.contains('locked')
+      && /Octopus2\.jpg|octopus/i.test(img?.src || '');
+  });
+  results.push([`${label}: silent curator locked until six viewed`, curatorLocked, curatorLocked]);
+
   await page.evaluate(() => {
     localStorage.setItem('mia-ocean-passport-v1', JSON.stringify(['EXT-01', 'EXT-02', 'EXT-03', 'EXT-04', 'EXT-05', 'EXT-06']));
     localStorage.setItem('depths-visited-v1', JSON.stringify({
@@ -175,21 +185,33 @@ async function runSuite(page, label) {
     const cards = await page.locator('.mobile-card').count();
     results.push([`${label}: mobile grid cards`, cards === 7, cards]);
 
-    const allCardsClick = await page.evaluate(async () => {
-      const titles = ['Hammerhead Shark', 'Cookiecutter Shark', 'Box Jellyfish', 'Seahorse', 'Pistol Shrimp', 'Sperm Whale', 'The quiet curator'];
-      for (let i = 0; i < titles.length; i++) {
-        const card = document.querySelectorAll('.mobile-card')[i];
-        if (!card) return false;
+    const lockedBeforeMain = await page.locator('.mobile-card.bonus').evaluate((el) => el.disabled);
+    results.push([`${label}: curator locked on mobile at start`, lockedBeforeMain, lockedBeforeMain]);
+
+    const mainCardsClick = await page.evaluate(async () => {
+      const specs = [
+        ['EXT-01', 'Hammerhead Shark'],
+        ['EXT-02', 'Cookiecutter Shark'],
+        ['EXT-03', 'Box Jellyfish'],
+        ['EXT-04', 'Seahorse'],
+        ['EXT-05', 'Pistol Shrimp'],
+        ['EXT-06', 'Sperm Whale'],
+      ];
+      for (const [id, title] of specs) {
+        const card = document.querySelector(`.mobile-card[data-specimen="${id}"]`);
+        if (!card || card.disabled) return false;
         card.click();
         await new Promise((r) => setTimeout(r, 350));
-        const t = document.querySelector('#title')?.textContent;
-        if (t !== titles[i]) return false;
+        if (document.querySelector('#title')?.textContent !== title) return false;
         document.querySelector('#closeBtn')?.click();
         await new Promise((r) => setTimeout(r, 250));
       }
       return true;
     });
-    results.push([`${label}: all mobile cards open`, allCardsClick, allCardsClick]);
+    results.push([`${label}: all six main mobile stories open`, mainCardsClick, mainCardsClick]);
+
+    const unlockedAfterMain = await page.locator('.mobile-card.bonus').evaluate((el) => !el.disabled);
+    results.push([`${label}: curator unlocked on mobile after six`, unlockedAfterMain, unlockedAfterMain]);
 
     await page.locator('.mobile-card').first().click();
   }
@@ -264,17 +286,29 @@ async function runSuite(page, label) {
   results.push([`${label}: no made-for-you tagline`, !/made for you|hecho para ti/i.test(sub || ''), sub]);
 
   if (isDesktop) {
+    await page.evaluate(() => {
+      const ids = ['EXT-01', 'EXT-02', 'EXT-03', 'EXT-04', 'EXT-05', 'EXT-06'];
+      const at = {};
+      ids.forEach((id) => { at[id] = Date.now(); });
+      localStorage.setItem('depths-stories-opened-v2', JSON.stringify({ order: ids, at }));
+    });
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 });
+    await page.waitForTimeout(400);
+
+    const unlocked = await page.locator('.passport-slot.bonus').evaluate((el) => !el.disabled && !el.classList.contains('locked'));
+    results.push([`${label}: silent curator unlocked after six`, unlocked, unlocked]);
+
     await page.locator('.passport-slot.bonus').click();
     await page.waitForTimeout(500);
-    await page.locator('.carousel-item.is-selected button.polaroid-frame').click();
+    await page.locator('.carousel-item.is-selected button.polaroid-frame:not([disabled])').click();
     await page.waitForSelector('body.panel-open', { timeout: 5000 });
     const octopusTitle = await page.locator('#title').textContent();
     const watchVisible = await page.locator('#tabWatch').evaluate((el) => el.style.display !== 'none');
     const octopusSrc = await page.locator('#heroImg').getAttribute('src');
     await page.waitForFunction(() => document.querySelector('#player iframe'), { timeout: 20000 }).catch(() => {});
     const octopusVideo = await page.evaluate(() => document.querySelector('#player iframe')?.src || '');
-    results.push([`${label}: octopus disguise episode`, octopusTitle === 'The quiet curator' && watchVisible && octopusVideo.includes('9jJmaSgbOz4'), { octopusTitle, watchVisible, octopusVideo }]);
-    results.push([`${label}: octopus card image`, !!octopusSrc && octopusSrc.includes('pexels'), octopusSrc]);
+    results.push([`${label}: silent curator disguise episode`, octopusTitle === 'The silent curator' && watchVisible && octopusVideo.includes('9jJmaSgbOz4'), { octopusTitle, watchVisible, octopusVideo }]);
+    results.push([`${label}: silent curator octopus image`, !!octopusSrc && /Octopus2\.jpg|octopus/i.test(octopusSrc), octopusSrc]);
     await page.locator('#closeBtn').click();
     await page.waitForTimeout(200);
   }

@@ -1339,8 +1339,26 @@
     }
     .passport-slot.bonus { border-color: var(--hot); width: 2.85rem; height: 2.85rem; }
     .passport-slot.bonus.stamped { box-shadow: 0 0 16px rgba(255, 102, 204, 0.45); }
-    .passport-slot.bonus.locked { opacity: 0.55; filter: grayscale(0.6); }
+    .passport-slot.bonus.locked,
+    .side-nav-item.bonus.locked,
+    .mobile-card.bonus.locked {
+      opacity: 0.55;
+      filter: grayscale(0.65);
+      cursor: not-allowed;
+    }
+    .passport-slot.bonus.locked:disabled,
+    .side-nav-item.bonus.locked:disabled,
+    .mobile-card.bonus.locked:disabled {
+      pointer-events: none;
+    }
     .passport-slot.bonus.locked .slot-code::after { content: "🔒"; margin-left: 1px; }
+    .carousel-item.is-locked .polaroid-frame {
+      opacity: 0.45;
+      filter: grayscale(0.7);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .carousel-item.is-locked .polaroid-frame:disabled { box-shadow: none; }
     .passport-slot:hover { transform: scale(1.06); border-color: var(--sea); }
     .passport-slot.just-stamped { animation: card-stamp-flash 0.9s ease; }
 
@@ -1815,7 +1833,8 @@
         passportLabel: 'Ocean passport',
         passportHint: 'Open a story in the gallery — a star appears on that slot',
         passportHintDone: 'All six viewed — bonus octopus unlocked',
-        passportHintBonus: 'View all 6 stories to unlock 🐙',
+        passportHintBonus: 'View all 6 stories to unlock the silent curator 🐙',
+        bonusLockedAria: 'The silent curator — locked until all six main specimens are viewed',
         stampBurst: 'STAMPED!',
         soundOnLabel: 'Sound on',
         soundOffLabel: 'Sound off',
@@ -1883,7 +1902,8 @@
         passportLabel: 'Pasaporte oceánico',
         passportHint: 'Abre una historia en la galería — aparece una estrella en esa casilla',
         passportHintDone: 'Viste los seis — pulpo extra desbloqueado',
-        passportHintBonus: 'Ve las 6 historias para desbloquear 🐙',
+        passportHintBonus: 'Ve las 6 historias para desbloquear al curador silencioso 🐙',
+        bonusLockedAria: 'El curador silencioso — bloqueado hasta ver los seis espécimenes principales',
         stampBurst: '¡SELLO!',
         soundOnLabel: 'Sonido activo',
         soundOffLabel: 'Sonido apagado',
@@ -1925,12 +1945,12 @@
 
     const OCTOPUS_DESK = {
       specimen: 'CUR-00',
-      image: 'https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg?auto=compress&cs=tinysrgb&w=1280',
-      imageAlt: 'Octopus underwater',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Octopus2.jpg/1280px-Octopus2.jpg',
+      imageAlt: 'Common octopus (Octopus vulgaris)',
       youtube: 'https://www.youtube.com/watch?v=9jJmaSgbOz4',
       videoId: '9jJmaSgbOz4',
       en: {
-        title: 'The quiet curator', epithet: 'Eight arms, one library card',
+        title: 'The silent curator', epithet: 'Eight arms, one library card',
         act: 'Bonus · Disguise — Lo más extremo',
         blurb: 'Every good collection needs someone clever at the door — and on <em>The Most Extreme</em>, the mimic octopus won the Disguise episode for shape-shifting that fooled the sea itself. This desk specimen guards the crafts room between polaroids.',
         anthro: 'Octopuses read like the kind of mind that would run a crafts room — so this desk specimen guards the shelf: eight arms, one library card, and patience for the slow work of sorting beautiful things.',
@@ -1963,7 +1983,7 @@
         ],
       },
       es: {
-        title: 'La curadora tranquila', epithet: 'Ocho brazos, una tarjeta de biblioteca',
+        title: 'El curador silencioso', epithet: 'Ocho brazos, una tarjeta de biblioteca',
         act: 'Extra · Disfraz — Lo más extremo',
         blurb: 'Toda buena colección necesita alguien listo en la entrada — en <em>Lo más extremo</em>, el pulpo mimético ganó el episodio <em>Disfraz</em>. Este espécimen cuida el taller entre polaroids.',
         anthro: 'Los pulpos parecen la mente que llevaría un taller — este espécimen cuida el mostrador: ocho brazos, una tarjeta de biblioteca, y paciencia para ordenar cosas bellas.',
@@ -2687,12 +2707,19 @@
         + (bonusViewed ? ' stamped' : '')
         + (viewedAllMain() ? '' : ' locked');
       obtn.dataset.specimen = 'CUR-00';
-      obtn.title = L(oct, 'title');
-      obtn.innerHTML = `<img src="${oct.image}" alt="" loading="lazy" /><span class="slot-code">🐙</span>${passportStampHtml('CUR-00')}`;
-      bindCardClick(obtn, () => {
-        if (isDesktopLayout()) focusSpecimenAt(oidx);
-        else openSpecimenAt(oidx, { scrollPick: false });
-      });
+      const bonusUnlocked = viewedAllMain();
+      obtn.title = bonusUnlocked ? L(oct, 'title') : t('bonusLockedAria');
+      obtn.setAttribute('aria-label', bonusUnlocked ? L(oct, 'title') : t('bonusLockedAria'));
+      obtn.innerHTML = `<img src="${oct.image}" alt="${oct.imageAlt || L(oct, 'title')}" loading="lazy" /><span class="slot-code">🐙</span>${passportStampHtml('CUR-00')}`;
+      if (bonusUnlocked) {
+        bindCardClick(obtn, () => {
+          if (isDesktopLayout()) focusSpecimenAt(oidx);
+          else openSpecimenAt(oidx, { scrollPick: false });
+        });
+      } else {
+        obtn.disabled = true;
+        obtn.setAttribute('aria-disabled', 'true');
+      }
       slots.appendChild(obtn);
     }
 
@@ -2855,6 +2882,40 @@
       return viewedCount() >= ITEMS.length;
     }
 
+    function isSilentCurator(entry) {
+      const item = typeof entry === 'number' ? CAROUSEL_ENTRIES[entry] : entry;
+      return item?.specimen === 'CUR-00';
+    }
+
+    function isSilentCuratorUnlocked() {
+      return viewedAllMain();
+    }
+
+    function canAccessSpecimen(entry) {
+      if (isSilentCurator(entry) && !isSilentCuratorUnlocked()) return false;
+      return true;
+    }
+
+    function adjacentAccessibleIndex(from, delta) {
+      const n = CAROUSEL_ENTRIES.length;
+      for (let step = 1; step <= n; step++) {
+        const i = (((from + delta * step) % n) + n) % n;
+        if (canAccessSpecimen(i)) return i;
+      }
+      return from;
+    }
+
+    function refreshGalleryAfterBonusUnlock() {
+      if (!isSilentCuratorUnlocked()) return;
+      const prev = selectedIdx;
+      buildPassportSlots();
+      buildSideNav();
+      buildMobileGrid();
+      buildCarousel();
+      if (!canAccessSpecimen(prev)) setSelection(adjacentAccessibleIndex(prev, -1), { scrollPick: false });
+      else setSelection(prev, { scrollPick: false });
+    }
+
     function getVisited() {
       try {
         const raw = JSON.parse(localStorage.getItem(STORAGE_VISITED) || '{}');
@@ -2904,6 +2965,7 @@
       updateProgressUI();
       updateVisitorFill();
       if (isNew && viewedAllMain()) maybeCelebrate();
+      if (isNew && specimenId !== 'CUR-00' && isSilentCuratorUnlocked()) refreshGalleryAfterBonusUnlock();
       return isNew;
     }
 
@@ -2995,12 +3057,14 @@
     }
 
     function focusSpecimenAt(i) {
+      if (!canAccessSpecimen(i)) return;
       const item = CAROUSEL_ENTRIES[i];
       if (!item) return;
       setSelection(i, { scrollPick: true });
     }
 
     function openSpecimenAt(i, { scrollPick = true } = {}) {
+      if (!canAccessSpecimen(i)) return;
       const item = CAROUSEL_ENTRIES[i];
       if (!item) return;
       setSelection(i, { scrollPick });
@@ -3008,6 +3072,7 @@
     }
 
     function openCarouselSpecimen(i) {
+      if (!canAccessSpecimen(i)) return;
       const item = CAROUSEL_ENTRIES[i];
       if (!item) return;
       setSelection(i, { scrollPick: false });
@@ -3029,6 +3094,7 @@
     }
 
     function setSelection(idx, { scrollPick = true } = {}) {
+      if (!canAccessSpecimen(idx)) return;
       selectedIdx = ((idx % CAROUSEL_ENTRIES.length) + CAROUSEL_ENTRIES.length) % CAROUSEL_ENTRIES.length;
       const item = CAROUSEL_ENTRIES[selectedIdx];
       carouselItemEls.forEach((li, i) => li.classList.toggle('is-selected', i === selectedIdx));
@@ -3050,14 +3116,20 @@
       CAROUSEL_ENTRIES.forEach((item, i) => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'side-nav-item' + (item.specimen === 'CUR-00' ? ' bonus' : '');
+        const locked = isSilentCurator(item) && !isSilentCuratorUnlocked();
+        btn.className = 'side-nav-item' + (isSilentCurator(item) ? ' bonus' : '') + (locked ? ' locked' : '');
         btn.dataset.specimen = item.specimen || '';
-        btn.setAttribute('aria-label', L(item, 'title'));
+        btn.setAttribute('aria-label', locked ? t('bonusLockedAria') : L(item, 'title'));
         const actShort = (L(item, 'act') || '').split('·')[0].trim();
         btn.innerHTML = `
-          <img src="${item.image}" alt="" loading="lazy" width="48" height="48" />
+          <img src="${item.image}" alt="${item.imageAlt || L(item, 'title')}" loading="lazy" width="48" height="48" />
           <div class="side-nav-text"><strong>${L(item, 'title')}</strong><span>${actShort}</span></div>`;
-        bindCardClick(btn, () => focusSpecimenAt(i));
+        if (locked) {
+          btn.disabled = true;
+          btn.setAttribute('aria-disabled', 'true');
+        } else {
+          bindCardClick(btn, () => focusSpecimenAt(i));
+        }
         sideNav.appendChild(btn);
       });
     }
@@ -3068,15 +3140,21 @@
       CAROUSEL_ENTRIES.forEach((item, i) => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'mobile-card';
+        const locked = isSilentCurator(item) && !isSilentCuratorUnlocked();
+        btn.className = 'mobile-card' + (isSilentCurator(item) ? ' bonus' : '') + (locked ? ' locked' : '');
         btn.dataset.specimen = item.specimen || '';
         btn.setAttribute('role', 'listitem');
-        btn.setAttribute('aria-label', L(item, 'title'));
+        btn.setAttribute('aria-label', locked ? t('bonusLockedAria') : L(item, 'title'));
         btn.innerHTML = `
-          <img src="${item.image}" alt="" loading="lazy" />
+          <img src="${item.image}" alt="${item.imageAlt || L(item, 'title')}" loading="lazy" />
           <span class="mobile-card-act">${(L(item, 'act') || '').split('·')[0].trim()}</span>
           <span class="mobile-card-title">${L(item, 'title')}</span>`;
-        bindCardClick(btn, () => openSpecimenAt(i, { scrollPick: false }));
+        if (locked) {
+          btn.disabled = true;
+          btn.setAttribute('aria-disabled', 'true');
+        } else {
+          bindCardClick(btn, () => openSpecimenAt(i, { scrollPick: false }));
+        }
         mobileGrid.appendChild(btn);
       });
     }
@@ -3088,16 +3166,19 @@
       carouselItemEls = [];
       CAROUSEL_ENTRIES.forEach((item, i) => {
         const li = document.createElement('li');
+        const locked = isSilentCurator(item) && !isSilentCuratorUnlocked();
         let cls = 'carousel-item';
         if (i === selectedIdx) cls += ' is-selected';
+        if (locked) cls += ' is-locked';
         li.className = cls;
         li.dataset.specimen = item.specimen || '';
+        if (locked) li.setAttribute('aria-hidden', 'false');
         li.style.setProperty('--_index', i + 1);
         li.style.setProperty('--_image-url', `url('${item.image}')`);
         const frame = document.createElement('button');
         frame.type = 'button';
         frame.className = 'polaroid-frame';
-        frame.setAttribute('aria-label', L(item, 'title'));
+        frame.setAttribute('aria-label', locked ? t('bonusLockedAria') : L(item, 'title'));
         const badge = document.createElement('span');
         badge.className = 'frame-badge';
         badge.textContent = item.specimen || '★';
@@ -3115,7 +3196,13 @@
         frame.appendChild(photo);
         frame.appendChild(caption);
         li.appendChild(frame);
-        bindCardClick(frame, () => openCarouselSpecimen(i));
+        if (locked) {
+          frame.disabled = true;
+          frame.setAttribute('aria-disabled', 'true');
+          frame.tabIndex = -1;
+        } else {
+          bindCardClick(frame, () => openCarouselSpecimen(i));
+        }
         carouselItems.appendChild(li);
         carouselItemEls.push(li);
       });
@@ -3308,6 +3395,7 @@
     }
 
     function openPanel(item) {
+      if (!canAccessSpecimen(item)) return;
       const idx = CAROUSEL_ENTRIES.indexOf(item);
       if (idx >= 0) setSelection(idx);
       markSeen();
@@ -3405,12 +3493,13 @@
         }
         return;
       }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); setSelection(selectedIdx - 1); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); setSelection(selectedIdx + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); setSelection(adjacentAccessibleIndex(selectedIdx, -1)); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); setSelection(adjacentAccessibleIndex(selectedIdx, 1)); }
       if (e.key === 'Enter') {
         if (document.activeElement?.closest('.mobile-card, .carousel, .passport-slot, .side-nav')) {
           e.preventDefault();
-          openPanel(CAROUSEL_ENTRIES[selectedIdx]);
+          const item = CAROUSEL_ENTRIES[selectedIdx];
+          if (canAccessSpecimen(selectedIdx)) openPanel(item);
         }
       }
     });
