@@ -103,8 +103,30 @@
       40% { box-shadow: 0 0 22px rgba(255, 102, 204, 0.85); }
       100% { box-shadow: 0 0 12px rgba(0, 255, 200, 0.45); }
     }
+    @keyframes loader-bar-glow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    @keyframes loader-bubble-drift {
+      0% { transform: translateY(0) scale(0.6); opacity: 0; }
+      15% { opacity: 0.7; }
+      100% { transform: translateY(-3.5rem) scale(1); opacity: 0; }
+    }
+    @keyframes loader-pulse {
+      0%, 100% { opacity: 0.55; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.06); }
+    }
+    @keyframes loader-exit {
+      to { opacity: 0; visibility: hidden; }
+    }
 
     html, body { min-height: 100%; }
+    body.is-loading { overflow: hidden; }
+    body.is-loading .ui-layer {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
     body {
       display: flex;
       flex-direction: column;
@@ -1436,7 +1458,18 @@
     body.zone-complete .progress-ring .fill {
       animation: progress-pulse 1.5s ease-in-out infinite;
     }
-    .gloss-btn.sound-off { opacity: 0.65; }
+    .gloss-btn.sound-off,
+    .gloss-btn.music-off { opacity: 0.65; }
+    .bgm-player {
+      position: fixed;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .bgm-player iframe { width: 1px; height: 1px; border: 0; }
     .passport-slot.just-stamped { animation: card-stamp-flash 0.9s ease; }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1626,10 +1659,158 @@
     }
     .letter-body em { color: var(--ocean); font-style: italic; }
     .letter-sign { margin-top: 1rem; color: var(--sea); font-size: 0.82rem; }
+
+    .site-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(1rem, var(--safe-t)) max(1rem, var(--safe-r)) max(1rem, var(--safe-b)) max(1rem, var(--safe-l));
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0, 84, 227, 0.35), rgba(0, 10, 28, 0.92));
+      backdrop-filter: blur(6px);
+      transition: opacity 0.55s var(--panel-ease), visibility 0.55s;
+    }
+    .site-loader.is-done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      animation: loader-exit 0.55s var(--panel-ease) forwards;
+    }
+    .loader-window {
+      width: min(22rem, 92vw);
+      border: 2px solid var(--chrome-hi);
+      border-radius: 8px 8px 6px 6px;
+      box-shadow:
+        0 0 0 1px var(--chrome-lo),
+        0 12px 40px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      background: var(--gloss-panel);
+      overflow: hidden;
+    }
+    .loader-window .title-bar { cursor: default; }
+    .loader-body {
+      padding: 1.1rem 1.15rem 1.2rem;
+      text-align: center;
+    }
+    .loader-icon {
+      font-size: 2.6rem;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      animation: loader-pulse 1.8s ease-in-out infinite;
+    }
+    .loader-brand {
+      font-size: 1.05rem;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      color: var(--sea);
+      text-shadow: 0 0 12px rgba(0, 255, 204, 0.45);
+      margin-bottom: 0.15rem;
+    }
+    .loader-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }
+    .loader-track {
+      height: 14px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: #001828;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.45);
+    }
+    .loader-bar {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #004080, var(--ocean), var(--sea), var(--lime), var(--ocean), #004080);
+      background-size: 200% 100%;
+      animation: loader-bar-glow 1.2s linear infinite;
+      transition: width 0.35s ease-out;
+    }
+    .loader-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-top: 0.45rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+    .loader-status {
+      flex: 1;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .loader-pct {
+      font-variant-numeric: tabular-nums;
+      color: var(--ocean);
+    }
+    .loader-bubbles {
+      position: relative;
+      height: 2.5rem;
+      margin-top: 0.65rem;
+      overflow: hidden;
+      opacity: 0.85;
+    }
+    .loader-bubbles span {
+      position: absolute;
+      bottom: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(0, 170, 255, 0.35));
+      animation: loader-bubble-drift 2.2s ease-in infinite;
+    }
+    .loader-bubbles span:nth-child(1) { left: 12%; animation-delay: 0s; }
+    .loader-bubbles span:nth-child(2) { left: 38%; width: 6px; height: 6px; animation-delay: 0.5s; }
+    .loader-bubbles span:nth-child(3) { left: 62%; animation-delay: 1s; }
+    .loader-bubbles span:nth-child(4) { left: 82%; width: 10px; height: 10px; animation-delay: 1.4s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .site-loader { transition-duration: 0.15s; }
+      .loader-icon,
+      .loader-bar,
+      .loader-bubbles span { animation: none; }
+    }
   </style>
 </head>
-<body>
+<body class="is-loading">
+  <div class="site-loader" id="siteLoader" role="status" aria-live="polite" aria-busy="true" aria-label="Loading exhibit">
+    <div class="loader-window">
+      <div class="title-bar" aria-hidden="true">
+        <div class="title-bar-dots">
+          <span class="r"></span><span class="y"></span><span class="g"></span>
+        </div>
+        <span class="title-bar-title" id="loaderWindowTitle">DEPTHS.exe — Loading</span>
+        <div class="title-bar-dots" style="visibility:hidden">
+          <span class="r"></span><span class="y"></span><span class="g"></span>
+        </div>
+      </div>
+      <div class="loader-body">
+        <div class="loader-icon" aria-hidden="true">🐙</div>
+        <p class="loader-brand" id="loaderBrand">★ DEPTHS ★</p>
+        <p class="loader-sub" id="loaderSub">The Extreme · Ocean Zone</p>
+        <div class="loader-track" aria-hidden="true">
+          <span class="loader-bar" id="loaderBar"></span>
+        </div>
+        <div class="loader-meta">
+          <span class="loader-status" id="loaderStatus">Initializing…</span>
+          <span class="loader-pct" id="loaderPct">0%</span>
+        </div>
+        <div class="loader-bubbles" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="bg-video-wrap" aria-hidden="true">
+    <div class="bgm-player" id="bgmPlayer" aria-hidden="true"></div>
     <video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto">
       <source src="https://videos.pexels.com/video-files/8823192/8823192-hd_1920_1080_30fps.mp4" type="video/mp4">
     </video>
@@ -1669,6 +1850,7 @@
         <span class="visitor" id="visitorCount" title="Visitor counter"></span>
         <div class="topbar-actions">
           <button type="button" class="gloss-btn" id="soundBtn" aria-pressed="true" title="Sound effects">🔊</button>
+          <button type="button" class="gloss-btn music-off" id="musicBtn" aria-pressed="false" title="Background music off">🎵</button>
           <button type="button" class="gloss-btn" id="resetBtn" aria-label="Reset progress">↺ Reset</button>
           <button type="button" class="gloss-btn" id="langBtn" aria-pressed="false">EN</button>
           <button type="button" class="gloss-btn note" id="noteBtn" aria-label="Note" hidden>🐙</button>
@@ -1898,6 +2080,20 @@
         resetDone: 'Progress reset — start exploring again.',
         soundOnLabel: 'Sound on',
         soundOffLabel: 'Sound off',
+        musicOnLabel: 'Background music on (Freddi Fish intro)',
+        musicOffLabel: 'Background music off',
+        musicCredit: 'Theme: Freddi Fish — Missing Kelp Seeds (George “The Fat Man” Sanger)',
+        musicUnavailable: 'Add audio/freddi-intro.mp3 or check your connection for streaming fallback.',
+        loaderWindow: 'DEPTHS.exe — Loading',
+        loaderBrand: '★ DEPTHS ★',
+        loaderSub: 'The Extreme · Ocean Zone',
+        loaderSteps: [
+          'Calibrating depth sensors…',
+          'Indexing specimen polaroids…',
+          'Pressurizing 3D carousel…',
+          'Syncing ocean passport…',
+          'Surface ready.',
+        ],
         youtubeOpen: 'YouTube ↗',
         replay: '↺ Replay', soundOn: '🔊 Sound ON', mute: '🔈 Mute',
         loading: 'Loading clip… please wait',
@@ -1971,6 +2167,20 @@
         resetDone: 'Progreso reiniciado — explora otra vez.',
         soundOnLabel: 'Sonido activo',
         soundOffLabel: 'Sonido apagado',
+        musicOnLabel: 'Música de fondo activa (intro Freddi Fish)',
+        musicOffLabel: 'Música de fondo apagada',
+        musicCredit: 'Tema: Freddi Fish — Missing Kelp Seeds (George “The Fat Man” Sanger)',
+        musicUnavailable: 'Añade audio/freddi-intro.mp3 o revisa la conexión para el respaldo en streaming.',
+        loaderWindow: 'PROFUNDIDADES.exe — Cargando',
+        loaderBrand: '★ PROFUNDIDADES ★',
+        loaderSub: 'The Extreme · Zona oceánica',
+        loaderSteps: [
+          'Calibrando sensores de profundidad…',
+          'Indexando polaroids de espécimenes…',
+          'Presurizando carrusel 3D…',
+          'Sincronizando pasaporte oceánico…',
+          'Superficie lista.',
+        ],
         youtubeOpen: 'YouTube ↗',
         replay: '↺ Repetir', soundOn: '🔊 Sonido', mute: '🔈 Mute',
         loading: 'Cargando… espera',
@@ -2006,6 +2216,9 @@
     const STORAGE_SEEN = 'depths-seen-v1';
     const STORAGE_BONUS = 'depths-bonus-v1';
     const STORAGE_SFX = 'depths-sfx-v1';
+    const STORAGE_BGM = 'depths-bgm-v1';
+    const BGM_LOCAL = 'audio/freddi-intro.mp3';
+    const BGM_YT_ID = 'tPsoMseeZ-g';
     const PROGRESS_STORAGE_KEYS = [
       STORAGE_VISITED,
       STORAGE_PASSPORT,
@@ -2160,7 +2373,7 @@
         taxonomy: 'Isistius brasiliensis · Family Dalatiidae · Order Squaliformes',
         history: 'Mesopelagic 200–1,000 m · diel vertical migration · worldwide warm oceans',
         overview: [
-          'Cookiecutter sharks are small mesopelagic dogfish (usually &lt;50 cm) famous for leaving crisp, circular wounds on whales, dolphins, tuna, billfish, and occasionally research equipment. They approach prey using counter-illumination: ventral photophores match downwelling light so the silhouette disappears from below.',
+          'Cookiecutter sharks are small mesopelagic dogfish (usually <50 cm) famous for leaving crisp, circular wounds on whales, dolphins, tuna, billfish, and occasionally research equipment. They approach prey using counter-illumination: ventral photophores match downwelling light so the silhouette disappears from below.',
           'The bite is a suction anchor followed by a spinning cut from lower jaw teeth acting like a cookie cutter. Peer-reviewed morphology studies document wound geometry and prey overlap; tagging shows strong vertical migration — rising toward surface waters at night to feed, descending by day.',
         ],
         facts: [
@@ -2342,7 +2555,7 @@
           'Many species pair with goby fish: the shrimp maintains the burrow while the goby watches for danger and flick signals when predators approach. <em>Alpheus bellulus</em>, the tiger pistol shrimp, is a reef-dwelling icon in home aquaria and wild Indo-Pacific rubble zones — a reminder that extreme power can live in a body smaller than your thumb.',
         ],
         facts: [
-          'Snap produced in &lt;300 microseconds; bubble collapse creates light (sonoluminescence).',
+          'Snap produced in <300 microseconds; bubble collapse creates light (sonoluminescence).',
           'Large claw can regenerate after autotomy; smaller claw may enlarge on next molt.',
           'Alpheids contribute heavily to ocean ambient noise — detectable on hydrophones.',
           'Burrows under rubble stabilize reef sediment; excavated sand is piled at entrance.',
@@ -2375,7 +2588,7 @@
             'Muchos viven con gobios: el camarón cava; el pez avisa de depredadores. <em>A. bellulus</em> es ícono de acuarios y arrecifes.',
           ],
           facts: [
-            'Chasquido en &lt;300 microsegundos; posible sonoluminiscencia.',
+            'Chasquido en <300 microsegundos; posible sonoluminiscencia.',
             'Pinza grande puede regenerarse en la muda.',
             'Ruido ambiental oceánico medible en hidrófonos.',
             'Mutualismo: contacto con la cola del gobio.',
@@ -2395,7 +2608,7 @@
         anthro: 'Moby-Dick fixed the sperm whale in literature, but Atlantic and Caribbean histories also know them through whaling logbooks, ambergris lore, and today’s whale-watching economies — a species that carries human stories in its scars.',
         traits: 'Largest toothed predator · spermaceti organ · echolocation clicks',
         taxonomy: 'Physeter macrocephalus · Family Physeteridae · Order Cetacea',
-        history: 'Deep offshore · dives &gt;1,000 m · worldwide except polar ice',
+        history: 'Deep offshore · dives >1,000 m · worldwide except polar ice',
         overview: [
           'The sperm whale is the largest toothed predator on Earth — males can exceed 16 m and 40 tonnes, with a block-shaped head filled with spermaceti organ oil once hunted for lamps and industry. Social groups (units) of females and young stay in warmer waters while mature males roam higher latitudes, including the North Atlantic.',
           'Satellite tagging and acoustic studies show routine dives beyond 1,000 m and dives lasting over an hour, hunting chiefly squid in the mesopelagic and bathypelagic zones. Clicks used in echolocation are among the loudest biological sounds known; peer-reviewed work links click patterns to foraging and social “codas.” Cookiecutter shark scars on their lips testify to surface visits from much smaller neighbors.',
@@ -2429,10 +2642,10 @@
           anthro: 'Moby-Dick lo fijó en la literatura; el Atlántico lo conoce por bitácoras, ámbar gris y avistamientos actuales.',
           traits: 'Mayor depredador con dientes · órgano de espermaceti · clicks',
           taxonomy: 'Physeter macrocephalus · Physeteridae',
-          history: 'Aguas profundas · buceos &gt;1.000 m · casi mundial',
+          history: 'Aguas profundas · buceos >1.000 m · casi mundial',
           overview: [
-            'El cachalote es el mayor depredador con dientes — machos &gt;16 m. El cráneo alberga espermaceti, históricamente cazado. Unidades de hembras en aguas cálidas; machos maduros migran más al norte.',
-            'Etiquetas satelitales registran buceos &gt;1 h y &gt;1.000 m por calamares. Los clicks de ecolocalización son de los sonidos biológicos más intensos; cicatrices de tiburón cigarro en los labios.',
+            'El cachalote es el mayor depredador con dientes — machos >16 m. El cráneo alberga espermaceti, históricamente cazado. Unidades de hembras en aguas cálidas; machos maduros migran más al norte.',
+            'Etiquetas satelitales registran buceos >1 h y >1.000 m por calamares. Los clicks de ecolocalización son de los sonidos biológicos más intensos; cicatrices de tiburón cigarro en los labios.',
           ],
           facts: [
             'Cerebro ~7 kg en machos grandes.',
@@ -2659,6 +2872,133 @@
       };
     })();
 
+    const Bgm = (() => {
+      let enabled = localStorage.getItem(STORAGE_BGM) === '1';
+      let unlocked = false;
+      let ducked = false;
+      let useLocal = null;
+      let audio = null;
+      let ytFrame = null;
+      const wrap = () => document.getElementById('bgmPlayer');
+
+      async function probeLocal() {
+        if (useLocal !== null) return useLocal;
+        try {
+          const r = await fetch(BGM_LOCAL, { method: 'HEAD' });
+          useLocal = r.ok;
+        } catch {
+          useLocal = false;
+        }
+        return useLocal;
+      }
+
+      function ensureAudio() {
+        if (audio) return audio;
+        audio = new Audio(BGM_LOCAL);
+        audio.loop = true;
+        audio.volume = 0.32;
+        audio.preload = 'auto';
+        return audio;
+      }
+
+      function ytSrc(autoplay) {
+        const q = new URLSearchParams({
+          autoplay: autoplay ? '1' : '0',
+          loop: '1',
+          playlist: BGM_YT_ID,
+          controls: '0',
+          modestbranding: '1',
+          rel: '0',
+          playsinline: '1',
+          enablejsapi: '1',
+        });
+        return `https://www.youtube-nocookie.com/embed/${BGM_YT_ID}?${q}`;
+      }
+
+      function ensureYt() {
+        if (ytFrame) return ytFrame;
+        const host = wrap();
+        if (!host) return null;
+        ytFrame = document.createElement('iframe');
+        ytFrame.id = 'bgmYt';
+        ytFrame.title = 'Background music';
+        ytFrame.setAttribute('allow', 'autoplay; encrypted-media');
+        ytFrame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        host.appendChild(ytFrame);
+        return ytFrame;
+      }
+
+      function stopYt() {
+        if (ytFrame) ytFrame.src = 'about:blank';
+      }
+
+      async function startPlayback() {
+        if (!enabled || ducked) return false;
+        const local = await probeLocal();
+        if (local) {
+          const a = ensureAudio();
+          try {
+            await a.play();
+            stopYt();
+            return true;
+          } catch {
+            return false;
+          }
+        }
+        const frame = ensureYt();
+        if (!frame) return false;
+        if (audio) audio.pause();
+        frame.src = ytSrc(true);
+        return true;
+      }
+
+      function stopPlayback() {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+        stopYt();
+      }
+
+      return {
+        unlock() { unlocked = true; },
+        isEnabled() { return enabled; },
+        setEnabled(on) {
+          enabled = on;
+          localStorage.setItem(STORAGE_BGM, on ? '1' : '0');
+          if (!on) stopPlayback();
+          else if (unlocked) startPlayback();
+        },
+        async toggle() {
+          unlocked = true;
+          const next = !enabled;
+          enabled = next;
+          localStorage.setItem(STORAGE_BGM, next ? '1' : '0');
+          if (!next) {
+            stopPlayback();
+            return false;
+          }
+          const ok = await startPlayback();
+          if (!ok) {
+            enabled = false;
+            localStorage.setItem(STORAGE_BGM, '0');
+            showToast(t('musicUnavailable'));
+            return false;
+          }
+          return true;
+        },
+        duck(active) {
+          ducked = active;
+          if (active) stopPlayback();
+          else if (enabled && unlocked) startPlayback();
+        },
+        resumeIfEnabled() {
+          if (enabled && unlocked && !ducked) startPlayback();
+        },
+        pause() { stopPlayback(); },
+      };
+    })();
+
     function syncSoundBtn() {
       const btn = document.getElementById('soundBtn');
       if (!btn) return;
@@ -2667,6 +3007,105 @@
       btn.classList.toggle('sound-off', !on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       btn.title = on ? t('soundOnLabel') : t('soundOffLabel');
+    }
+
+    function syncMusicBtn() {
+      const btn = document.getElementById('musicBtn');
+      if (!btn) return;
+      const on = Bgm.isEnabled();
+      btn.textContent = on ? '🎶' : '🎵';
+      btn.classList.toggle('music-off', !on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.title = on ? t('musicOnLabel') : t('musicOffLabel');
+      btn.setAttribute('aria-label', btn.title);
+    }
+
+    function syncLoaderCopy() {
+      if (!document.getElementById('siteLoader')) return;
+      const w = document.getElementById('loaderWindowTitle');
+      const b = document.getElementById('loaderBrand');
+      const s = document.getElementById('loaderSub');
+      if (w) w.textContent = t('loaderWindow');
+      if (b) b.textContent = t('loaderBrand');
+      if (s) s.textContent = t('loaderSub');
+    }
+
+    function initSiteLoader() {
+      const loader = document.getElementById('siteLoader');
+      if (!loader) return;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const bar = document.getElementById('loaderBar');
+      const statusEl = document.getElementById('loaderStatus');
+      const pctEl = document.getElementById('loaderPct');
+      const LOADER_MIN = reduced ? 0 : 1500;
+      const LOADER_MAX = reduced ? 400 : 5500;
+      const start = Date.now();
+      let pct = 0;
+      let stepIdx = 0;
+      let done = false;
+
+      syncLoaderCopy();
+
+      function setProgress(n, stepText) {
+        pct = Math.min(100, Math.max(pct, n));
+        if (bar) bar.style.width = `${pct}%`;
+        if (pctEl) pctEl.textContent = `${Math.round(pct)}%`;
+        if (statusEl && stepText) statusEl.textContent = stepText;
+      }
+
+      const tick = setInterval(() => {
+        if (done) return;
+        const stepsArr = t('loaderSteps');
+        const cap = 88;
+        const next = Math.min(cap, pct + 4 + Math.random() * 7);
+        const si = Math.min(stepIdx, stepsArr.length - 1);
+        setProgress(next, stepsArr[si]);
+        const threshold = ((stepIdx + 1) / stepsArr.length) * 82;
+        if (pct >= threshold && stepIdx < stepsArr.length - 1) stepIdx += 1;
+      }, 260);
+
+      function dismiss() {
+        if (done) return;
+        done = true;
+        clearInterval(tick);
+        const stepsArr = t('loaderSteps');
+        setProgress(100, stepsArr[stepsArr.length - 1]);
+        const elapsed = Date.now() - start;
+        const delay = Math.max(0, LOADER_MIN - elapsed);
+        setTimeout(() => {
+          loader.classList.add('is-done');
+          loader.setAttribute('aria-busy', 'false');
+          document.body.classList.remove('is-loading');
+          setTimeout(() => loader.remove(), reduced ? 120 : 580);
+        }, delay);
+      }
+
+      if (reduced) {
+        setProgress(100, t('loaderSteps')[0]);
+        requestAnimationFrame(dismiss);
+        return;
+      }
+
+      const pageReady = Promise.race([
+        new Promise((resolve) => {
+          if (document.readyState === 'complete') resolve();
+          else window.addEventListener('load', resolve, { once: true });
+        }),
+        new Promise((resolve) => setTimeout(resolve, LOADER_MAX)),
+      ]);
+
+      const videoReady = Promise.race([
+        new Promise((resolve) => {
+          const v = document.getElementById('bgVideo');
+          if (!v) { resolve(); return; }
+          if (v.readyState >= 2) { resolve(); return; }
+          v.addEventListener('loadeddata', resolve, { once: true });
+          v.addEventListener('error', resolve, { once: true });
+        }),
+        new Promise((resolve) => setTimeout(resolve, 3200)),
+      ]);
+
+      Promise.all([pageReady, videoReady]).then(dismiss);
     }
 
     function initBubbles() {
@@ -3362,6 +3801,8 @@
       document.getElementById('sidebarTitle').textContent = t('sidebarTitle');
       document.getElementById('passportLabel').textContent = t('passportLabel');
       syncSoundBtn();
+      syncMusicBtn();
+      syncLoaderCopy();
       const resetBtn = document.getElementById('resetBtn');
       if (resetBtn) {
         resetBtn.textContent = t('resetBtn');
@@ -3481,8 +3922,8 @@
       episodeEl.textContent = L(item, 'act') || '';
       epithetEl.textContent = L(item, 'epithet') || '';
       titleEl.textContent = L(item, 'title');
-      blurbEl.textContent = L(item, 'blurb');
-      anthroEl.textContent = L(item, 'anthro');
+      if (blurbEl) blurbEl.innerHTML = L(item, 'blurb') || '';
+      if (anthroEl) anthroEl.innerHTML = L(item, 'anthro') || '';
       renderFactsPanel(item);
       renderMakesPanel(item);
       mediaSection.style.display = isDesk ? 'none' : '';
@@ -3527,6 +3968,7 @@
 
     function closePanel() {
       SoundFX.close();
+      Bgm.duck(false);
       document.body.classList.remove('panel-open');
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
@@ -3569,8 +4011,17 @@
 
     document.getElementById('soundBtn')?.addEventListener('click', () => {
       SoundFX.unlock();
+      Bgm.unlock();
       SoundFX.setEnabled(!SoundFX.isEnabled());
       syncSoundBtn();
+      SoundFX.click();
+    });
+
+    document.getElementById('musicBtn')?.addEventListener('click', async () => {
+      SoundFX.unlock();
+      Bgm.unlock();
+      await Bgm.toggle();
+      syncMusicBtn();
       SoundFX.click();
     });
 
@@ -3628,6 +4079,7 @@
       const frame = document.getElementById('panelFrame');
       if (frame) frame.src = panelEmbedSrc(currentItem.videoId, isMuted);
       muteBtn.textContent = isMuted ? t('soundOn') : t('mute');
+      Bgm.duck(!isMuted);
     });
 
     setInterval(rotateSidebarTip, 12000);
@@ -3638,8 +4090,13 @@
       document.addEventListener('click', tryPlay, { once: true });
     }
 
-    document.addEventListener('click', () => SoundFX.unlock(), { once: true });
-    document.addEventListener('keydown', () => SoundFX.unlock(), { once: true });
+    function unlockAudio() {
+      SoundFX.unlock();
+      Bgm.unlock();
+      if (Bgm.isEnabled()) Bgm.resumeIfEnabled();
+    }
+    document.addEventListener('click', unlockAudio, { once: true });
+    document.addEventListener('keydown', unlockAudio, { once: true });
 
     if (carouselRoot) {
       carouselRoot.addEventListener('pointerenter', pauseCarouselMotion);
@@ -3653,6 +4110,7 @@
     bumpVisitorCount();
     initBubbles();
     applyUI();
+    initSiteLoader();
   </script>
 </body>
 </html>

@@ -23,6 +23,18 @@ async function runSuite(page, label) {
   });
   await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 });
 
+  const loaderVisible = await page.locator('#siteLoader').isVisible().catch(() => false);
+  results.push([`${label}: loader shows on start`, loaderVisible, loaderVisible]);
+
+  await page.waitForFunction(
+    () => !document.getElementById('siteLoader') && !document.body.classList.contains('is-loading'),
+    { timeout: 10000 },
+  );
+  const loaderGone = await page.evaluate(
+    () => !document.getElementById('siteLoader') && !document.body.classList.contains('is-loading'),
+  );
+  results.push([`${label}: loader dismisses after boot`, loaderGone, loaderGone]);
+
   const noDuplicateGalleries = await page.evaluate(() => {
     const desk = window.matchMedia('(min-width: 960px)').matches;
     if (desk) {
@@ -42,6 +54,23 @@ async function runSuite(page, label) {
     return stray.length === 0;
   });
   results.push([`${label}: no passport stars before view`, noStarsBeforePanel, noStarsBeforePanel]);
+
+  const musicBtn = await page.locator('#musicBtn').count();
+  results.push([`${label}: background music toggle`, musicBtn === 1, musicBtn]);
+
+  const musicToggle = await page.evaluate(async () => {
+    const btn = document.getElementById('musicBtn');
+    if (!btn) return false;
+    btn.click();
+    await new Promise((r) => setTimeout(r, 200));
+    const on = localStorage.getItem('depths-bgm-v1') === '1';
+    const pressed = btn.getAttribute('aria-pressed') === 'true';
+    btn.click();
+    await new Promise((r) => setTimeout(r, 100));
+    const off = localStorage.getItem('depths-bgm-v1') !== '1';
+    return on && pressed && off;
+  });
+  results.push([`${label}: music preference toggles`, musicToggle, musicToggle]);
 
   const visitor = await page.locator('#visitorCount').textContent();
   results.push([`${label}: visitor counter live`, /Visitors?:\s*\d{6}|Visitas:\s*\d{6}/i.test(visitor || ''), visitor]);
@@ -269,6 +298,21 @@ async function runSuite(page, label) {
   const sourceCount = await page.locator('#factsSources li').count();
   const overviewParas = await page.locator('#factsOverview p').count();
   results.push([`${label}: facts tab depth`, factCount >= 8 && sourceCount >= 2 && overviewParas >= 1, { factCount, sourceCount, overviewParas }]);
+
+  const noRawHtmlInCopy = await page.evaluate(() => {
+    const bad = /<(em|strong|p|span|br)\b|&lt;|&gt;/i;
+    const checks = ['#blurb', '#anthro', '#factsOverview', '#factsList'];
+    for (const sel of checks) {
+      const el = document.querySelector(sel);
+      if (!el || bad.test(el.textContent)) return { ok: false, sel, sample: el?.textContent?.slice(0, 120) };
+    }
+    return { ok: true, hasEm: !!document.querySelector('#factsOverview em') };
+  });
+  results.push([
+    `${label}: copy renders HTML (no raw tags in text)`,
+    noRawHtmlInCopy.ok && noRawHtmlInCopy.hasEm,
+    noRawHtmlInCopy,
+  ]);
 
   await page.locator('#tabMakes').click();
   const makesLinks = await page.evaluate(() => {

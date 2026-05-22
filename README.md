@@ -39,4 +39,10 @@ BASE_URL=http://127.0.0.1:4173/ node test.mjs
 - **Gallery** — pick a specimen; open story from the card or dock button
 - **Ocean passport** — stars appear after you open each story
 - **Makes tab** — puzzle and crochet links per creature
+- **🎵** — optional background music (Freddi Fish *Missing Kelp Seeds* intro); off by default, preference saved in the browser
+- **🔊** — UI sound effects (separate from music and video)
 - **ES** — Spanish UI
+
+### Background music file
+
+Place your licensed copy of the intro as [`audio/freddi-intro.mp3`](audio/README.md). Without that file, the site falls back to a YouTube no-cookie stream. See [`audio/README.md`](audio/README.md).
