@@ -43,6 +43,12 @@ BASE_URL=http://127.0.0.1:4173/ node test.mjs
 - **🔊** — UI sound effects (separate from music and video)
 - **ES** — Spanish UI
 
+### Mobile (under 960px)
+
+- **Tap a card** to preview the specimen, then **Open Story** on the sticky bar (no duplicate desktop dock)
+- Horizontally scrollable **ocean passport**; progress ring and count above the gallery
+- Full-screen story panel with larger touch targets; loader and audio controls match desktop
+
 ### Background music file
 
 Place your licensed copy of the intro as [`audio/freddi-intro.mp3`](audio/README.md). Without that file, the site falls back to a YouTube no-cookie stream. See [`audio/README.md`](audio/README.md).

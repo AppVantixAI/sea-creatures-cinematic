@@ -248,11 +248,15 @@ async function runSuite(page, label) {
         ['EXT-05', 'Pistol Shrimp'],
         ['EXT-06', 'Sperm Whale'],
       ];
+      const openBtn = document.getElementById('openStoryBtnMobile');
       for (const [id, title] of specs) {
         const card = document.querySelector(`.mobile-card[data-specimen="${id}"]`);
-        if (!card || card.disabled) return false;
+        if (!card || card.disabled || !openBtn) return false;
         card.click();
-        await new Promise((r) => setTimeout(r, 350));
+        await new Promise((r) => setTimeout(r, 200));
+        if (document.getElementById('dockTitleMobile')?.textContent !== title) return false;
+        openBtn.click();
+        await new Promise((r) => setTimeout(r, 400));
         if (document.querySelector('#title')?.textContent !== title) return false;
         document.querySelector('#closeBtn')?.click();
         await new Promise((r) => setTimeout(r, 250));
@@ -261,10 +265,20 @@ async function runSuite(page, label) {
     });
     results.push([`${label}: all six main mobile stories open`, mainCardsClick, mainCardsClick]);
 
+    const mobileLayout = await page.evaluate(() => {
+      const dockHidden = getComputedStyle(document.getElementById('dock')).display === 'none';
+      const scroll = !!document.querySelector('.mobile-scroll');
+      const progress = !!document.getElementById('progressTextMobile')?.textContent;
+      const thumb = !!document.getElementById('dockThumbMobile')?.src;
+      return dockHidden && scroll && progress && thumb;
+    });
+    results.push([`${label}: mobile layout chrome`, mobileLayout, mobileLayout]);
+
     const unlockedAfterMain = await page.locator('.mobile-card.bonus').evaluate((el) => !el.disabled);
     results.push([`${label}: curator unlocked on mobile after six`, unlockedAfterMain, unlockedAfterMain]);
 
     await page.locator('.mobile-card').first().click();
+    await page.locator('#openStoryBtnMobile').click();
   }
 
   await page.waitForSelector('body.panel-open', { timeout: 5000 });
