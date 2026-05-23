@@ -1,6 +1,9 @@
 # Side banner assets
 
-Real brand logos and product imagery used in the desktop “Advertisement” rails (1080px+ viewports). Files are hosted in-repo so GitHub Pages does not depend on hotlinked third-party URLs.
+Real brand logos and product imagery used in the Y2K “Advertisement” rails. Files are hosted in-repo so GitHub Pages does not depend on hotlinked third-party URLs.
+
+- **Desktop (960px+):** fixed left/right side rails
+- **Mobile (&lt;960px):** horizontal scroll strip under the passport bar
 
 ## Sources
 

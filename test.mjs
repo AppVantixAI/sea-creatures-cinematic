@@ -158,7 +158,10 @@ async function runSuite(page, label) {
     }));
   });
   await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(300);
+  await page.waitForFunction(
+    () => !document.getElementById('siteLoader') && !document.body.classList.contains('is-loading'),
+    { timeout: 10000 },
+  ).catch(() => {});
   const legacyPassportNoStars = await page.evaluate(() => {
     const stamps = document.querySelectorAll('#passportSlots .slot-stamp').length;
     const stamped = document.querySelectorAll('.passport-slot.stamped').length;
@@ -181,16 +184,25 @@ async function runSuite(page, label) {
   if (isDesktop) {
     const y2kAds = await page.evaluate(() => {
       const rails = document.getElementById('adRails');
-      const imgs = [...document.querySelectorAll('.banner-ad img')];
+      const leftRail = document.querySelector('.ad-rail--left');
+      const imgs = [...document.querySelectorAll('#adRails .banner-ad img')];
       const ui = document.querySelector('.ui-layer');
       const uiPad = ui ? parseFloat(getComputedStyle(ui).paddingLeft) : 0;
+      const railStyle = rails ? getComputedStyle(rails) : null;
+      const rect = leftRail?.getBoundingClientRect();
+      const visible = !!rect && rect.width > 0 && rect.height > 0
+        && railStyle?.display !== 'none'
+        && railStyle?.visibility !== 'hidden'
+        && parseFloat(railStyle?.opacity || '1') > 0
+        && parseInt(railStyle?.zIndex || '0', 10) >= 4;
       return {
-        ok: !!rails
+        ok: visible
           && imgs.length >= 10
           && imgs.every((img) => img.src.includes('/ads/') && img.alt)
           && uiPad >= 120,
         count: imgs.length,
         uiPad,
+        zIndex: railStyle?.zIndex,
       };
     });
     results.push([`${label}: Y2K side banner ads`, y2kAds.ok, y2kAds]);
@@ -353,10 +365,16 @@ async function runSuite(page, label) {
       const progress = !!document.getElementById('progressTextMobile')?.textContent;
       const hint = !!document.getElementById('mobileTapHint')?.textContent;
       const noStickyOpen = !document.getElementById('openStoryBtnMobile');
-      const noAds = getComputedStyle(document.getElementById('adRails')).display === 'none';
+      const sideAdsHidden = getComputedStyle(document.getElementById('adRails')).display === 'none';
+      const mobileAds = document.getElementById('mobileAdStrip');
+      const mobileAdImgs = [...document.querySelectorAll('#mobileAdStrip .banner-ad img')];
+      const mobileAdsOk = !!mobileAds
+        && getComputedStyle(mobileAds).display !== 'none'
+        && mobileAdImgs.length >= 6
+        && mobileAdImgs.every((img) => img.src.includes('/ads/') && img.alt);
       const uiPad = parseFloat(getComputedStyle(document.querySelector('.ui-layer')).paddingLeft) < 20;
       const bodyScroll = getComputedStyle(document.body).overflowY !== 'hidden';
-      return dockHidden && scroll && progress && hint && noStickyOpen && noAds && uiPad && bodyScroll;
+      return dockHidden && scroll && progress && hint && noStickyOpen && sideAdsHidden && mobileAdsOk && uiPad && bodyScroll;
     });
     results.push([`${label}: mobile layout chrome`, mobileLayout, mobileLayout]);
 
