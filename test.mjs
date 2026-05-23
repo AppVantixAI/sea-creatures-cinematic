@@ -199,7 +199,7 @@ async function runSuite(page, label) {
       return {
         ok: visible
           && imgs.length >= 10
-          && imgs.every((img) => img.src.includes('/ads/') && img.alt)
+          && imgs.every((img) => /\/ads\//.test(img.src) && img.alt)
           && uiPad >= 120,
         count: imgs.length,
         uiPad,
@@ -373,7 +373,7 @@ async function runSuite(page, label) {
       const mobileAdsOk = !!mobileAds
         && getComputedStyle(mobileAds).display !== 'none'
         && mobileAdImgs.length >= 6
-        && mobileAdImgs.every((img) => img.src.includes('/ads/') && img.alt);
+        && mobileAdImgs.every((img) => /\/ads\//.test(img.src) && img.alt);
       const uiPad = parseFloat(getComputedStyle(document.querySelector('.ui-layer')).paddingLeft) < 20;
       const bodyScroll = getComputedStyle(document.body).overflowY !== 'hidden';
       return dockHidden && scroll && progress && hint && noStickyOpen && sideAdsHidden && mobileAdsOk && uiPad && bodyScroll;

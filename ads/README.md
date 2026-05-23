@@ -25,4 +25,4 @@ Logos may be trademarked by their respective owners. This exhibit uses them only
 
 ## Replacing assets
 
-Drop in new images with the same filenames, or update paths in `index.html`. Keep images under ~120px wide for the side rails.
+Drop in new images with the same filenames, or update `data-asset` / `src` on the banner `<img>` tags in `index.html` (paths are resolved via `assetUrl()` for custom domain, localhost, and legacy GitHub Pages). Keep images under ~120px wide for the side rails.
