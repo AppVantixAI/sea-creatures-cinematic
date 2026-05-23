@@ -107,6 +107,14 @@ async function runSuite(page, label) {
   const noRejected = !Object.values(episodeVideos).some((vid) => REJECTED_EXTREME_VIDEOS.includes(vid));
   results.push([`${label}: correct Most Extreme episode IDs`, videosOk && noRejected, { expected: EXTREME_EPISODE_VIDEOS, actual: episodeVideos }]);
 
+  const brandOk = await page.evaluate(() => {
+    const title = document.getElementById('brandTitle')?.textContent || '';
+    const tagline = document.getElementById('siteTagline')?.textContent || '';
+    const footer = document.getElementById('siteFooter')?.textContent || '';
+    return /Ocean Passport/i.test(title) && tagline.length > 20 && /not affiliated/i.test(footer);
+  });
+  results.push([`${label}: rebrand and credits visible`, brandOk, brandOk]);
+
   const passportSlots = await page.locator('.passport-slot').count();
   results.push([`${label}: passport game slots`, passportSlots === 7, passportSlots]);
 
@@ -553,6 +561,25 @@ async function run() {
   });
   await runSuite(mobile, 'mobile');
   await mobile.close();
+
+  const deepPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  await deepPage.goto(`${BASE}?specimen=EXT-03&open=1`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await deepPage.waitForFunction(
+    () => !document.body.classList.contains('is-loading') && document.body.classList.contains('panel-open'),
+    { timeout: 15000 },
+  ).catch(() => {});
+  const deepLink = await deepPage.evaluate(() => ({
+    params: new URLSearchParams(location.search).get('specimen'),
+    panelOpen: document.body.classList.contains('panel-open'),
+    title: document.querySelector('#title')?.textContent,
+    episode: document.querySelector('#episode')?.textContent,
+  }));
+  results.push([
+    'deep link: specimen URL opens panel',
+    deepLink.params === 'EXT-03' && deepLink.panelOpen && deepLink.title === 'Box Jellyfish' && /Venom/.test(deepLink.episode || ''),
+    deepLink,
+  ]);
+  await deepPage.close();
 
   await browser.close();
 

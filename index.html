@@ -5,7 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0054e3" />
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>★ DEPTHS ★ The Extreme Ocean Zone</title>
+  <meta name="description" content="Watch six ranked sea creatures from Animal Planet’s The Most Extreme, read Gulf and Florida shore stories, and stamp your ocean passport." id="metaDescription" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="The Extreme: Ocean Passport" />
+  <meta property="og:title" content="The Extreme: Ocean Passport" id="metaOgTitle" />
+  <meta property="og:description" content="Six Most Extreme episodes, shore stories, and a stampable ocean passport — unlock the octopus when you finish." id="metaOgDescription" />
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg/1200px-Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg" />
+  <meta property="og:url" content="https://appvantixai.github.io/sea-creatures-cinematic/" id="metaOgUrl" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Extreme: Ocean Passport" id="metaTwitterTitle" />
+  <meta name="twitter:description" content="Six Most Extreme episodes, shore stories, and a stampable ocean passport." id="metaTwitterDescription" />
+  <meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg/1200px-Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg" />
+  <title>The Extreme: Ocean Passport</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.78em' x='.12em' font-size='72'%3E🐙%3C/text%3E%3C/svg%3E">
   <style>
     :root {
@@ -817,7 +828,7 @@
         -webkit-tap-highlight-color: transparent;
       }
       .topbar { padding: 0.4rem 0.45rem; gap: 0.35rem; }
-      .brand h1 { font-size: 1.05rem; }
+      .brand h1 { font-size: 0.82rem; line-height: 1.15; }
       .brand p { font-size: 9px; }
       .topbar-actions { gap: 0.3rem; }
       .topbar-actions .gloss-btn {
@@ -1568,6 +1579,29 @@
       text-align: right;
       flex: 1;
     }
+    .site-tagline {
+      width: min(100%, 52rem);
+      margin: 0 max(0.65rem, var(--safe-l)) 0.4rem max(0.65rem, var(--safe-r));
+      padding: 0.4rem 0.65rem;
+      text-align: center;
+      font: 600 11px/1.45 Tahoma, Verdana, sans-serif;
+      color: #cfefff;
+      border: 1px dashed #004466;
+      border-radius: 6px;
+      background: rgba(0, 24, 48, 0.55);
+      letter-spacing: 0.02em;
+    }
+    .site-footer .footer-credits {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 9px;
+      line-height: 1.45;
+      color: var(--muted);
+      max-width: 36rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .site-footer .footer-credits a { color: var(--sea); }
     .passport-slots {
       display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: center;
     }
@@ -2128,16 +2162,16 @@
         <div class="title-bar-dots" aria-hidden="true">
           <span class="r"></span><span class="y"></span><span class="g"></span>
         </div>
-        <span class="title-bar-title" id="windowTitle">DEPTHS.exe — Ocean Zone</span>
+        <span class="title-bar-title" id="windowTitle">PASSPORT.exe — The Extreme Ocean Zone</span>
         <div class="title-bar-dots" aria-hidden="true" style="visibility:hidden">
           <span class="r"></span><span class="y"></span><span class="g"></span>
         </div>
       </div>
       <header class="topbar">
         <div class="brand">
-          <h1 id="brandTitle">Depths</h1>
+          <h1 id="brandTitle">The Extreme: Ocean Passport</h1>
           <span class="badge-new" id="badgeNew" hidden>NEW!</span>
-          <p id="brandSub">Six ocean stories</p>
+          <p id="brandSub">Six episodes · shore stories · stamp them all</p>
         </div>
         <span class="visitor" id="visitorCount" title="Visitor counter"></span>
         <div class="topbar-actions">
@@ -2156,6 +2190,8 @@
       </div>
       <div class="passport-slots" id="passportSlots"></div>
     </div>
+
+    <p class="site-tagline" id="siteTagline"></p>
 
     <section class="layout-mobile" id="layoutMobile" aria-label="Mobile gallery">
       <p class="mobile-progress" id="progressTextMobile" aria-live="polite"></p>
@@ -2310,9 +2346,12 @@
 
     const I18N = {
       en: {
-        brandTitle: '★ Depths ★',
-        brandSub: 'Six ocean stories · The Extreme',
-        windowTitle: 'DEPTHS.exe — Ocean Zone',
+        documentTitle: 'The Extreme: Ocean Passport',
+        metaDescription: 'Watch six ranked sea creatures from Animal Planet’s The Most Extreme, read Gulf and Florida shore stories, and stamp your ocean passport.',
+        brandTitle: '★ The Extreme: Ocean Passport ★',
+        brandSub: 'Six episodes · shore stories · stamp them all',
+        siteTagline: 'Watch each creature’s <em>Most Extreme</em> episode, read why it matters on our coasts, and stamp your passport.',
+        windowTitle: 'PASSPORT.exe — The Extreme Ocean Zone',
         panelWindow: 'Specimen Viewer 3000',
         letterWindow: 'readme.txt',
         openStory: '>>> OPEN STORY <<<',
@@ -2357,9 +2396,9 @@
         musicOffLabel: 'Background music off',
         musicCredit: 'Theme: Freddi Fish — Missing Kelp Seeds (George “The Fat Man” Sanger)',
         musicUnavailable: 'Add audio/freddi-intro.mp3 or check your connection for streaming fallback.',
-        loaderWindow: 'DEPTHS.exe — Loading',
-        loaderBrand: '★ DEPTHS ★',
-        loaderSub: 'The Extreme · Ocean Zone',
+        loaderWindow: 'PASSPORT.exe — Loading',
+        loaderBrand: '★ The Extreme: Ocean Passport ★',
+        loaderSub: 'Six episodes · shore stories · stamp them all',
         loaderSteps: [
           'Calibrating depth sensors…',
           'Indexing specimen polaroids…',
@@ -2379,6 +2418,7 @@
 <p class="letter-sign">— curator log · updated from your notes</p>`,
         completeToast: '★★★ Every specimen viewed — confetti time ★★★',
         footer: 'Best viewed 1024×768 · Flash-free since 2012 ·',
+        footerCredits: '<span class="footer-credits">Fan/educational exhibit — not affiliated with Discovery, Animal Planet, or Warner Bros. Episode clips via YouTube; images via <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>. <em>The Most Extreme</em> © its rights holders.</span>',
         visitors: 'Visitors:',
         galleryTitle: '★ Specimen Gallery ★',
         galleryStatus: '● LIVE',
@@ -2388,9 +2428,12 @@
         progressText: (n, t) => `${n} of ${t} viewed`,
       },
       es: {
-        brandTitle: '★ Profundidades ★',
-        brandSub: 'Seis historias del mar · The Extreme',
-        windowTitle: 'PROFUNDIDADES.exe',
+        documentTitle: 'Pasaporte oceánico: The Extreme',
+        metaDescription: 'Mira seis criaturas del mar en The Most Extreme de Animal Planet, lee historias de costa del Golfo y Florida, y sella tu pasaporte oceánico.',
+        brandTitle: '★ Pasaporte oceánico: The Extreme ★',
+        brandSub: 'Seis episodios · historias de costa · sella tu pasaporte',
+        siteTagline: 'Mira el episodio de <em>The Most Extreme</em>, lee por qué importa en nuestras costas y sella tu pasaporte.',
+        windowTitle: 'PASAPORTE.exe — Zona oceánica The Extreme',
         panelWindow: 'Visor de espécimen',
         letterWindow: 'nota_secreta.txt',
         openStory: '>>> ABRIR <<<',
@@ -2435,9 +2478,9 @@
         musicOffLabel: 'Música de fondo apagada',
         musicCredit: 'Tema: Freddi Fish — Missing Kelp Seeds (George “The Fat Man” Sanger)',
         musicUnavailable: 'Añade audio/freddi-intro.mp3 o revisa la conexión para el respaldo en streaming.',
-        loaderWindow: 'PROFUNDIDADES.exe — Cargando',
-        loaderBrand: '★ PROFUNDIDADES ★',
-        loaderSub: 'The Extreme · Zona oceánica',
+        loaderWindow: 'PASAPORTE.exe — Cargando',
+        loaderBrand: '★ Pasaporte oceánico: The Extreme ★',
+        loaderSub: 'Seis episodios · historias de costa',
         loaderSteps: [
           'Calibrando sensores de profundidad…',
           'Indexando polaroids de espécimenes…',
@@ -2457,6 +2500,7 @@
 <p class="letter-sign">— bitácora del curador · actualizada con tus notas</p>`,
         completeToast: '★★★ Viste todos los espécimenes — confeti ★★★',
         footer: 'Mejor en 1024×768 · Sin Flash ·',
+        footerCredits: '<span class="footer-credits">Exhibición educativa/fan — sin afiliación a Discovery, Animal Planet ni Warner Bros. Episodios en YouTube; imágenes en <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>. <em>The Most Extreme</em> © sus titulares.</span>',
         visitors: 'Visitas:',
         galleryTitle: '★ Galería de espécimenes ★',
         galleryStatus: '● EN VIVO',
@@ -2475,6 +2519,19 @@
     const STORAGE_BGM = 'depths-bgm-v1';
     const BGM_LOCAL = 'audio/freddi-intro.mp3';
     const BGM_YT_ID = 'tPsoMseeZ-g';
+    const SITE_CANONICAL = 'https://appvantixai.github.io/sea-creatures-cinematic/';
+    const SPECIMEN_URL_PARAM = 'specimen';
+    const OPEN_URL_PARAM = 'open';
+
+    const EXTREME_META = {
+      'EXT-01': { episode: 'Super Sharks', episodeEs: 'Super tiburones', code: 'S03E12', rank: 1, rankEn: 'Hammerhead shark', rankEs: 'Tiburón martillo' },
+      'EXT-02': { episode: 'Biters', episodeEs: 'Mordedores', code: 'S01E13', rank: 1, rankEn: 'Cookiecutter shark', rankEs: 'Tiburón cigarro' },
+      'EXT-03': { episode: 'Venom', episodeEs: 'Veneno', code: 'S02E03', rank: 1, rankEn: 'Box jellyfish', rankEs: 'Medusa cubo' },
+      'EXT-04': { episode: 'Dads', episodeEs: 'Papás', code: 'S02E02', rank: 1, rankEn: 'Seahorse', rankEs: 'Caballito de mar' },
+      'EXT-05': { episode: 'Loudmouths', episodeEs: 'Ruidosos', code: 'S04E05', rank: 1, rankEn: 'Pistol shrimp', rankEs: 'Camarón pistola' },
+      'EXT-06': { episode: 'Divers', episodeEs: 'Buceadores', code: 'S04E03', rank: 1, rankEn: 'Sperm whale', rankEs: 'Cachalote' },
+      'CUR-00': { episode: 'Disguises', episodeEs: 'Disfraz', code: 'S02E04', rank: 1, rankEn: 'Mimic octopus', rankEs: 'Pulpo mimético' },
+    };
     const PROGRESS_STORAGE_KEYS = [
       STORAGE_VISITED,
       STORAGE_PASSPORT,
@@ -3332,6 +3389,7 @@
           loader.classList.add('is-done');
           loader.setAttribute('aria-busy', 'false');
           document.body.classList.remove('is-loading');
+          applySpecimenFromUrl();
           setTimeout(() => loader.remove(), reduced ? 120 : 580);
         }, delay);
       }
@@ -3544,6 +3602,62 @@
       return t('sourceReview');
     };
 
+    function episodeLine(item) {
+      const meta = EXTREME_META[item?.specimen];
+      if (!meta) return L(item, 'act') || '';
+      const episode = lang === 'es' ? meta.episodeEs : meta.episode;
+      const rankName = lang === 'es' ? meta.rankEs : meta.rankEn;
+      return `${episode} (${meta.code}) · #${meta.rank} ${rankName}`;
+    }
+
+    function specimenIndexFromId(id) {
+      if (!id) return -1;
+      return CAROUSEL_ENTRIES.findIndex((entry) => entry.specimen === id);
+    }
+
+    function syncSpecimenUrl(specimenId, { push = false } = {}) {
+      if (location.protocol === 'file:') return;
+      const url = new URL(location.href);
+      if (specimenId) url.searchParams.set(SPECIMEN_URL_PARAM, specimenId);
+      else url.searchParams.delete(SPECIMEN_URL_PARAM);
+      url.searchParams.delete(OPEN_URL_PARAM);
+      const state = { specimen: specimenId || null };
+      if (push) history.pushState(state, '', url);
+      else history.replaceState(state, '', url);
+    }
+
+    function applySpecimenFromUrl() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get(SPECIMEN_URL_PARAM);
+      if (!id) return;
+      const idx = specimenIndexFromId(id);
+      if (idx < 0 || !canAccessSpecimen(idx)) return;
+      setSelection(idx, { scrollPick: true, syncUrl: false });
+      if (params.get(OPEN_URL_PARAM) === '1') {
+        openPanel(CAROUSEL_ENTRIES[idx]);
+      }
+    }
+
+    function syncMetaTags() {
+      document.title = t('documentTitle');
+      const desc = t('metaDescription');
+      const setMeta = (sel, val) => {
+        const el = document.querySelector(sel);
+        if (el) el.setAttribute('content', val);
+      };
+      setMeta('meta[name="description"]', desc);
+      setMeta('#metaOgTitle', t('documentTitle'));
+      setMeta('#metaOgDescription', desc);
+      setMeta('#metaTwitterTitle', t('documentTitle'));
+      setMeta('#metaTwitterDescription', desc);
+      const ogUrl = document.getElementById('metaOgUrl');
+      if (ogUrl && location.protocol !== 'file:') {
+        ogUrl.setAttribute('content', location.origin + location.pathname);
+      } else if (ogUrl) {
+        ogUrl.setAttribute('content', SITE_CANONICAL);
+      }
+    }
+
     const carouselRoot = document.getElementById('carousel3d');
     const carouselItems = document.getElementById('carouselItems');
     const sideNav = document.getElementById('sideNav');
@@ -3748,7 +3862,7 @@
     }
 
     function updateDockMeta(item) {
-      const act = L(item, 'act') || '';
+      const act = episodeLine(item);
       const title = L(item, 'title');
       const epithet = L(item, 'epithet') || '';
       if (dockThumb) { dockThumb.src = item.image; dockThumb.alt = title; }
@@ -3890,7 +4004,7 @@
       });
     }
 
-    function setSelection(idx, { scrollPick = true } = {}) {
+    function setSelection(idx, { scrollPick = true, syncUrl = true } = {}) {
       if (!canAccessSpecimen(idx)) return;
       selectedIdx = ((idx % CAROUSEL_ENTRIES.length) + CAROUSEL_ENTRIES.length) % CAROUSEL_ENTRIES.length;
       const item = CAROUSEL_ENTRIES[selectedIdx];
@@ -3898,6 +4012,7 @@
       setPickCurrent(mobileGrid?.querySelectorAll('.mobile-card'), selectedIdx);
       setPickCurrent(sideNav?.querySelectorAll('.side-nav-item'), selectedIdx);
       updateDockMeta(item);
+      if (syncUrl && item?.specimen) syncSpecimenUrl(item.specimen);
       if (isDesktopLayout()) {
         spinCarouselToIndex(selectedIdx);
         if (scrollPick) {
@@ -3920,7 +4035,10 @@
         btn.className = 'side-nav-item' + (isBonusOctopus(item) ? ' bonus' : '') + (locked ? ' locked' : '');
         btn.dataset.specimen = item.specimen || '';
         btn.setAttribute('aria-label', locked ? t('bonusLockedAria') : L(item, 'title'));
-        const actShort = (L(item, 'act') || '').split('·')[0].trim();
+        const meta = EXTREME_META[item.specimen];
+        const actShort = locked
+          ? '?'
+          : (lang === 'es' ? meta?.episodeEs : meta?.episode) || (L(item, 'act') || '').split('·').pop()?.trim() || '';
         const thumb = locked
           ? bonusMysteryMarkup('nav')
           : `<img src="${item.image}" alt="${item.imageAlt || L(item, 'title')}" loading="lazy" width="48" height="48" />`;
@@ -4078,8 +4196,11 @@
         resetBtn.setAttribute('aria-label', t('resetAria'));
         resetBtn.title = t('resetAria');
       }
+      const siteTagline = document.getElementById('siteTagline');
+      if (siteTagline) siteTagline.innerHTML = t('siteTagline');
+      syncMetaTags();
       document.getElementById('siteFooter').innerHTML =
-        `${t('footer')} <span id="footerYear">${new Date().getFullYear()}</span>`;
+        `${t('footer')} <span id="footerYear">${new Date().getFullYear()}</span> ${t('footerCredits')}`;
       document.getElementById('factsListHead').textContent = t('factsListHead');
       document.getElementById('factsSourcesHead').textContent = t('factsSourcesHead');
       document.getElementById('tabWatch').textContent = t('tabWatch');
@@ -4102,7 +4223,8 @@
       buildMobileGrid();
       buildSideNav();
       buildCarousel();
-      setSelection(selectedIdx, { scrollPick: false });
+      const urlHasSpecimen = !!new URLSearchParams(location.search).get(SPECIMEN_URL_PARAM);
+      setSelection(selectedIdx, { scrollPick: false, syncUrl: !urlHasSpecimen });
       updateProgressUI();
       if (currentItem) fillPanel(currentItem);
     }
@@ -4184,7 +4306,7 @@
       heroImg.src = item.image;
       heroImg.alt = item.imageAlt || L(item, 'title');
       heroImg.hidden = false;
-      episodeEl.textContent = L(item, 'act') || '';
+      episodeEl.textContent = episodeLine(item);
       epithetEl.textContent = L(item, 'epithet') || '';
       titleEl.textContent = L(item, 'title');
       if (storyTextEl) storyTextEl.innerHTML = L(item, 'anthro') || '';
@@ -4225,7 +4347,15 @@
     function openPanel(item) {
       if (!canAccessSpecimen(item)) return;
       const idx = CAROUSEL_ENTRIES.indexOf(item);
-      if (idx >= 0) setSelection(idx);
+      if (idx >= 0) setSelection(idx, { syncUrl: false });
+      if (item?.specimen) {
+        if (location.protocol !== 'file:') {
+          const url = new URL(location.href);
+          url.searchParams.set(SPECIMEN_URL_PARAM, item.specimen);
+          url.searchParams.set(OPEN_URL_PARAM, '1');
+          history.pushState({ specimen: item.specimen, open: true }, '', url);
+        }
+      }
       markSeen();
       currentItem = item;
       SoundFX.open();
@@ -4252,6 +4382,12 @@
       resetPlayer();
       playerLoading.hidden = true;
       playerFallback.hidden = true;
+      if (location.protocol !== 'file:' && currentItem?.specimen) {
+        const url = new URL(location.href);
+        url.searchParams.delete(OPEN_URL_PARAM);
+        url.searchParams.set(SPECIMEN_URL_PARAM, currentItem.specimen);
+        history.replaceState({ specimen: currentItem.specimen }, '', url);
+      }
       if (isDesktopLayout()) resumeCarouselMotion();
       if (!letterPanel.classList.contains('open')) unlockPageScroll();
     }
@@ -4383,6 +4519,16 @@
         if (!carouselRoot.contains(e.relatedTarget)) resumeCarouselMotion();
       });
     }
+
+    window.addEventListener('popstate', () => {
+      const open = new URLSearchParams(location.search).get(OPEN_URL_PARAM) === '1';
+      if (panel.classList.contains('open') && !open) closePanel();
+      applySpecimenFromUrl();
+    });
+
+    const bootSpecimen = new URLSearchParams(location.search).get(SPECIMEN_URL_PARAM);
+    const bootIdx = specimenIndexFromId(bootSpecimen);
+    if (bootIdx >= 0 && canAccessSpecimen(bootIdx)) selectedIdx = bootIdx;
 
     bumpVisitorCount();
     initBubbles();

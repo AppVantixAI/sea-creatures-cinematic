@@ -1,6 +1,6 @@
-# Depths — Sea Creatures Cinematic
+# The Extreme: Ocean Passport
 
-Interactive ocean exhibit: 3D specimen gallery, story panels, ocean passport, and craft links (puzzles & crochet) for each creature. Bilingual EN/ES.
+Interactive ocean exhibit tied to *Animal Planet’s The Most Extreme*: watch each ranked episode, read Gulf and Florida shore stories, stamp your passport, and unlock the bonus octopus. Bilingual EN/ES.
 
 **Live site:** https://appvantixai.github.io/sea-creatures-cinematic/
 
