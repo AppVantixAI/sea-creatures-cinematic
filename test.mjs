@@ -4,6 +4,21 @@ const BASE = process.env.BASE_URL || 'http://127.0.0.1:4173/';
 const errors = [];
 const results = [];
 
+/** Full *Most Extreme* episodes — each specimen’s #1 ranking animal must match. */
+const EXTREME_EPISODE_VIDEOS = {
+  'EXT-01': 'Yz-WKeGEQIA', // Super Sharks — hammerhead
+  'EXT-02': 'y5TNO-jSUzo', // Biters — cookiecutter
+  'EXT-03': 'y8qlfJ7aaoo', // Venom — box jellyfish (not Poison / dart frog)
+  'EXT-04': 'uzOa4q-ilzk', // Dads — seahorse
+  'EXT-05': 'rG_HOg8VGP8', // Loud Mouths — pistol shrimp (full episode)
+  'EXT-06': 'B2f669rSC54', // Divers — sperm whale
+  CURATOR: '9jJmaSgbOz4', // Disguises — mimic octopus
+};
+const REJECTED_EXTREME_VIDEOS = [
+  '5qAetTMgTQA', // titled Venom but is the Poison episode
+  'HHFwLE8Wt1E', // pistol-shrimp clip only, not full Loud Mouths
+];
+
 async function runSuite(page, label) {
   page.on('pageerror', (e) => errors.push(`[${label}] ${e.message}`));
   page.on('console', (msg) => {
@@ -79,6 +94,19 @@ async function runSuite(page, label) {
   const dockTitle = await page.locator('#dockTitle').textContent();
   results.push([`${label}: dock populated on load`, !!dockSrc && dockSrc.startsWith('http') && !!dockTitle, { dockSrc, dockTitle }]);
 
+  const episodeVideos = await page.evaluate(() => {
+    const items = typeof ITEMS !== 'undefined' ? ITEMS : [];
+    const bonus = typeof OCTOPUS_BONUS !== 'undefined' ? OCTOPUS_BONUS : null;
+    const map = Object.fromEntries(items.map((i) => [i.specimen, i.videoId]));
+    if (bonus?.videoId) map.CURATOR = bonus.videoId;
+    return map;
+  });
+  const videosOk = Object.entries(EXTREME_EPISODE_VIDEOS).every(
+    ([id, vid]) => episodeVideos[id] === vid,
+  );
+  const noRejected = !Object.values(episodeVideos).some((vid) => REJECTED_EXTREME_VIDEOS.includes(vid));
+  results.push([`${label}: correct Most Extreme episode IDs`, videosOk && noRejected, { expected: EXTREME_EPISODE_VIDEOS, actual: episodeVideos }]);
+
   const passportSlots = await page.locator('.passport-slot').count();
   results.push([`${label}: passport game slots`, passportSlots === 7, passportSlots]);
 
@@ -143,6 +171,22 @@ async function runSuite(page, label) {
   const isDesktop = label === 'desktop';
 
   if (isDesktop) {
+    const y2kAds = await page.evaluate(() => {
+      const rails = document.getElementById('adRails');
+      const imgs = [...document.querySelectorAll('.banner-ad img')];
+      const ui = document.querySelector('.ui-layer');
+      const uiPad = ui ? parseFloat(getComputedStyle(ui).paddingLeft) : 0;
+      return {
+        ok: !!rails
+          && imgs.length >= 10
+          && imgs.every((img) => img.src.includes('/ads/') && img.alt)
+          && uiPad >= 120,
+        count: imgs.length,
+        uiPad,
+      };
+    });
+    results.push([`${label}: Y2K side banner ads`, y2kAds.ok, y2kAds]);
+
     const itemCount = await page.locator('.carousel-item').count();
     results.push([`${label}: 3d carousel items`, itemCount === 7, itemCount]);
 
@@ -233,6 +277,13 @@ async function runSuite(page, label) {
 
     await page.locator('#openStoryBtn').click();
   } else {
+    const noMobileAds = await page.evaluate(() => {
+      const rails = document.getElementById('adRails');
+      if (!rails) return true;
+      return getComputedStyle(rails).display === 'none';
+    });
+    results.push([`${label}: no side ads on mobile`, noMobileAds, noMobileAds]);
+
     const cards = await page.locator('.mobile-card').count();
     results.push([`${label}: mobile grid cards`, cards === 7, cards]);
 
@@ -294,8 +345,10 @@ async function runSuite(page, label) {
       const progress = !!document.getElementById('progressTextMobile')?.textContent;
       const hint = !!document.getElementById('mobileTapHint')?.textContent;
       const noStickyOpen = !document.getElementById('openStoryBtnMobile');
+      const noAds = getComputedStyle(document.getElementById('adRails')).display === 'none';
+      const uiPad = parseFloat(getComputedStyle(document.querySelector('.ui-layer')).paddingLeft) < 20;
       const bodyScroll = getComputedStyle(document.body).overflowY !== 'hidden';
-      return dockHidden && scroll && progress && hint && noStickyOpen && bodyScroll;
+      return dockHidden && scroll && progress && hint && noStickyOpen && noAds && uiPad && bodyScroll;
     });
     results.push([`${label}: mobile layout chrome`, mobileLayout, mobileLayout]);
 
