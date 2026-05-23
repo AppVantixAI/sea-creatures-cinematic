@@ -645,15 +645,15 @@
     }
     .dock-simple .dock-controls { display: none !important; }
 
-    /* ——— Y2K side banner ads (desktop margins only) ——— */
-    .ad-rails {
+    /* ——— Y2K side sponsor tiles (desktop margins only) ——— */
+    .sponsor-rails {
       display: none;
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 10;
     }
-    .ad-rail {
+    .sponsor-rail {
       position: fixed;
       top: 6.5rem;
       bottom: 1.5rem;
@@ -670,9 +670,9 @@
       scrollbar-width: thin;
       scrollbar-color: #004466 transparent;
     }
-    .ad-rail--left { left: max(0.35rem, var(--safe-l)); }
-    .ad-rail--right { right: max(0.35rem, var(--safe-r)); }
-    .ad-rail-tag {
+    .sponsor-rail--left { left: max(0.35rem, var(--safe-l)); }
+    .sponsor-rail--right { right: max(0.35rem, var(--safe-r)); }
+    .sponsor-rail-tag {
       font: bold 7px/1.2 Arial, Helvetica, sans-serif;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -684,7 +684,7 @@
       text-shadow: 1px 1px 0 #c00, -1px -1px 0 #00f;
       animation: ad-blink 1.1s step-end infinite;
     }
-    .banner-ad {
+    .sponsor-tile {
       display: block;
       flex-shrink: 0;
       text-decoration: none;
@@ -696,15 +696,15 @@
       transition: transform 0.12s ease, filter 0.12s ease;
       pointer-events: auto;
     }
-    .banner-ad:nth-child(3n) {
+    .sponsor-tile:nth-child(3n) {
       animation: ad-border-flash 2.4s step-end infinite;
     }
-    .banner-ad:hover,
-    .banner-ad:focus-visible {
+    .sponsor-tile:hover,
+    .sponsor-tile:focus-visible {
       transform: scale(1.03);
       filter: brightness(1.06) saturate(1.1);
     }
-    .banner-ad img {
+    .sponsor-tile img {
       display: block;
       width: 100%;
       height: 100%;
@@ -712,18 +712,18 @@
       background: #fff;
       pointer-events: none;
     }
-    .banner-ad--tall { width: 120px; height: 200px; }
-    .banner-ad--tall img { object-fit: cover; }
-    .banner-ad--square { width: 120px; height: 120px; }
-    .banner-ad--wide { width: 120px; height: 64px; }
+    .sponsor-tile--tall { width: 120px; height: 200px; }
+    .sponsor-tile--tall img { object-fit: cover; }
+    .sponsor-tile--square { width: 120px; height: 120px; }
+    .sponsor-tile--wide { width: 120px; height: 64px; }
 
     @media (prefers-reduced-motion: reduce) {
-      .ad-rail-tag,
-      .banner-ad { animation: none !important; }
+      .sponsor-rail-tag,
+      .sponsor-tile { animation: none !important; }
     }
 
     /* Mobile sponsor strip */
-    .mobile-ad-strip {
+    .mobile-sponsor-strip {
       display: none;
       position: relative;
       z-index: 3;
@@ -735,7 +735,7 @@
       background: linear-gradient(180deg, #1a3060, #0a1830);
       box-shadow: 0 2px 0 #002040;
     }
-    .mobile-ad-tag {
+    .mobile-sponsor-label {
       font: bold 7px/1.2 Arial, Helvetica, sans-serif;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -744,7 +744,7 @@
       margin: 0 0 0.35rem;
       animation: ad-blink 1.1s step-end infinite;
     }
-    .mobile-ad-scroll {
+    .mobile-sponsor-scroll {
       display: flex;
       gap: 0.45rem;
       overflow-x: auto;
@@ -753,35 +753,35 @@
       overscroll-behavior-x: contain;
       padding-bottom: 0.15rem;
     }
-    .mobile-ad-scroll .banner-ad {
+    .mobile-sponsor-scroll .sponsor-tile {
       flex: 0 0 auto;
       scroll-snap-align: center;
       width: 88px;
       height: 88px;
     }
-    .mobile-ad-scroll .banner-ad--wide {
+    .mobile-sponsor-scroll .sponsor-tile--wide {
       width: 120px;
       height: 52px;
     }
-    .mobile-ad-scroll .banner-ad--tall {
+    .mobile-sponsor-scroll .sponsor-tile--tall {
       width: 72px;
       height: 120px;
     }
-    .mobile-ad-scroll .banner-ad img {
+    .mobile-sponsor-scroll .sponsor-tile img {
       object-fit: contain;
     }
-    .mobile-ad-scroll .banner-ad--tall img,
-    .mobile-ad-scroll .banner-ad--square img[src*="sea-monkeys"] {
+    .mobile-sponsor-scroll .sponsor-tile--tall img,
+    .mobile-sponsor-scroll .sponsor-tile--square img[src*="sea-monkeys"] {
       object-fit: cover;
     }
 
     @media (max-width: 959px) {
-      .ad-rails { display: none !important; }
-      .mobile-ad-strip { display: block; }
+      .sponsor-rails { display: none !important; }
+      .mobile-sponsor-strip { display: block; }
     }
     @media (min-width: 960px) {
-      .ad-rails { display: block; }
-      .mobile-ad-strip { display: none !important; }
+      .sponsor-rails { display: block; }
+      .mobile-sponsor-strip { display: none !important; }
       .ui-layer {
         box-sizing: border-box;
         padding-left: 136px;
@@ -797,10 +797,8 @@
         margin-right: 0;
       }
     }
-    body.is-loading .ad-rails,
-    body.panel-open .ad-rails,
-    body.is-loading .mobile-ad-strip,
-    body.panel-open .mobile-ad-strip {
+    body.panel-open .sponsor-rails,
+    body.panel-open .mobile-sponsor-strip {
       visibility: hidden;
       pointer-events: none;
       opacity: 0;
@@ -2225,29 +2223,29 @@
 
     <p class="site-tagline" id="siteTagline"></p>
 
-    <div class="mobile-ad-strip" id="mobileAdStrip" aria-label="Sponsored links">
-      <p class="mobile-ad-tag">Advertisement</p>
-      <div class="mobile-ad-scroll">
-        <a class="banner-ad banner-ad--square" href="https://www.sea-monkeys.com/" target="_blank" rel="noopener noreferrer sponsored" title="Sea-Monkeys®">
-          <img data-asset="ads/sea-monkeys.jpg" src="ads/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="88" height="88" loading="lazy" decoding="async" />
+    <div class="mobile-sponsor-strip" id="mobileSponsorStrip" aria-label="Y2K partner banners">
+      <p class="mobile-sponsor-label">Cool sites!</p>
+      <div class="mobile-sponsor-scroll">
+        <a class="sponsor-tile sponsor-tile--square" href="https://www.sea-monkeys.com/" target="_blank" rel="noopener noreferrer" title="Sea-Monkeys®">
+          <img data-asset="sponsors/sea-monkeys.jpg" src="sponsors/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="88" height="88" loading="eager" decoding="async" />
         </a>
-        <a class="banner-ad banner-ad--square" href="https://www.aol.com/" target="_blank" rel="noopener noreferrer sponsored" title="AOL">
-          <img data-asset="ads/aol-classic.png" src="ads/aol-classic.png" alt="AOL logo" width="88" height="88" loading="lazy" decoding="async" />
+        <a class="sponsor-tile sponsor-tile--square" href="https://www.aol.com/" target="_blank" rel="noopener noreferrer" title="AOL">
+          <img data-asset="sponsors/aol-classic.png" src="sponsors/aol-classic.png" alt="AOL logo" width="88" height="88" loading="eager" decoding="async" />
         </a>
-        <a class="banner-ad banner-ad--wide" href="https://www.animalplanet.com/" target="_blank" rel="noopener noreferrer sponsored" title="Animal Planet">
-          <img data-asset="ads/animal-planet.png" src="ads/animal-planet.png" alt="Animal Planet logo" width="120" height="52" loading="lazy" decoding="async" />
+        <a class="sponsor-tile sponsor-tile--wide" href="https://www.animalplanet.com/" target="_blank" rel="noopener noreferrer" title="Animal Planet">
+          <img data-asset="sponsors/animal-planet.png" src="sponsors/animal-planet.png" alt="Animal Planet logo" width="120" height="52" loading="eager" decoding="async" />
         </a>
-        <a class="banner-ad banner-ad--square" href="https://www.neopets.com/" target="_blank" rel="noopener noreferrer sponsored" title="Neopets">
-          <img data-asset="ads/neopets.png" src="ads/neopets.png" alt="Neopets logo" width="88" height="88" loading="lazy" decoding="async" />
+        <a class="sponsor-tile sponsor-tile--square" href="https://www.neopets.com/" target="_blank" rel="noopener noreferrer" title="Neopets">
+          <img data-asset="sponsors/neopets.png" src="sponsors/neopets.png" alt="Neopets logo" width="88" height="88" loading="eager" decoding="async" />
         </a>
-        <a class="banner-ad banner-ad--square" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer sponsored" title="eBay">
-          <img data-asset="ads/ebay.png" src="ads/ebay.png" alt="eBay logo" width="88" height="88" loading="lazy" decoding="async" />
+        <a class="sponsor-tile sponsor-tile--square" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer" title="eBay">
+          <img data-asset="sponsors/ebay.png" src="sponsors/ebay.png" alt="eBay logo" width="88" height="88" loading="eager" decoding="async" />
         </a>
-        <a class="banner-ad banner-ad--tall" href="https://www.youtube.com/watch?v=tPsoMseeZ-g" target="_blank" rel="noopener noreferrer sponsored" title="Humongous Entertainment — Freddi Fish">
-          <img data-asset="ads/freddi-humongous.png" src="ads/freddi-humongous.png" alt="Humongous Entertainment logo" width="72" height="120" loading="lazy" decoding="async" />
+        <a class="sponsor-tile sponsor-tile--tall" href="https://www.youtube.com/watch?v=tPsoMseeZ-g" target="_blank" rel="noopener noreferrer" title="Humongous Entertainment — Freddi Fish">
+          <img data-asset="sponsors/freddi-humongous.png" src="sponsors/freddi-humongous.png" alt="Humongous Entertainment logo" width="72" height="120" loading="eager" decoding="async" />
         </a>
-        <a class="banner-ad banner-ad--square" href="https://www.pogo.com/" target="_blank" rel="noopener noreferrer sponsored" title="Pogo.com">
-          <img data-asset="ads/pogo.png" src="ads/pogo.png" alt="Pogo.com logo" width="88" height="88" loading="lazy" decoding="async" />
+        <a class="sponsor-tile sponsor-tile--square" href="https://www.pogo.com/" target="_blank" rel="noopener noreferrer" title="Pogo.com">
+          <img data-asset="sponsors/pogo.png" src="sponsors/pogo.png" alt="Pogo.com logo" width="88" height="88" loading="eager" decoding="async" />
         </a>
       </div>
     </div>
@@ -2321,41 +2319,41 @@
     <p class="site-footer" id="siteFooter"></p>
   </div>
 
-  <div class="ad-rails" id="adRails" aria-label="Sponsored links">
-    <aside class="ad-rail ad-rail--left" aria-label="Left sponsors">
-      <p class="ad-rail-tag">Advertisement</p>
-      <a class="banner-ad banner-ad--tall" href="https://www.sea-monkeys.com/" target="_blank" rel="noopener noreferrer sponsored" title="Sea-Monkeys®">
-        <img data-asset="ads/sea-monkeys.jpg" src="ads/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="120" height="200" loading="lazy" decoding="async" />
+  <div class="sponsor-rails" id="sponsorRails" aria-label="Y2K partner banners">
+    <aside class="sponsor-rail sponsor-rail--left" aria-label="Left partner banners">
+      <p class="sponsor-rail-tag">Cool sites!</p>
+      <a class="sponsor-tile sponsor-tile--tall" href="https://www.sea-monkeys.com/" target="_blank" rel="noopener noreferrer" title="Sea-Monkeys®">
+        <img data-asset="sponsors/sea-monkeys.jpg" src="sponsors/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="120" height="200" loading="eager" decoding="async" />
       </a>
-      <a class="banner-ad banner-ad--square" href="https://www.aol.com/" target="_blank" rel="noopener noreferrer sponsored" title="AOL">
-        <img data-asset="ads/aol-classic.png" src="ads/aol-classic.png" alt="AOL logo" width="120" height="120" loading="lazy" decoding="async" />
+      <a class="sponsor-tile sponsor-tile--square" href="https://www.aol.com/" target="_blank" rel="noopener noreferrer" title="AOL">
+        <img data-asset="sponsors/aol-classic.png" src="sponsors/aol-classic.png" alt="AOL logo" width="120" height="120" loading="eager" decoding="async" />
       </a>
-      <a class="banner-ad banner-ad--wide" href="https://www.animalplanet.com/" target="_blank" rel="noopener noreferrer sponsored" title="Animal Planet">
-        <img data-asset="ads/animal-planet.png" src="ads/animal-planet.png" alt="Animal Planet logo" width="120" height="64" loading="lazy" decoding="async" />
+      <a class="sponsor-tile sponsor-tile--wide" href="https://www.animalplanet.com/" target="_blank" rel="noopener noreferrer" title="Animal Planet">
+        <img data-asset="sponsors/animal-planet.png" src="sponsors/animal-planet.png" alt="Animal Planet logo" width="120" height="64" loading="eager" decoding="async" />
       </a>
-      <a class="banner-ad banner-ad--square" href="https://www.nationalgeographic.com/" target="_blank" rel="noopener noreferrer sponsored" title="National Geographic">
-        <img data-asset="ads/natgeo.png" src="ads/natgeo.png" alt="National Geographic Channel logo" width="120" height="120" loading="lazy" decoding="async" />
+      <a class="sponsor-tile sponsor-tile--square" href="https://www.nationalgeographic.com/" target="_blank" rel="noopener noreferrer" title="National Geographic">
+        <img data-asset="sponsors/natgeo.png" src="sponsors/natgeo.png" alt="National Geographic Channel logo" width="120" height="120" loading="eager" decoding="async" />
       </a>
     </aside>
-    <aside class="ad-rail ad-rail--right" aria-label="Right sponsors">
-      <p class="ad-rail-tag">Advertisement</p>
-      <a class="banner-ad banner-ad--square" href="https://www.neopets.com/" target="_blank" rel="noopener noreferrer sponsored" title="Neopets">
-        <img data-asset="ads/neopets.png" src="ads/neopets.png" alt="Neopets logo" width="120" height="120" loading="lazy" decoding="async" />
+    <aside class="sponsor-rail sponsor-rail--right" aria-label="Right partner banners">
+      <p class="sponsor-rail-tag">Cool sites!</p>
+      <a class="sponsor-tile sponsor-tile--square" href="https://www.neopets.com/" target="_blank" rel="noopener noreferrer" title="Neopets">
+        <img data-asset="sponsors/neopets.png" src="sponsors/neopets.png" alt="Neopets logo" width="120" height="120" loading="eager" decoding="async" />
       </a>
-      <a class="banner-ad banner-ad--wide" href="https://www.microsoft.com/en-us/download/internet-explorer.aspx" target="_blank" rel="noopener noreferrer sponsored" title="Internet Explorer">
-        <img data-asset="ads/ie.png" src="ads/ie.png" alt="Internet Explorer logo" width="120" height="64" loading="lazy" decoding="async" />
+      <a class="sponsor-tile sponsor-tile--wide" href="https://www.microsoft.com/en-us/download/internet-explorer.aspx" target="_blank" rel="noopener noreferrer" title="Internet Explorer">
+        <img data-asset="sponsors/ie.png" src="sponsors/ie.png" alt="Internet Explorer logo" width="120" height="64" loading="eager" decoding="async" />
       </a>
-      <a class="banner-ad banner-ad--square" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer sponsored" title="eBay">
-        <img data-asset="ads/ebay.png" src="ads/ebay.png" alt="eBay logo" width="120" height="120" loading="lazy" decoding="async" />
+      <a class="sponsor-tile sponsor-tile--square" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer" title="eBay">
+        <img data-asset="sponsors/ebay.png" src="sponsors/ebay.png" alt="eBay logo" width="120" height="120" loading="eager" decoding="async" />
       </a>
-      <a class="banner-ad banner-ad--tall" href="https://www.youtube.com/watch?v=tPsoMseeZ-g" target="_blank" rel="noopener noreferrer sponsored" title="Humongous Entertainment — Freddi Fish">
-        <img data-asset="ads/freddi-humongous.png" src="ads/freddi-humongous.png" alt="Humongous Entertainment logo" width="120" height="200" loading="lazy" decoding="async" />
+      <a class="sponsor-tile sponsor-tile--tall" href="https://www.youtube.com/watch?v=tPsoMseeZ-g" target="_blank" rel="noopener noreferrer" title="Humongous Entertainment — Freddi Fish">
+        <img data-asset="sponsors/freddi-humongous.png" src="sponsors/freddi-humongous.png" alt="Humongous Entertainment logo" width="120" height="200" loading="eager" decoding="async" />
       </a>
-      <a class="banner-ad banner-ad--wide" href="https://www.britannica.com/" target="_blank" rel="noopener noreferrer sponsored" title="Encyclopædia Britannica">
-        <img data-asset="ads/britannica.png" src="ads/britannica.png" alt="Encyclopædia Britannica logo" width="120" height="64" loading="lazy" decoding="async" />
+      <a class="sponsor-tile sponsor-tile--wide" href="https://www.britannica.com/" target="_blank" rel="noopener noreferrer" title="Encyclopædia Britannica">
+        <img data-asset="sponsors/britannica.png" src="sponsors/britannica.png" alt="Encyclopædia Britannica logo" width="120" height="64" loading="eager" decoding="async" />
       </a>
-      <a class="banner-ad banner-ad--square" href="https://www.pogo.com/" target="_blank" rel="noopener noreferrer sponsored" title="Pogo.com">
-        <img data-asset="ads/pogo.png" src="ads/pogo.png" alt="Pogo.com logo" width="120" height="120" loading="lazy" decoding="async" />
+      <a class="sponsor-tile sponsor-tile--square" href="https://www.pogo.com/" target="_blank" rel="noopener noreferrer" title="Pogo.com">
+        <img data-asset="sponsors/pogo.png" src="sponsors/pogo.png" alt="Pogo.com logo" width="120" height="120" loading="eager" decoding="async" />
       </a>
     </aside>
   </div>

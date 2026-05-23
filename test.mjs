@@ -183,10 +183,10 @@ async function runSuite(page, label) {
 
   if (isDesktop) {
     const y2kAds = await page.evaluate(() => {
-      const rails = document.getElementById('adRails');
-      const leftRail = document.querySelector('.ad-rail--left');
+      const rails = document.getElementById('sponsorRails');
+      const leftRail = document.querySelector('.sponsor-rail--left');
       const ls = leftRail ? getComputedStyle(leftRail) : null;
-      const imgs = [...document.querySelectorAll('#adRails .banner-ad img')];
+      const imgs = [...document.querySelectorAll('#sponsorRails .sponsor-tile img')];
       const ui = document.querySelector('.ui-layer');
       const uiPad = ui ? parseFloat(getComputedStyle(ui).paddingLeft) : 0;
       const railStyle = rails ? getComputedStyle(rails) : null;
@@ -199,7 +199,7 @@ async function runSuite(page, label) {
       return {
         ok: visible
           && imgs.length >= 10
-          && imgs.every((img) => /\/ads\//.test(img.src) && img.alt)
+          && imgs.every((img) => /\/sponsors\//.test(img.src) && img.alt)
           && uiPad >= 120,
         count: imgs.length,
         uiPad,
@@ -207,7 +207,7 @@ async function runSuite(page, label) {
         railsZ: railStyle?.zIndex,
       };
     });
-    results.push([`${label}: Y2K side banner ads`, y2kAds.ok, y2kAds]);
+    results.push([`${label}: Y2K side sponsor banners`, y2kAds.ok, y2kAds]);
 
     const itemCount = await page.locator('.carousel-item').count();
     results.push([`${label}: 3d carousel items`, itemCount === 7, itemCount]);
@@ -300,7 +300,7 @@ async function runSuite(page, label) {
     await page.locator('#openStoryBtn').click();
   } else {
     const noMobileAds = await page.evaluate(() => {
-      const rails = document.getElementById('adRails');
+      const rails = document.getElementById('sponsorRails');
       if (!rails) return true;
       return getComputedStyle(rails).display === 'none';
     });
@@ -367,13 +367,13 @@ async function runSuite(page, label) {
       const progress = !!document.getElementById('progressTextMobile')?.textContent;
       const hint = !!document.getElementById('mobileTapHint')?.textContent;
       const noStickyOpen = !document.getElementById('openStoryBtnMobile');
-      const sideAdsHidden = getComputedStyle(document.getElementById('adRails')).display === 'none';
-      const mobileAds = document.getElementById('mobileAdStrip');
-      const mobileAdImgs = [...document.querySelectorAll('#mobileAdStrip .banner-ad img')];
+      const sideAdsHidden = getComputedStyle(document.getElementById('sponsorRails')).display === 'none';
+      const mobileAds = document.getElementById('mobileSponsorStrip');
+      const mobileAdImgs = [...document.querySelectorAll('#mobileSponsorStrip .sponsor-tile img')];
       const mobileAdsOk = !!mobileAds
         && getComputedStyle(mobileAds).display !== 'none'
         && mobileAdImgs.length >= 6
-        && mobileAdImgs.every((img) => /\/ads\//.test(img.src) && img.alt);
+        && mobileAdImgs.every((img) => /\/sponsors\//.test(img.src) && img.alt);
       const uiPad = parseFloat(getComputedStyle(document.querySelector('.ui-layer')).paddingLeft) < 20;
       const bodyScroll = getComputedStyle(document.body).overflowY !== 'hidden';
       return dockHidden && scroll && progress && hint && noStickyOpen && sideAdsHidden && mobileAdsOk && uiPad && bodyScroll;
