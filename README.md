@@ -2,7 +2,19 @@
 
 Interactive ocean exhibit tied to *Animal Planet’s The Most Extreme*: watch each ranked episode, read Gulf and Florida shore stories, stamp your passport, and unlock the bonus octopus. Bilingual EN/ES.
 
-**Live site:** https://appvantixai.github.io/sea-creatures-cinematic/
+**Live site:** https://2000leagues.com/  
+**Legacy URL:** https://appvantixai.github.io/sea-creatures-cinematic/ (still works)
+
+### Custom domain (2000leagues.com)
+
+DNS on Cloudflare should match [GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages):
+
+| Type | Name | Content |
+|------|------|---------|
+| A | `@` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
+| CNAME | `www` | `appvantixai.github.io` |
+
+In the repo: **Settings → Pages → Custom domain** → `2000leagues.com`, then enable **Enforce HTTPS** once the certificate is ready (can take up to an hour).
 
 ## Run locally
 

@@ -11,7 +11,8 @@
   <meta property="og:title" content="The Extreme: Ocean Passport" id="metaOgTitle" />
   <meta property="og:description" content="Six Most Extreme episodes, shore stories, and a stampable ocean passport — unlock the octopus when you finish." id="metaOgDescription" />
   <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg/1200px-Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28223125973%29.jpeg" />
-  <meta property="og:url" content="https://appvantixai.github.io/sea-creatures-cinematic/" id="metaOgUrl" />
+  <link rel="canonical" href="https://2000leagues.com/" id="canonicalUrl" />
+  <meta property="og:url" content="https://2000leagues.com/" id="metaOgUrl" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Extreme: Ocean Passport" id="metaTwitterTitle" />
   <meta name="twitter:description" content="Six Most Extreme episodes, shore stories, and a stampable ocean passport." id="metaTwitterDescription" />
@@ -2519,7 +2520,8 @@
     const STORAGE_BGM = 'depths-bgm-v1';
     const BGM_LOCAL = 'audio/freddi-intro.mp3';
     const BGM_YT_ID = 'tPsoMseeZ-g';
-    const SITE_CANONICAL = 'https://appvantixai.github.io/sea-creatures-cinematic/';
+    const SITE_CANONICAL = 'https://2000leagues.com/';
+    const SITE_CANONICAL_LEGACY = 'https://appvantixai.github.io/sea-creatures-cinematic/';
     const SPECIMEN_URL_PARAM = 'specimen';
     const OPEN_URL_PARAM = 'open';
 
@@ -3650,12 +3652,10 @@
       setMeta('#metaOgDescription', desc);
       setMeta('#metaTwitterTitle', t('documentTitle'));
       setMeta('#metaTwitterDescription', desc);
+      const canonical = document.getElementById('canonicalUrl');
+      if (canonical) canonical.setAttribute('href', SITE_CANONICAL);
       const ogUrl = document.getElementById('metaOgUrl');
-      if (ogUrl && location.protocol !== 'file:') {
-        ogUrl.setAttribute('content', location.origin + location.pathname);
-      } else if (ogUrl) {
-        ogUrl.setAttribute('content', SITE_CANONICAL);
-      }
+      if (ogUrl) ogUrl.setAttribute('content', SITE_CANONICAL);
     }
 
     const carouselRoot = document.getElementById('carousel3d');
