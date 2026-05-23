@@ -722,66 +722,11 @@
       .sponsor-tile { animation: none !important; }
     }
 
-    /* Mobile sponsor strip */
-    .mobile-sponsor-strip {
-      display: none;
-      position: relative;
-      z-index: 3;
-      width: 100%;
-      margin: 0 0 0.45rem;
-      padding: 0.35rem max(0.5rem, var(--safe-l)) 0.45rem max(0.5rem, var(--safe-r));
-      border: 2px solid;
-      border-color: var(--chrome-hi) var(--chrome-lo) var(--chrome-lo) var(--chrome-hi);
-      background: linear-gradient(180deg, #1a3060, #0a1830);
-      box-shadow: 0 2px 0 #002040;
-    }
-    .mobile-sponsor-label {
-      font: bold 7px/1.2 Arial, Helvetica, sans-serif;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #8899aa;
-      text-align: center;
-      margin: 0 0 0.35rem;
-      animation: ad-blink 1.1s step-end infinite;
-    }
-    .mobile-sponsor-scroll {
-      display: flex;
-      gap: 0.45rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x proximity;
-      overscroll-behavior-x: contain;
-      padding-bottom: 0.15rem;
-    }
-    .mobile-sponsor-scroll .sponsor-tile {
-      flex: 0 0 auto;
-      scroll-snap-align: center;
-      width: 88px;
-      height: 88px;
-    }
-    .mobile-sponsor-scroll .sponsor-tile--wide {
-      width: 120px;
-      height: 52px;
-    }
-    .mobile-sponsor-scroll .sponsor-tile--tall {
-      width: 72px;
-      height: 120px;
-    }
-    .mobile-sponsor-scroll .sponsor-tile img {
-      object-fit: contain;
-    }
-    .mobile-sponsor-scroll .sponsor-tile--tall img,
-    .mobile-sponsor-scroll .sponsor-tile--square img[src*="sea-monkeys"] {
-      object-fit: cover;
-    }
-
     @media (max-width: 959px) {
       .sponsor-rails { display: none !important; }
-      .mobile-sponsor-strip { display: block; }
     }
     @media (min-width: 960px) {
       .sponsor-rails { display: block; }
-      .mobile-sponsor-strip { display: none !important; }
       .ui-layer {
         box-sizing: border-box;
         padding-left: 136px;
@@ -797,8 +742,7 @@
         margin-right: 0;
       }
     }
-    body.panel-open .sponsor-rails,
-    body.panel-open .mobile-sponsor-strip {
+    body.panel-open .sponsor-rails {
       visibility: hidden;
       pointer-events: none;
       opacity: 0;
@@ -2222,33 +2166,6 @@
     </div>
 
     <p class="site-tagline" id="siteTagline"></p>
-
-    <div class="mobile-sponsor-strip" id="mobileSponsorStrip" aria-label="Y2K partner banners">
-      <p class="mobile-sponsor-label">Cool sites!</p>
-      <div class="mobile-sponsor-scroll">
-        <a class="sponsor-tile sponsor-tile--square" href="https://www.sea-monkeys.com/" target="_blank" rel="noopener noreferrer" title="Sea-Monkeys®">
-          <img data-asset="sponsors/sea-monkeys.jpg" src="sponsors/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="88" height="88" loading="eager" decoding="async" />
-        </a>
-        <a class="sponsor-tile sponsor-tile--square" href="https://www.aol.com/" target="_blank" rel="noopener noreferrer" title="AOL">
-          <img data-asset="sponsors/aol-classic.png" src="sponsors/aol-classic.png" alt="AOL logo" width="88" height="88" loading="eager" decoding="async" />
-        </a>
-        <a class="sponsor-tile sponsor-tile--wide" href="https://www.animalplanet.com/" target="_blank" rel="noopener noreferrer" title="Animal Planet">
-          <img data-asset="sponsors/animal-planet.png" src="sponsors/animal-planet.png" alt="Animal Planet logo" width="120" height="52" loading="eager" decoding="async" />
-        </a>
-        <a class="sponsor-tile sponsor-tile--square" href="https://www.neopets.com/" target="_blank" rel="noopener noreferrer" title="Neopets">
-          <img data-asset="sponsors/neopets.png" src="sponsors/neopets.png" alt="Neopets logo" width="88" height="88" loading="eager" decoding="async" />
-        </a>
-        <a class="sponsor-tile sponsor-tile--square" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer" title="eBay">
-          <img data-asset="sponsors/ebay.png" src="sponsors/ebay.png" alt="eBay logo" width="88" height="88" loading="eager" decoding="async" />
-        </a>
-        <a class="sponsor-tile sponsor-tile--tall" href="https://www.youtube.com/watch?v=tPsoMseeZ-g" target="_blank" rel="noopener noreferrer" title="Humongous Entertainment — Freddi Fish">
-          <img data-asset="sponsors/freddi-humongous.png" src="sponsors/freddi-humongous.png" alt="Humongous Entertainment logo" width="72" height="120" loading="eager" decoding="async" />
-        </a>
-        <a class="sponsor-tile sponsor-tile--square" href="https://www.pogo.com/" target="_blank" rel="noopener noreferrer" title="Pogo.com">
-          <img data-asset="sponsors/pogo.png" src="sponsors/pogo.png" alt="Pogo.com logo" width="88" height="88" loading="eager" decoding="async" />
-        </a>
-      </div>
-    </div>
 
     <section class="layout-mobile" id="layoutMobile" aria-label="Mobile gallery">
       <p class="mobile-progress" id="progressTextMobile" aria-live="polite"></p>

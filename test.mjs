@@ -368,15 +368,10 @@ async function runSuite(page, label) {
       const hint = !!document.getElementById('mobileTapHint')?.textContent;
       const noStickyOpen = !document.getElementById('openStoryBtnMobile');
       const sideAdsHidden = getComputedStyle(document.getElementById('sponsorRails')).display === 'none';
-      const mobileAds = document.getElementById('mobileSponsorStrip');
-      const mobileAdImgs = [...document.querySelectorAll('#mobileSponsorStrip .sponsor-tile img')];
-      const mobileAdsOk = !!mobileAds
-        && getComputedStyle(mobileAds).display !== 'none'
-        && mobileAdImgs.length >= 6
-        && mobileAdImgs.every((img) => /\/sponsors\//.test(img.src) && img.alt);
+      const noMobileSponsors = !document.getElementById('mobileSponsorStrip');
       const uiPad = parseFloat(getComputedStyle(document.querySelector('.ui-layer')).paddingLeft) < 20;
       const bodyScroll = getComputedStyle(document.body).overflowY !== 'hidden';
-      return dockHidden && scroll && progress && hint && noStickyOpen && sideAdsHidden && mobileAdsOk && uiPad && bodyScroll;
+      return dockHidden && scroll && progress && hint && noStickyOpen && sideAdsHidden && noMobileSponsors && uiPad && bodyScroll;
     });
     results.push([`${label}: mobile layout chrome`, mobileLayout, mobileLayout]);
 

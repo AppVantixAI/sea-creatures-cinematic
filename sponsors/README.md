@@ -3,7 +3,7 @@
 Real brand logos and product imagery used in the Y2K side sponsor rails. Files live in `sponsors/` (not `ads/`) so browser ad blockers do not strip the images on the live domain.
 
 - **Desktop (960px+):** fixed left/right side rails
-- **Mobile (&lt;960px):** horizontal scroll strip under the passport bar
+- **Mobile (&lt;960px):** hidden (no sponsor strip)
 
 ## Sources
 
