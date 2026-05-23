@@ -447,8 +447,13 @@ async function runSuite(page, label) {
   const stampedUi = await page.locator('.passport-slot[data-specimen="EXT-01"]').evaluate((el) => el.classList.contains('stamped'));
   results.push([`${label}: passport star after view`, stampedUi, stampedUi]);
 
-  const noteHidden = await page.locator('#noteBtn').evaluate((el) => el.hidden);
-  results.push([`${label}: readme note hidden`, noteHidden, noteHidden]);
+  const noteGone = await page.evaluate(() => {
+    const btn = document.getElementById('noteBtn');
+    if (!btn) return true;
+    const style = getComputedStyle(btn);
+    return style.display === 'none' || btn.hidden;
+  });
+  results.push([`${label}: readme note hidden`, noteGone, noteGone]);
   const sub = await page.locator('#brandSub').textContent();
   results.push([`${label}: no made-for-you tagline`, !/made for you|hecho para ti/i.test(sub || ''), sub]);
 

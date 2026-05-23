@@ -1929,7 +1929,6 @@
           <button type="button" class="gloss-btn music-off" id="musicBtn" aria-pressed="false" title="Background music off">🎵</button>
           <button type="button" class="gloss-btn" id="resetBtn" aria-label="Reset progress">↺ Reset</button>
           <button type="button" class="gloss-btn" id="langBtn" aria-pressed="false">EN</button>
-          <button type="button" class="gloss-btn note" id="noteBtn" aria-label="Note" hidden>🐙</button>
         </div>
       </header>
     </div>
@@ -3368,7 +3367,6 @@
     const pauseSpinBtn = document.getElementById('pauseSpinBtn');
     const toast = document.getElementById('toast');
     const langBtn = document.getElementById('langBtn');
-    const noteBtn = document.getElementById('noteBtn');
     const closeBtn = document.getElementById('closeBtn');
     const letterClose = document.getElementById('letterClose');
     const replayBtn = document.getElementById('replayBtn');
@@ -4101,7 +4099,6 @@
       applyUI();
       if (letterPanel.classList.contains('open')) fillLetter();
     });
-    noteBtn?.addEventListener('click', () => { SoundFX.click(); openLetter(); });
     letterClose.addEventListener('click', closeLetter);
     letterPanel.addEventListener('click', (e) => { if (e.target === letterPanel) closeLetter(); });
     closeBtn.addEventListener('click', closePanel);
