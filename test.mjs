@@ -185,6 +185,7 @@ async function runSuite(page, label) {
     const y2kAds = await page.evaluate(() => {
       const rails = document.getElementById('adRails');
       const leftRail = document.querySelector('.ad-rail--left');
+      const ls = leftRail ? getComputedStyle(leftRail) : null;
       const imgs = [...document.querySelectorAll('#adRails .banner-ad img')];
       const ui = document.querySelector('.ui-layer');
       const uiPad = ui ? parseFloat(getComputedStyle(ui).paddingLeft) : 0;
@@ -194,7 +195,7 @@ async function runSuite(page, label) {
         && railStyle?.display !== 'none'
         && railStyle?.visibility !== 'hidden'
         && parseFloat(railStyle?.opacity || '1') > 0
-        && parseInt(railStyle?.zIndex || '0', 10) >= 4;
+        && parseInt(ls?.zIndex || railStyle?.zIndex || '0', 10) >= 10;
       return {
         ok: visible
           && imgs.length >= 10
@@ -202,7 +203,8 @@ async function runSuite(page, label) {
           && uiPad >= 120,
         count: imgs.length,
         uiPad,
-        zIndex: railStyle?.zIndex,
+        railZ: ls?.zIndex,
+        railsZ: railStyle?.zIndex,
       };
     });
     results.push([`${label}: Y2K side banner ads`, y2kAds.ok, y2kAds]);

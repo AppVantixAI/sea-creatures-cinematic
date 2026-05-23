@@ -648,14 +648,17 @@
     /* ——— Y2K side banner ads (desktop margins only) ——— */
     .ad-rails {
       display: none;
+      position: fixed;
+      inset: 0;
       pointer-events: none;
-      z-index: 4;
+      z-index: 10;
     }
     .ad-rail {
       position: fixed;
       top: 6.5rem;
       bottom: 1.5rem;
       width: 120px;
+      z-index: 10;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -722,6 +725,8 @@
     /* Mobile sponsor strip */
     .mobile-ad-strip {
       display: none;
+      position: relative;
+      z-index: 3;
       width: 100%;
       margin: 0 0 0.45rem;
       padding: 0.35rem max(0.5rem, var(--safe-l)) 0.45rem max(0.5rem, var(--safe-r));
@@ -2174,45 +2179,6 @@
   <div class="crt" aria-hidden="true"></div>
   <div class="sparkles" aria-hidden="true"><i>✦</i><i>★</i><i>✧</i><i>◇</i></div>
 
-  <div class="ad-rails" id="adRails" aria-label="Sponsored links">
-    <aside class="ad-rail ad-rail--left" aria-label="Left sponsors">
-      <p class="ad-rail-tag">Advertisement</p>
-      <a class="banner-ad banner-ad--tall" href="https://www.sea-monkeys.com/" target="_blank" rel="noopener noreferrer sponsored" title="Sea-Monkeys®">
-        <img src="ads/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="120" height="200" loading="lazy" decoding="async" />
-      </a>
-      <a class="banner-ad banner-ad--square" href="https://www.aol.com/" target="_blank" rel="noopener noreferrer sponsored" title="AOL">
-        <img src="ads/aol-classic.png" alt="AOL logo" width="120" height="120" loading="lazy" decoding="async" />
-      </a>
-      <a class="banner-ad banner-ad--wide" href="https://www.animalplanet.com/" target="_blank" rel="noopener noreferrer sponsored" title="Animal Planet">
-        <img src="ads/animal-planet.png" alt="Animal Planet logo" width="120" height="64" loading="lazy" decoding="async" />
-      </a>
-      <a class="banner-ad banner-ad--square" href="https://www.nationalgeographic.com/" target="_blank" rel="noopener noreferrer sponsored" title="National Geographic">
-        <img src="ads/natgeo.png" alt="National Geographic Channel logo" width="120" height="120" loading="lazy" decoding="async" />
-      </a>
-    </aside>
-    <aside class="ad-rail ad-rail--right" aria-label="Right sponsors">
-      <p class="ad-rail-tag">Advertisement</p>
-      <a class="banner-ad banner-ad--square" href="https://www.neopets.com/" target="_blank" rel="noopener noreferrer sponsored" title="Neopets">
-        <img src="ads/neopets.png" alt="Neopets logo" width="120" height="120" loading="lazy" decoding="async" />
-      </a>
-      <a class="banner-ad banner-ad--wide" href="https://www.microsoft.com/en-us/download/internet-explorer.aspx" target="_blank" rel="noopener noreferrer sponsored" title="Internet Explorer">
-        <img src="ads/ie.png" alt="Internet Explorer logo" width="120" height="64" loading="lazy" decoding="async" />
-      </a>
-      <a class="banner-ad banner-ad--square" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer sponsored" title="eBay">
-        <img src="ads/ebay.png" alt="eBay logo" width="120" height="120" loading="lazy" decoding="async" />
-      </a>
-      <a class="banner-ad banner-ad--tall" href="https://www.youtube.com/watch?v=tPsoMseeZ-g" target="_blank" rel="noopener noreferrer sponsored" title="Humongous Entertainment — Freddi Fish">
-        <img src="ads/freddi-humongous.png" alt="Humongous Entertainment logo" width="120" height="200" loading="lazy" decoding="async" />
-      </a>
-      <a class="banner-ad banner-ad--wide" href="https://www.britannica.com/" target="_blank" rel="noopener noreferrer sponsored" title="Encyclopædia Britannica">
-        <img src="ads/britannica.png" alt="Encyclopædia Britannica logo" width="120" height="64" loading="lazy" decoding="async" />
-      </a>
-      <a class="banner-ad banner-ad--square" href="https://www.pogo.com/" target="_blank" rel="noopener noreferrer sponsored" title="Pogo.com">
-        <img src="ads/pogo.png" alt="Pogo.com logo" width="120" height="120" loading="lazy" decoding="async" />
-      </a>
-    </aside>
-  </div>
-
   <svg width="0" height="0" aria-hidden="true" style="position:absolute">
     <defs>
       <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -2263,25 +2229,25 @@
       <p class="mobile-ad-tag">Advertisement</p>
       <div class="mobile-ad-scroll">
         <a class="banner-ad banner-ad--square" href="https://www.sea-monkeys.com/" target="_blank" rel="noopener noreferrer sponsored" title="Sea-Monkeys®">
-          <img src="ads/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="88" height="88" loading="lazy" decoding="async" />
+          <img src="/ads/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="88" height="88" loading="lazy" decoding="async" />
         </a>
         <a class="banner-ad banner-ad--square" href="https://www.aol.com/" target="_blank" rel="noopener noreferrer sponsored" title="AOL">
-          <img src="ads/aol-classic.png" alt="AOL logo" width="88" height="88" loading="lazy" decoding="async" />
+          <img src="/ads/aol-classic.png" alt="AOL logo" width="88" height="88" loading="lazy" decoding="async" />
         </a>
         <a class="banner-ad banner-ad--wide" href="https://www.animalplanet.com/" target="_blank" rel="noopener noreferrer sponsored" title="Animal Planet">
-          <img src="ads/animal-planet.png" alt="Animal Planet logo" width="120" height="52" loading="lazy" decoding="async" />
+          <img src="/ads/animal-planet.png" alt="Animal Planet logo" width="120" height="52" loading="lazy" decoding="async" />
         </a>
         <a class="banner-ad banner-ad--square" href="https://www.neopets.com/" target="_blank" rel="noopener noreferrer sponsored" title="Neopets">
-          <img src="ads/neopets.png" alt="Neopets logo" width="88" height="88" loading="lazy" decoding="async" />
+          <img src="/ads/neopets.png" alt="Neopets logo" width="88" height="88" loading="lazy" decoding="async" />
         </a>
         <a class="banner-ad banner-ad--square" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer sponsored" title="eBay">
-          <img src="ads/ebay.png" alt="eBay logo" width="88" height="88" loading="lazy" decoding="async" />
+          <img src="/ads/ebay.png" alt="eBay logo" width="88" height="88" loading="lazy" decoding="async" />
         </a>
         <a class="banner-ad banner-ad--tall" href="https://www.youtube.com/watch?v=tPsoMseeZ-g" target="_blank" rel="noopener noreferrer sponsored" title="Humongous Entertainment — Freddi Fish">
-          <img src="ads/freddi-humongous.png" alt="Humongous Entertainment logo" width="72" height="120" loading="lazy" decoding="async" />
+          <img src="/ads/freddi-humongous.png" alt="Humongous Entertainment logo" width="72" height="120" loading="lazy" decoding="async" />
         </a>
         <a class="banner-ad banner-ad--square" href="https://www.pogo.com/" target="_blank" rel="noopener noreferrer sponsored" title="Pogo.com">
-          <img src="ads/pogo.png" alt="Pogo.com logo" width="88" height="88" loading="lazy" decoding="async" />
+          <img src="/ads/pogo.png" alt="Pogo.com logo" width="88" height="88" loading="lazy" decoding="async" />
         </a>
       </div>
     </div>
@@ -2353,6 +2319,45 @@
     </div>
 
     <p class="site-footer" id="siteFooter"></p>
+  </div>
+
+  <div class="ad-rails" id="adRails" aria-label="Sponsored links">
+    <aside class="ad-rail ad-rail--left" aria-label="Left sponsors">
+      <p class="ad-rail-tag">Advertisement</p>
+      <a class="banner-ad banner-ad--tall" href="https://www.sea-monkeys.com/" target="_blank" rel="noopener noreferrer sponsored" title="Sea-Monkeys®">
+        <img src="/ads/sea-monkeys.jpg" alt="Sea-Monkeys in aquarium" width="120" height="200" loading="lazy" decoding="async" />
+      </a>
+      <a class="banner-ad banner-ad--square" href="https://www.aol.com/" target="_blank" rel="noopener noreferrer sponsored" title="AOL">
+        <img src="/ads/aol-classic.png" alt="AOL logo" width="120" height="120" loading="lazy" decoding="async" />
+      </a>
+      <a class="banner-ad banner-ad--wide" href="https://www.animalplanet.com/" target="_blank" rel="noopener noreferrer sponsored" title="Animal Planet">
+        <img src="/ads/animal-planet.png" alt="Animal Planet logo" width="120" height="64" loading="lazy" decoding="async" />
+      </a>
+      <a class="banner-ad banner-ad--square" href="https://www.nationalgeographic.com/" target="_blank" rel="noopener noreferrer sponsored" title="National Geographic">
+        <img src="/ads/natgeo.png" alt="National Geographic Channel logo" width="120" height="120" loading="lazy" decoding="async" />
+      </a>
+    </aside>
+    <aside class="ad-rail ad-rail--right" aria-label="Right sponsors">
+      <p class="ad-rail-tag">Advertisement</p>
+      <a class="banner-ad banner-ad--square" href="https://www.neopets.com/" target="_blank" rel="noopener noreferrer sponsored" title="Neopets">
+        <img src="/ads/neopets.png" alt="Neopets logo" width="120" height="120" loading="lazy" decoding="async" />
+      </a>
+      <a class="banner-ad banner-ad--wide" href="https://www.microsoft.com/en-us/download/internet-explorer.aspx" target="_blank" rel="noopener noreferrer sponsored" title="Internet Explorer">
+        <img src="/ads/ie.png" alt="Internet Explorer logo" width="120" height="64" loading="lazy" decoding="async" />
+      </a>
+      <a class="banner-ad banner-ad--square" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer sponsored" title="eBay">
+        <img src="/ads/ebay.png" alt="eBay logo" width="120" height="120" loading="lazy" decoding="async" />
+      </a>
+      <a class="banner-ad banner-ad--tall" href="https://www.youtube.com/watch?v=tPsoMseeZ-g" target="_blank" rel="noopener noreferrer sponsored" title="Humongous Entertainment — Freddi Fish">
+        <img src="/ads/freddi-humongous.png" alt="Humongous Entertainment logo" width="120" height="200" loading="lazy" decoding="async" />
+      </a>
+      <a class="banner-ad banner-ad--wide" href="https://www.britannica.com/" target="_blank" rel="noopener noreferrer sponsored" title="Encyclopædia Britannica">
+        <img src="/ads/britannica.png" alt="Encyclopædia Britannica logo" width="120" height="64" loading="lazy" decoding="async" />
+      </a>
+      <a class="banner-ad banner-ad--square" href="https://www.pogo.com/" target="_blank" rel="noopener noreferrer sponsored" title="Pogo.com">
+        <img src="/ads/pogo.png" alt="Pogo.com logo" width="120" height="120" loading="lazy" decoding="async" />
+      </a>
+    </aside>
   </div>
 
   <p class="toast" id="toast" role="status" aria-live="polite"></p>
